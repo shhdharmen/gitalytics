@@ -26,7 +26,9 @@
     "update": "nx migrate latest",
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
-    "help": "nx help"
+    "help": "nx help",
+    "server:start": "serve -s _static -l tcp://0.0.0.0:$PORT -n",
+    "server:build": "rm -r _static; nx build && mv dist _static"
   },
   "private": true,
   "dependencies": {
@@ -44,6 +46,7 @@
     "@nrwl/angular": "11.0.8",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.5.5",
+    "serve": "^11.3.2",
     "tslib": "^2.0.0",
     "zone.js": "^0.10.2"
   },
