@@ -28,7 +28,7 @@
     "dep-graph": "nx dep-graph",
     "help": "nx help",
     "server:start": "serve -s _static -l tcp://0.0.0.0:$PORT -n",
-    "server:build": "rm -r _static; nx build && mv dist _static"
+    "server:build": "rm -r _static && nx build && mv dist/apps/client _static"
   },
   "private": true,
   "dependencies": {
