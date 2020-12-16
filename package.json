@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "commit": "cz",
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
     "nx": "nx",
@@ -51,6 +52,8 @@
     "@angular/cli": "~11.0.0",
     "@angular/compiler-cli": "^11.0.0",
     "@angular/language-service": "^11.0.0",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@nestjs/schematics": "^7.0.0",
     "@nestjs/testing": "^7.0.0",
     "@nrwl/cli": "11.0.8",
@@ -68,15 +71,37 @@
     "@typescript-eslint/parser": "4.3.0",
     "codelyzer": "^6.0.0",
     "cypress": "^5.5.0",
+    "cz-conventional-changelog": "^3.3.0",
     "dotenv": "6.2.0",
     "eslint": "7.10.0",
     "eslint-config-prettier": "6.0.0",
+    "husky": "^4.3.6",
     "jest": "26.2.2",
     "jest-preset-angular": "8.3.1",
+    "lint-staged": "^10.5.3",
     "prettier": "2.1.2",
+    "stylelint": "^13.8.0",
+    "stylelint-config-sass-guidelines": "^7.1.0",
     "ts-jest": "26.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~6.0.0",
     "typescript": "~4.0.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.scss": "stylelint --fix --syntax=scss",
+    "*.{js,json,md,ts,html}": [
+      "npm run format --uncommitted"
+    ]
   }
 }
