@@ -1,0 +1,12 @@
+spec:
+  name: gitalytics
+  services:
+  - build_command: npm run server:build
+    environment_slug: node-js
+    git:
+      branch: main
+      repo_clone_url: https://github.com/shhdharmen/gitalytics.git
+    name: gitalytics
+    routes:
+    - path: /
+    run_command: npm run server:start
