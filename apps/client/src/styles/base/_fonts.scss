@@ -1,0 +1,43 @@
+/* poppins-regular - latin */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''), url('../../assets/fonts/poppins/poppins-v15-latin-regular.woff2') format('woff2'),
+    url('../../assets/fonts/poppins/poppins-v15-latin-regular.woff') format('woff');
+}
+/* poppins-500 - latin */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  src: local(''), url('../../assets/fonts/poppins/poppins-v15-latin-500.woff2') format('woff2'),
+    url('../../assets/fonts/poppins/poppins-v15-latin-500.woff') format('woff');
+}
+/* roboto-slab-300 - latin */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 300;
+  src: local(''),
+    url('../../assets/fonts/roboto-slab/roboto-slab-v12-latin-300.woff2') format('woff2'),
+    url('../../assets/fonts/roboto-slab/roboto-slab-v12-latin-300.woff') format('woff');
+}
+/* roboto-slab-regular - latin */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+    url('../../assets/fonts/roboto-slab/roboto-slab-v12-latin-regular.woff2') format('woff2'),
+    url('../../assets/fonts/roboto-slab/roboto-slab-v12-latin-regular.woff') format('woff');
+}
+/* roboto-slab-500 - latin */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 500;
+  src: local(''),
+    url('../../assets/fonts/roboto-slab/roboto-slab-v12-latin-500.woff2') format('woff2'),
+    url('../../assets/fonts/roboto-slab/roboto-slab-v12-latin-500.woff') format('woff');
+}
