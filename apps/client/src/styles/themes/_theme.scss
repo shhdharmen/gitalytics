@@ -1,0 +1,76 @@
+// primary, accent and warn palettes
+
+$client-components-primary: mat-palette($mat-indigo);
+$client-components-accent: mat-palette($mat-pink, A200, A100, A400);
+$client-components-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$client-components-theme: mat-light-theme(
+  $client-components-primary,
+  $client-components-accent,
+  $client-components-warn
+);
+
+// Define  a custom typography config
+$heading-font-family: '"Roboto Slab", serif';
+$body-font-family: '"Poppins", sans-serif';
+$typography: mat-typography-config(
+  $font-family: $body-font-family,
+  $display-4:
+    mat-typography-level(
+      112px,
+      112px,
+      300,
+      $font-family: $heading-font-family,
+      $letter-spacing: -0.05em
+    ),
+  $display-3:
+    mat-typography-level(
+      56px,
+      56px,
+      400,
+      $font-family: $heading-font-family,
+      $letter-spacing: -0.02em
+    ),
+  $display-2:
+    mat-typography-level(
+      45px,
+      48px,
+      400,
+      $font-family: $heading-font-family,
+      $letter-spacing: -0.005em
+    ),
+  $display-1: mat-typography-level(34px, 40px, 400, $font-family: $heading-font-family),
+  $headline: mat-typography-level(24px, 32px, 400, $font-family: $heading-font-family),
+  $title: mat-typography-level(20px, 32px, 500, $font-family: $heading-font-family),
+  $subheading-2: mat-typography-level(16px, 28px, 400),
+  $subheading-1: mat-typography-level(15px, 24px, 400),
+  $body-2: mat-typography-level(14px, 24px, 500),
+  $body-1: mat-typography-level(14px, 20px, 400),
+  $caption: mat-typography-level(12px, 20px, 400),
+  $button: mat-typography-level(14px, 14px, 500),
+  $input: mat-typography-level(inherit, 1.125, 400),
+);
+
+// Define an alternate dark theme.
+$dark-primary: mat-palette($mat-blue-grey);
+$dark-accent: mat-palette($mat-amber, A200, A100, A400);
+$dark-warn: mat-palette($mat-deep-orange);
+$dark-theme: mat-dark-theme(
+  (
+    color: (
+      primary: $dark-primary,
+      accent: $dark-accent,
+      warn: $dark-warn,
+    ),
+  )
+);
+
+// Theme for notifications / snackbar
+$notifications-theme: (
+  default: #fff,
+  info: mat-color(mat-palette($mat-blue), 400),
+  success: mat-color(mat-palette($mat-green), 400),
+  warning: mat-color(mat-palette($mat-yellow), 400),
+  error: mat-color(mat-palette($mat-red), 400),
+);

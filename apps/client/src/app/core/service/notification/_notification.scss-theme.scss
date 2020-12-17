@@ -1,0 +1,70 @@
+// src\app\shared\services\notification.scss-theme.scss
+
+@mixin notification-theme($notifications-theme) {
+  $default-color: map-get($notifications-theme, default);
+  $info-color: map-get($notifications-theme, info);
+  $success-color: map-get($notifications-theme, success);
+  $warn-color: map-get($notifications-theme, warning);
+  $error-color: map-get($notifications-theme, error);
+
+  .default-notification-overlay,
+  .info-notification-overlay,
+  .success-notification-overlay,
+  .warning-notification-overlay,
+  .error-notification-overlay {
+    border-left: 4px solid;
+
+    &::before {
+      float: left;
+      font-family: 'Material Icons';
+      font-size: 24px;
+      // because we want spaces to be considered in content
+      // https://stackoverflow.com/questions/5467605/add-a-space-after-an-element-using-after
+      white-space: pre;
+    }
+  }
+
+  .default-notification-overlay {
+    border-left-color: $default-color;
+
+    &::before {
+      color: #fff;
+    }
+  }
+
+  .info-notification-overlay {
+    border-left-color: $info-color;
+
+    &::before {
+      color: $info-color;
+      content: '\e88e  ';
+    }
+  }
+
+  .success-notification-overlay {
+    border-left-color: $success-color;
+
+    &::before {
+      color: $success-color;
+      content: '\e86c  ';
+    }
+  }
+
+  .warning-notification-overlay {
+    border-left-color: $warn-color;
+
+    &::before {
+      color: $warn-color;
+      content: '\e002  ';
+    }
+  }
+
+  .error-notification-overlay {
+    border-left-color: $error-color;
+
+    &::before {
+      color: $error-color;
+      content: '\e000  ';
+    }
+  }
+}

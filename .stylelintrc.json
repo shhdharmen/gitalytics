@@ -1,3 +1,7 @@
 {
-  "extends": "stylelint-config-sass-guidelines"
+  "extends": "stylelint-config-sass-guidelines",
+  "rules": {
+    "function-parentheses-space-inside": null,
+    "max-nesting-depth": null
+  }
 }
