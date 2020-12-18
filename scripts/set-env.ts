@@ -17,6 +17,7 @@ const targetPath = `./apps/client/src/environments/environment${
 const envConfigFile = `export const environment = {
   production: ${isProd},
   pat: "${process.env.PAT}",
+  api_url: "${process.env.API_URL}"
 };`;
 writeFile(targetPath, envConfigFile, function (err) {
   if (err) {
