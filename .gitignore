@@ -39,4 +39,3 @@ testem.log
 Thumbs.db
 
 .env
-*environment.ts
