@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'gitalytics-home',
@@ -28,6 +29,8 @@ export class HomeComponent {
       ];
     })
   );
+
+  pat = environment.pat;
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 }
