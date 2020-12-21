@@ -1,33 +1,49 @@
-<div class="grid-container">
-  <h1 class="mat-h1">Dashboard {{ pat }}</h1>
-  <mat-grid-list cols="2" rowHeight="350px">
-    <mat-grid-tile
-      *ngFor="let card of cards | async; let i = index"
-      [colspan]="card.cols"
-      [rowspan]="card.rows"
-    >
-      <mat-card class="dashboard-card">
-        <mat-card-header>
-          <mat-card-title>
-            {{ card.title }}
-            <button
-              mat-icon-button
-              class="more-button"
-              [matMenuTriggerFor]="menu"
-              aria-label="Toggle menu"
+<form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()" class="h-100">
+  <div class="container h-100">
+    <div class="row justify-content-center h-100 align-items-center">
+      <div class="col-12 col-sm-12 col-md-6">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>What's your Github Username?</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="px-3">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Github Username</mat-label>
+              <input matInput placeholder="Github Username" formControlName="userName" />
+              <mat-error *ngIf="loginForm.controls['userName'].hasError('required')">
+                <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-actions class="px-3">
+            <div
+              role="alert"
+              class="alert bg-primary-{{ (isDark$ | async) ? 'darker' : 'lighter' }} border-primary"
             >
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu" xPosition="before">
-              <button mat-menu-item>Expand</button>
-              <button mat-menu-item>Remove</button>
-            </mat-menu>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="dashboard-card-content">
-          <div>Card Content Here</div>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
-</div>
+              <p>Gitalytics will store your</p>
+              <ul>
+                <li>Github Username</li>
+                <li>Theme Preference</li>
+              </ul>
+              <p>in your browser's local storage only if you agree.</p>
+              <hr />
+              <mat-checkbox formControlName="localStorage" color="primary">
+                Store the mentioned data in local storage
+              </mat-checkbox>
+            </div>
+            <div class="text-right">
+              <button
+                mat-stroked-button
+                color="primary"
+                type="submit"
+                [disabled]="loginForm.invalid"
+              >
+                Let's Go!
+              </button>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</form>

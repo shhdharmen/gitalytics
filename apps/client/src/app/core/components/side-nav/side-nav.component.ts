@@ -3,6 +3,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { ThemeService } from '../../service/theme/theme.service';
 
 @Component({
   selector: 'gitalytics-side-nav',
@@ -19,13 +20,15 @@ export class SideNavComponent implements OnInit {
 
   constructor(
     private overlayContainer: OverlayContainer,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private themeService: ThemeService
   ) {}
 
   ngOnInit(): void {}
 
   toggleTheme(): void {
     this.isDark = !this.isDark;
+    this.themeService.updateIsDark(this.isDark);
     if (this.isDark) {
       this.overlayContainer.getContainerElement().classList.add('dark-theme');
     } else {

@@ -1,11 +1,11 @@
-import { LayoutModule } from '@angular/cdk/layout';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 
 import { HomeComponent } from './home.component';
 
@@ -19,12 +19,12 @@ describe('HomeComponent', () => {
         declarations: [HomeComponent],
         imports: [
           NoopAnimationsModule,
-          LayoutModule,
+          ReactiveFormsModule,
           MatButtonModule,
           MatCardModule,
-          MatGridListModule,
-          MatIconModule,
-          MatMenuModule,
+          MatInputModule,
+          MatRadioModule,
+          MatSelectModule,
         ],
       }).compileComponents();
     })

@@ -5,9 +5,14 @@
     </button> -->
     <img src="../../../../assets/gitalytics.png" height="50" width="50" alt="" class="mr-2" />
     <span>Gitalytics</span>
-    <button mat-icon-button class="ml-auto" (click)="toggleTheme()" matTooltip="Toggle dark theme">
+    <button
+      mat-icon-button
+      class="ml-auto"
+      (click)="toggleTheme()"
+      matTooltip="Toggle light/dark theme"
+    >
       <mat-icon>
-        <ng-container *ngIf="isDark; else moon">brightness_6</ng-container>
+        <ng-container *ngIf="isDark; else moon">wb_sunny</ng-container>
         <ng-template #moon>brightness_3</ng-template>
       </mat-icon>
     </button>

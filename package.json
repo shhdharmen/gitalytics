@@ -29,7 +29,8 @@
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "server:start": "serve -s dist/apps/client -l tcp://0.0.0.0:$PORT -n"
+    "server:start": "serve -s dist/apps/client -l tcp://0.0.0.0:$PORT -n",
+    "generate-codegen": "graphql-codegen --config codegen.yml"
   },
   "private": true,
   "dependencies": {
@@ -64,6 +65,11 @@
     "@angular/language-service": "^11.0.0",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "@graphql-codegen/cli": "1.19.4",
+    "@graphql-codegen/introspection": "1.18.1",
+    "@graphql-codegen/typescript": "1.19.0",
+    "@graphql-codegen/typescript-apollo-angular": "2.2.1",
+    "@graphql-codegen/typescript-operations": "1.17.12",
     "@nestjs/schematics": "^7.0.0",
     "@nestjs/testing": "^7.0.0",
     "@nrwl/cli": "11.0.8",
@@ -91,6 +97,7 @@
     "lint-staged": "^10.5.3",
     "prettier": "2.1.2",
     "stylelint": "^13.8.0",
+    "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-sass-guidelines": "^7.1.0",
     "ts-jest": "26.4.0",
     "ts-node": "~7.0.0",
@@ -105,14 +112,13 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
+      "pre-commit": "nx lint --fix && git add . && lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-push": "npm run lint"
     }
   },
   "lint-staged": {
     "*.scss": "stylelint --fix --syntax=scss",
-    "*.{ts,html}": "nx lint --fix",
     "*.{js,json,md,ts,html}": [
       "prettier --write"
     ]

@@ -1,5 +1,3 @@
-// src\app\shared\services\notification.scss-theme.scss
-
 @mixin notification-theme($notifications-theme) {
   $default-color: map-get($notifications-theme, default);
   $info-color: map-get($notifications-theme, info);
