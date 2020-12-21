@@ -3,7 +3,9 @@ import { Message } from '@gitalytics/api-interfaces';
 
 @Injectable()
 export class AppService {
-  getData(): Message {
+  constructor() {}
+
+  getHello(): Message {
     return { message: 'Welcome to api!' };
   }
 }
