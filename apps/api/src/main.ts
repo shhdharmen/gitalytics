@@ -12,17 +12,16 @@ import { AppModule } from './app/app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
-  const allowlist = configService.get<string>('WHITELIST_URL');
+  const allowList = configService.get<string>('WHITELIST_URL').split(',');
   const env = configService.get<string>('NODE_ENV');
-
-  console.log('allowlist', allowlist.split(','));
 
   app.enableCors({
     origin: (origin, callback) => {
       // allow requests with no origin
       // (like mobile apps or curl requests)
       if (!origin && env !== 'production') return callback(null, true);
-      if (allowlist.indexOf(origin) === -1) {
+
+      if (allowList.indexOf(origin) === -1) {
         const msg =
           'The CORS policy for this site does not allow access from the specified Origin.';
         return callback(new Error(msg), false);
