@@ -15,21 +15,7 @@ export function createApollo(httpLink: HttpLink) {
     },
   }));
 
-  const auth = setContext((operation, context) => {
-    const token = environment.pat;
-
-    if (token === null) {
-      return {};
-    } else {
-      return {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-    }
-  });
-
-  const link = ApolloLink.from([basic, auth, httpLink.create({ uri })]);
+  const link = ApolloLink.from([basic, httpLink.create({ uri })]);
   const cache = new InMemoryCache();
 
   return {
