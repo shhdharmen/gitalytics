@@ -6,7 +6,7 @@ import { InMemoryCache, ApolloLink } from '@apollo/client/core';
 import { setContext } from '@apollo/client/link/context';
 import { environment } from '../../environments/environment';
 
-const uri = environment.api_url;
+const uri = environment.api_url + '/github';
 
 export function createApollo(httpLink: HttpLink) {
   const basic = setContext((operation, context) => ({

@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  api_url: '/api/github',
+  api_url: 'https://gitalytics-api.shhdharmen.me/api',
 };

@@ -124,8 +124,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "nx lint --fix && git add . && lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-push": "npm run lint"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "lint-staged": {
