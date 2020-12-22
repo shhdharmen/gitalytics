@@ -6,12 +6,16 @@
 
 @import './component-themes';
 
+@import '../utilities/colors';
+
 @include angular-material-theme($client-components-theme);
 @include components-theme($client-components-theme, $notifications-theme);
+@include theme-colors($client-components-theme);
 
 .dark-theme {
   @include angular-material-color($dark-theme);
   @include components-theme($dark-theme, $notifications-theme);
+  @include theme-colors($dark-theme);
 }
 
 @include angular-material-typography($typography);

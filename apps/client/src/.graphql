@@ -1,0 +1,85 @@
+query Viewer {
+  viewer {
+    login
+  }
+}
+
+query User($login: String!) {
+  user(login: $login) {
+    avatarUrl
+    bio
+    name
+  }
+}
+
+query TotalContributions($login: String!) {
+  user(login: $login) {
+    contributionsCollection {
+      totalIssueContributions
+      totalCommitContributions
+      totalIssueContributions
+      totalRepositoryContributions
+      totalPullRequestContributions
+      totalPullRequestReviewContributions
+      totalRepositoriesWithContributedIssues
+      totalRepositoriesWithContributedCommits
+      totalRepositoriesWithContributedPullRequests
+      totalRepositoriesWithContributedPullRequestReviews
+    }
+  }
+}
+
+query TotalContributionsByDate(
+  $login: String!
+  $from: DateTime = "2020-01-01T00:00:00.000Z"
+  $to: DateTime = "2020-12-31T00:00:00.000Z"
+) {
+  user(login: $login) {
+    contributionsCollection(from: $from, to: $to) {
+      totalIssueContributions
+      totalCommitContributions
+      totalIssueContributions
+      totalRepositoryContributions
+      totalPullRequestContributions
+      totalPullRequestReviewContributions
+      totalRepositoriesWithContributedIssues
+      totalRepositoriesWithContributedCommits
+      totalRepositoriesWithContributedPullRequests
+      totalRepositoriesWithContributedPullRequestReviews
+    }
+  }
+}
+
+query TotalIssueContributionsByDate(
+  $login: String!
+  $from: DateTime = "2020-01-01T00:00:00.000Z"
+  $to: DateTime = "2020-12-31T00:00:00.000Z"
+  $first: Int = 100
+  $direction: OrderDirection = ASC
+) {
+  user(login: $login) {
+    contributionsCollection(from: $from, to: $to) {
+      totalIssueContributions
+      issueContributions(first: $first, orderBy: { direction: $direction }) {
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        edges {
+          cursor
+          node {
+            occurredAt
+            issue {
+              title
+              url
+              repository {
+                name
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

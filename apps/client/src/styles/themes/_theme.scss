@@ -1,7 +1,7 @@
 // primary, accent and warn palettes
 
-$client-components-primary: mat-palette($mat-indigo);
-$client-components-accent: mat-palette($mat-pink, A200, A100, A400);
+$client-components-primary: mat-palette($mat-deep-purple);
+$client-components-accent: mat-palette($mat-amber, A200, A100, A400);
 $client-components-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).

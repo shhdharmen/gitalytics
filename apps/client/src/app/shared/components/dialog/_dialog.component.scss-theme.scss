@@ -1,6 +1,3 @@
-// src\app\shared\components\dialog\dialog.component.scss-theme.scss
-
-@import '~@angular/material/theming';
 @mixin dialog-component-theme($config-or-theme) {
   // retrieve variables from theme
   // (all possible variables, use only what you really need)

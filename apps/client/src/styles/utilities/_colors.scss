@@ -1,0 +1,42 @@
+@mixin theme-colors($config-or-theme) {
+  $config: mat-get-color-config($config-or-theme);
+  $primary: map-get($config, primary);
+  $accent: map-get($config, accent);
+  $warn: map-get($config, warn);
+  $foreground: map-get($config, foreground);
+  $background: map-get($config, background);
+
+  $color-list: (
+    'primary': $primary,
+    'accent': $accent,
+    'warn': $warn,
+    'foreground': $foreground,
+    'background': $background,
+  );
+
+  $hue-list: lighter, darker;
+
+  @each $key, $val in $color-list {
+    .text-#{$key} {
+      color: mat-color($val) !important;
+    }
+    .bg-#{$key} {
+      background-color: mat-color($val) !important;
+    }
+    .border-#{$key} {
+      border-color: mat-color($val) !important;
+    }
+
+    @each $valHue in $hue-list {
+      .text-#{$key}-#{$valHue} {
+        color: mat-color($val, $valHue) !important;
+      }
+      .bg-#{$key}-#{$valHue} {
+        background-color: mat-color($val, $valHue) !important;
+      }
+      .border-#{$key}-#{$valHue} {
+        border-color: mat-color($val, $valHue) !important;
+      }
+    }
+  }
+}

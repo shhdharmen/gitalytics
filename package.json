@@ -3,12 +3,14 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "config": "ts-node ./scripts/set-env.ts",
     "commit": "cz",
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
     "nx": "nx",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build --prod",
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",
     "e2e": "ng e2e",
@@ -27,7 +29,8 @@
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "server:start": "serve -s dist/apps/client -l tcp://0.0.0.0:$PORT -n"
+    "server:start": "serve -s dist/apps/client -l tcp://0.0.0.0:$PORT -n",
+    "generate-codegen": "graphql-codegen --config codegen.yml"
   },
   "private": true,
   "dependencies": {
@@ -41,11 +44,19 @@
     "@angular/platform-browser": "^11.0.0",
     "@angular/platform-browser-dynamic": "^11.0.0",
     "@angular/router": "^11.0.0",
+    "@apollo/client": "^3.3.6",
+    "@hapi/joi": "^17.1.1",
     "@nestjs/common": "^7.0.0",
+    "@nestjs/config": "^0.6.1",
     "@nestjs/core": "^7.0.0",
+    "@nestjs/graphql": "^7.9.1",
     "@nestjs/platform-express": "^7.0.0",
     "@nrwl/angular": "11.0.8",
+    "apollo-angular": "^2.1.0",
+    "apollo-server-express": "^2.19.0",
     "bootstrap": "^4.5.3",
+    "graphql": "^15.4.0",
+    "graphql-tools": "^7.0.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.5.5",
     "serve": "^11.3.2",
@@ -59,6 +70,11 @@
     "@angular/language-service": "^11.0.0",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "@graphql-codegen/cli": "1.19.4",
+    "@graphql-codegen/introspection": "1.18.1",
+    "@graphql-codegen/typescript": "1.19.0",
+    "@graphql-codegen/typescript-apollo-angular": "2.2.1",
+    "@graphql-codegen/typescript-operations": "1.17.12",
     "@nestjs/schematics": "^7.0.0",
     "@nestjs/testing": "^7.0.0",
     "@nrwl/cli": "11.0.8",
@@ -70,6 +86,7 @@
     "@nrwl/nx-cloud": "latest",
     "@nrwl/tao": "11.0.8",
     "@nrwl/workspace": "11.0.8",
+    "@types/hapi__joi": "^17.1.6",
     "@types/jest": "26.0.8",
     "@types/node": "12.12.38",
     "@typescript-eslint/eslint-plugin": "4.3.0",
@@ -77,7 +94,7 @@
     "codelyzer": "^6.0.0",
     "cypress": "^5.5.0",
     "cz-conventional-changelog": "^3.3.0",
-    "dotenv": "6.2.0",
+    "dotenv": "^6.2.0",
     "eslint": "7.10.0",
     "eslint-config-prettier": "6.0.0",
     "husky": "^4.3.6",
@@ -86,11 +103,13 @@
     "lint-staged": "^10.5.3",
     "prettier": "2.1.2",
     "stylelint": "^13.8.0",
+    "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-sass-guidelines": "^7.1.0",
     "ts-jest": "26.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~6.0.0",
-    "typescript": "~4.0.3"
+    "typescript": "~4.0.3",
+    "yargs": "^16.2.0"
   },
   "config": {
     "commitizen": {
@@ -99,14 +118,15 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "pre-commit": "nx lint --fix && git add . && lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": "npm run lint"
     }
   },
   "lint-staged": {
     "*.scss": "stylelint --fix --syntax=scss",
     "*.{js,json,md,ts,html}": [
-      "npm run format --uncommitted"
+      "prettier --write"
     ]
   }
 }

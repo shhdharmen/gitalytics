@@ -28,6 +28,6 @@ export class AppComponent {
   }
 
   openNotification(): void {
-    this.notification.default('Default Notification');
+    this.notification.default('Default Notifications');
   }
 }
