@@ -1,14 +1,12 @@
 <!-- src\app\shared\components\dialog\dialog.component.html -->
 
-<h2 mat-dialog-title [attr.color]="data.themeColor">Dialog Header</h2>
+<h2 mat-dialog-title [attr.color]="data.themeColor || 'primary'">
+  {{ data.header || 'Dialog Header' }}
+</h2>
 <mat-dialog-content class="mat-typography">
   <div class="mat-dialog-content-body">
-    <h3>Sub Header</h3>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet sunt ratione eligendi ab esse
-      dolorum delectus aliquid, doloribus perferendis dolores impedit laudantium voluptatum cum ad
-      odit eius harum saepe commodi.
-    </p>
+    <h3>{{ data.subHeader || 'Dialog Sub Header ' }}</h3>
+    <div [innerHTML]="data.content"></div>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

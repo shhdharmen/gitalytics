@@ -8,7 +8,7 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { MaterialModule } from './material/material.module';
 import { AppRoutingModule } from './app-routing.module';
-import { GraphQLModule } from './grapgql/grapgql.module';
+import { GraphQLModule } from './graphql/graphql.module';
 
 @NgModule({
   declarations: [AppComponent],

@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ThemeColor } from '../../models';
 
 @Component({
   selector: 'gitalytics-dialog',
@@ -12,5 +13,8 @@ export class DialogComponent implements OnInit {
   ngOnInit(): void {}
 }
 export interface DialogData {
-  themeColor: string;
+  themeColor?: ThemeColor;
+  header: string;
+  subHeader?: string;
+  content: string;
 }

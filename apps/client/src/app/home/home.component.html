@@ -4,9 +4,7 @@
       <div class="col-12 col-sm-12 col-md-6">
         <mat-card>
           <mat-card-header>
-            <mat-card-title
-              >What's your Github Username? {{ viewer$ | async | json }}</mat-card-title
-            >
+            <mat-card-title>What's your Github Username?</mat-card-title>
           </mat-card-header>
           <mat-card-content class="px-3">
             <mat-form-field class="w-100" appearance="outline">
@@ -38,9 +36,10 @@
                 mat-stroked-button
                 color="primary"
                 type="submit"
-                [disabled]="loginForm.invalid"
+                [disabled]="loginForm.invalid || isLoading"
               >
                 Let's Go!
+                <mat-spinner *ngIf="isLoading" diameter="20" class="d-inline-block"></mat-spinner>
               </button>
             </div>
           </mat-card-actions>
