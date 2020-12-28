@@ -1,70 +1,92 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UserGQL, UserQuery } from '../../generated/graphql';
-import { ThemeService } from '../core/service/theme/theme.service';
+import { TotalContributionsQuery, TotalContributionsGQL } from '../../generated/graphql';
+import { fadeSlideInOut } from '../core/animations/animations';
+import { DataService } from '../core/services/data/data.service';
+import { LocalStorageService } from '../core/services/local-storage/local-storage.service';
+import { ThemeService } from '../core/services/theme/theme.service';
 import { DialogComponent, DialogData } from '../shared/components/dialog/dialog.component';
-import { ThemeColor } from '../shared/models';
+import { twentyFrom, twentyTo } from '../shared/constants';
 
 @Component({
   selector: 'gitalytics-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  animations: [fadeSlideInOut],
 })
-export class HomeComponent {
-  isLoading = false;
+export class HomeComponent implements OnInit {
+  isLoading = true;
+  isUsernameLoading = false;
   loginForm = this.fb.group({
     userName: [null, Validators.required],
-    localStorage: [false],
   });
   isDark$ = this.themeService.isDark$;
-  user$: Observable<UserQuery['user']>;
+  totalContributions$: Observable<TotalContributionsQuery>;
 
   constructor(
     private fb: FormBuilder,
     private themeService: ThemeService,
-    private userGQL: UserGQL,
-    private dialog: MatDialog
+    private totalContributionsGQL: TotalContributionsGQL,
+    private dialog: MatDialog,
+    private dataService: DataService,
+    private router: Router,
+    private localStorage: LocalStorageService
   ) {}
 
-  onSubmit() {
-    this.isLoading = true;
-    const userName = this.loginForm.get('userName').value;
-    this.user$ = this.userGQL
-      .watch({ login: userName })
-      .valueChanges.pipe(map((result) => result.data.user));
+  ngOnInit() {
+    const userName = this.localStorage.get('userName');
 
-    this.user$.subscribe(
+    if (userName) {
+      this.loginForm.get('userName').setValue(userName);
+      this.getDataForUser(userName, false);
+    } else {
+      this.isLoading = false;
+    }
+  }
+
+  onSubmit() {
+    this.isUsernameLoading = true;
+    const userName = this.loginForm.get('userName').value;
+    if (userName) {
+      this.getDataForUser(userName);
+    }
+  }
+
+  private getDataForUser(userName: string, showError = true) {
+    this.totalContributions$ = this.totalContributionsGQL
+      .watch({ login: userName, from: twentyFrom, to: twentyTo })
+      .valueChanges.pipe(map((result) => result.data));
+
+    this.totalContributions$.subscribe(
       (data) => {
+        this.isUsernameLoading = false;
         this.isLoading = false;
-        const dialogData: DialogData = {
-          themeColor: 'primary',
-          content:
-            '<pre class="bg-light border p-2"><code>' +
-            JSON.stringify(data, null, 2) +
-            '</code></pre>',
-          header: 'Success!',
-          subHeader: 'Gitalytics got your profile!',
-        };
-        this.openDialog('primary', dialogData);
+        this.localStorage.set('userName', userName);
+        this.dataService.updateTwentyDataSub(data);
+        this.router.navigate(['/user', userName, '2020Coded']);
       },
       () => {
+        this.isUsernameLoading = false;
         this.isLoading = false;
-        const dialogData: DialogData = {
-          themeColor: 'warn',
-          content: 'Error while getting data for: <b><i>' + userName + '</i></b>',
-          header: 'Error!',
-          subHeader: 'Gitalytics did not get your profile!',
-        };
-        this.openDialog('warn', dialogData);
+        if (showError) {
+          const dialogData: DialogData = {
+            themeColor: 'warn',
+            content: 'Error while getting data for: <b><i>' + userName + '</i></b>',
+            header: 'Error!',
+            subHeader: 'Gitalytics did not get your profile!',
+          };
+          this.openDialog(dialogData);
+        }
       }
     );
   }
 
-  openDialog(themeColor: ThemeColor, data: DialogData): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
+  openDialog(data: DialogData): void {
+    this.dialog.open(DialogComponent, {
       panelClass: 'custom-dialog',
       data,
     });

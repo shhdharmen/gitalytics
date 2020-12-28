@@ -1,0 +1,34 @@
+<div class="grid-container">
+  <mat-grid-list cols="6" [rowHeight]="isHandSet ? '300px' : '180px'">
+    <mat-grid-tile [colspan]="2" [rowspan]="3">
+      <mat-card class="dashboard-card" color="primary">
+        <mat-card-header class="mx-0">
+          <mat-card-title>
+            <h1 class="mat-display-4">#2020<br />Coded</h1>
+          </mat-card-title>
+          <mat-card-subtitle>
+            <h2>A quick glance at your 2020 GitHub Contributions!</h2>
+          </mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="2" [rowspan]="2" *ngIf="isLoading">
+      <gitalytics-widget-loader></gitalytics-widget-loader>
+    </mat-grid-tile>
+
+    <ng-container *ngIf="!isLoading">
+      <!-- #region repository card -->
+
+      <mat-grid-tile colspan="2" rowspan="1" @fadeSlideInOut>
+        <gitalytics-repo-card
+          [totalRepositoryContributions]="
+            data.user.contributionsCollection.totalRepositoryContributions
+          "
+          [edges]="data.user.contributionsCollection.repositoryContributions.edges"
+        ></gitalytics-repo-card>
+      </mat-grid-tile>
+
+      <!-- #endregion -->
+    </ng-container>
+  </mat-grid-list>
+</div>

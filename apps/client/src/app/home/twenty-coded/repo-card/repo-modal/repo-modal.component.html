@@ -1,0 +1,45 @@
+<h2 mat-dialog-title color="primary">Repositories</h2>
+<mat-dialog-content class="mat-typography">
+  <div class="rounded border bg-primary text-white p-3 my-3">
+    <h2 class="mat-display-1">
+      You created <span class="highlight">{{ data.repositoriesCount }} repositories</span><br />
+      in 2020!
+    </h2>
+    <h2>
+      They got <span class="highlight">{{ data.starCount }} stars</span>.
+    </h2>
+    <h2>
+      They were <span class="highlight">forked {{ data.forkCount }}</span> times.
+    </h2>
+    <hr />
+    <div class="bg-dark m-n3 px-3 py-1 rounded-bottom">
+      <div class="row">
+        <div class="col">
+          <p class="mb-0">
+            <img
+              src="../../../../../assets/gitalytics.png"
+              height="24"
+              width="24"
+              alt="Gitalytics"
+              srcset=""
+              class="align-middle"
+            />
+            Gitalytics
+          </p>
+        </div>
+        <div class="col text-right">
+          <p class="mb-0">#2020Coded</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-icon-button class="ml-auto">
+    <mat-icon>download</mat-icon>
+  </button>
+  <a mat-icon-button [href]="twitterIntent" target="_blank">
+    <mat-icon svgIcon="twitter"></mat-icon>
+  </a>
+</mat-dialog-actions>

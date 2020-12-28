@@ -1,7 +1,10 @@
 <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()" class="h-100">
   <div class="container h-100">
     <div class="row justify-content-center h-100 align-items-center">
-      <div class="col-12 col-sm-12 col-md-6">
+      <div class="col-12 col-sm-12 col-md-6" *ngIf="isLoading">
+        <gitalytics-widget-loader></gitalytics-widget-loader>
+      </div>
+      <div class="col-12 col-sm-12 col-md-6" *ngIf="!isLoading" @fadeSlideInOut>
         <mat-card>
           <mat-card-header>
             <mat-card-title>What's your Github Username?</mat-card-title>
@@ -16,30 +19,19 @@
             </mat-form-field>
           </mat-card-content>
           <mat-card-actions class="px-3">
-            <div
-              role="alert"
-              class="alert bg-primary-{{ (isDark$ | async) ? 'darker' : 'lighter' }} border-primary"
-            >
-              <p>Gitalytics will store your</p>
-              <ul>
-                <li>Github Username</li>
-                <li>Theme Preference</li>
-              </ul>
-              <p>in your browser's local storage only if you agree.</p>
-              <hr />
-              <mat-checkbox formControlName="localStorage" color="primary">
-                Store the mentioned data in local storage
-              </mat-checkbox>
-            </div>
             <div class="text-right">
               <button
-                mat-stroked-button
+                mat-flat-button
                 color="primary"
                 type="submit"
-                [disabled]="loginForm.invalid || isLoading"
+                [disabled]="loginForm.invalid || isUsernameLoading"
               >
                 Let's Go!
-                <mat-spinner *ngIf="isLoading" diameter="20" class="d-inline-block"></mat-spinner>
+                <mat-spinner
+                  *ngIf="isUsernameLoading"
+                  diameter="20"
+                  class="d-inline-block"
+                ></mat-spinner>
               </button>
             </div>
           </mat-card-actions>

@@ -10,3 +10,6 @@ generates:
   ./graphql.schema.json:
     plugins:
       - "introspection"
+config:
+  preResolveTypes: true
+  skipTypename: true
