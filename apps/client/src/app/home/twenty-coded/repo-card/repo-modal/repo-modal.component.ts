@@ -37,7 +37,7 @@ export class RepoModalComponent implements OnInit {
       encodeURIComponent(
         `I created ${this.data.repositoriesCount} 📘 repositories, they got ${this.data.starCount} ⭐s and were forked ${this.data.forkCount} times. Find out yours!`
       ) +
-      '&hashtags=2020Coded'
+      '&via=gitalytics_app&hashtags=2020Coded'
     );
   }
 

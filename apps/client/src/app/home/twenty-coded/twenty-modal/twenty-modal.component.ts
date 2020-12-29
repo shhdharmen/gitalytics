@@ -36,9 +36,9 @@ export class TwentyModalComponent implements OnInit {
       encodeURI('https://gitalytics.shhdharmen.me') +
       '&text=' +
       encodeURIComponent(
-        `My 2020 GitHub Contributions:\n\n${this.data.totalRepositoryContributions} 📘 repositories,\n${this.data.totalCommitContributions} ✅ commits,\n${this.data.totalIssueContributions} ⚠ issues,\n${this.data.totalPullRequestContributions} ⬆ pull requests\nand reviewed 👀 ${this.data.totalPullRequestReviewContributions} pull requests\n\nin 2020!\n\nFind out yours!\n\n`
+        `My 2020 GitHub Contributions:\n\n${this.data.totalRepositoryContributions} 📘 repositories,\n${this.data.totalCommitContributions} ✅ commits,\n${this.data.totalIssueContributions} ⚠ issues,\n${this.data.totalPullRequestContributions} ⬆ pull requests\nreviewed 👀 ${this.data.totalPullRequestReviewContributions} pull requests\n\nFind out yours!\n\n`
       ) +
-      '&hashtags=2020Coded'
+      '&via=gitalytics_app&hashtags=2020Coded'
     );
   }
 
