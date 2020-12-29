@@ -1,18 +1,19 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ThemeService } from '../../../../core/services/theme/theme.service';
 import html2canvas from 'html2canvas';
 import { map, shareReplay } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { LocalStorageService } from '../../../../core/services/local-storage/local-storage.service';
+import { LocalStorageService } from '../../../core/services/local-storage/local-storage.service';
+import { ThemeService } from '../../../core/services/theme/theme.service';
+import { ContributionQueryType, CONTRIBUTION_QUERY_LIST } from '../../../shared/models';
 
 @Component({
-  selector: 'gitalytics-repo-modal',
-  templateUrl: './repo-modal.component.html',
-  styleUrls: ['./repo-modal.component.scss'],
+  selector: 'gitalytics-twenty-modal',
+  templateUrl: './twenty-modal.component.html',
+  styleUrls: ['./twenty-modal.component.scss'],
 })
-export class RepoModalComponent implements OnInit {
+export class TwentyModalComponent implements OnInit {
   userName = this.localStorageService.get('userName');
   isDark$ = this.themeService.isDark$;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
@@ -21,7 +22,7 @@ export class RepoModalComponent implements OnInit {
   );
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: RepoModalData,
+    @Inject(MAT_DIALOG_DATA) public data: TwentyModalData,
     private localStorageService: LocalStorageService,
     private themeService: ThemeService,
     private breakpointObserver: BreakpointObserver
@@ -35,7 +36,7 @@ export class RepoModalComponent implements OnInit {
       encodeURI('https://gitalytics.shhdharmen.me') +
       '&text=' +
       encodeURIComponent(
-        `I created ${this.data.repositoriesCount} 📘 repositories, they got ${this.data.starCount} ⭐s and were forked ${this.data.forkCount} times. Find out yours!`
+        `My 2020 GitHub Contributions:\n\n${this.data.totalRepositoryContributions} 📘 repositories,\n${this.data.totalCommitContributions} ✅ commits,\n${this.data.totalIssueContributions} ⚠ issues,\n${this.data.totalPullRequestContributions} ⬆ pull requests\nand reviewed 👀 ${this.data.totalPullRequestReviewContributions} pull requests\n\nin 2020!\n\nFind out yours!\n\n`
       ) +
       '&hashtags=2020Coded'
     );
@@ -43,7 +44,7 @@ export class RepoModalComponent implements OnInit {
 
   download() {
     const shareDiv = document.querySelector('.share-div') as HTMLElement;
-    shareDiv.style.width = '411px';
+    // shareDiv.style.width = '411px';
     html2canvas(shareDiv).then((canvas) => {
       this.saveAs(canvas.toDataURL(), this.userName + '-' + 'repositories-2020.png');
       shareDiv.style.width = 'initial';
@@ -71,8 +72,14 @@ export class RepoModalComponent implements OnInit {
   }
 }
 
-export interface RepoModalData {
-  repositoriesCount: string;
-  starCount: string;
-  forkCount: string;
+export interface TwentyModalData {
+  totalIssueContributions: number;
+  totalCommitContributions: number;
+  totalRepositoryContributions: number;
+  totalPullRequestContributions: number;
+  totalPullRequestReviewContributions: number;
+  totalRepositoriesWithContributedIssues: number;
+  totalRepositoriesWithContributedCommits: number;
+  totalRepositoriesWithContributedPullRequests: number;
+  totalRepositoriesWithContributedPullRequestReviews: number;
 }

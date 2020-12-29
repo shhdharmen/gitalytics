@@ -1,6 +1,9 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { map, shareReplay } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import {
   CONTRIBUTION_DESCRIPTION,
   CONTRIBUTION_ICON,
@@ -32,13 +35,28 @@ export class RepoCardComponent implements OnInit {
 
   @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger;
 
-  constructor(public dialog: MatDialog) {}
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+    map((result) => result.matches),
+    shareReplay()
+  );
+
+  panelClass = ['custom-dialog'];
+
+  constructor(public dialog: MatDialog, private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit(): void {
     this.edges.forEach((item) => {
       this.forkCount += item.node.repository.forkCount;
       this.forkedFromCount += item.node.repository.isFork ? 1 : 0;
       this.starCount += item.node.repository.stargazerCount;
+    });
+    this.isHandset$.subscribe((isHandSet) => {
+      if (isHandSet) {
+        this.panelClass.push('min-vw-100');
+        this.panelClass.push('min-vh-100');
+      } else {
+        this.panelClass = ['custom-dialog'];
+      }
     });
   }
 
@@ -51,7 +69,7 @@ export class RepoCardComponent implements OnInit {
     const dialogRef = this.dialog.open(RepoModalComponent, {
       data,
       restoreFocus: false,
-      panelClass: 'custom-dialog',
+      panelClass: this.panelClass,
     });
 
     // Manually restore focus to the menu trigger since the element that

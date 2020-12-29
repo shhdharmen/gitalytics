@@ -20,6 +20,7 @@ import { IssuesCardComponent } from './twenty-coded/issues-card/issues-card.comp
 import { PullRequestsCardComponent } from './twenty-coded/pull-requests-card/pull-requests-card.component';
 import { ReviewsCardComponent } from './twenty-coded/reviews-card/reviews-card.component';
 import { RepoModalComponent } from './twenty-coded/repo-card/repo-modal/repo-modal.component';
+import { TwentyModalComponent } from './twenty-coded/twenty-modal/twenty-modal.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { RepoModalComponent } from './twenty-coded/repo-card/repo-modal/repo-mod
     PullRequestsCardComponent,
     ReviewsCardComponent,
     RepoModalComponent,
+    TwentyModalComponent,
   ],
   imports: [
     CommonModule,

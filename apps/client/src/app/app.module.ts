@@ -37,6 +37,8 @@ export class AppModule {
       { name: 'twitter', url: 'assets/icons/twitter.svg' },
       { name: 'star', url: 'assets/icons/star.svg' },
       { name: 'git-fork', url: 'assets/icons/git-fork.svg' },
+      { name: 'star-fill', url: 'assets/icons/star-fill.svg' },
+      { name: 'verified', url: 'assets/icons/verified.svg' },
     ];
 
     iconList.forEach((icon) => {
