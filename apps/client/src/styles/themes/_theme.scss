@@ -1,15 +1,10 @@
 // primary, accent and warn palettes
 
-$client-components-primary: mat-palette($mat-deep-purple);
-$client-components-accent: mat-palette($mat-amber, A200, A100, A400);
-$client-components-warn: mat-palette($mat-red);
+$client-components-primary: mat-palette($mat-indigo);
+$client-components-accent: mat-palette($mat-pink, A200, A100, A400);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$client-components-theme: mat-light-theme(
-  $client-components-primary,
-  $client-components-accent,
-  $client-components-warn
-);
+$client-components-theme: mat-light-theme($client-components-primary, $client-components-accent);
 
 // Define  a custom typography config
 $heading-font-family: '"Roboto Slab", serif';
@@ -53,15 +48,13 @@ $typography: mat-typography-config(
 );
 
 // Define an alternate dark theme.
-$dark-primary: mat-palette($mat-blue-grey);
-$dark-accent: mat-palette($mat-amber, A200, A100, A400);
-$dark-warn: mat-palette($mat-deep-orange);
+$dark-primary: mat-palette($mat-purple);
+$dark-accent: mat-palette($mat-green, A200, A100, A400);
 $dark-theme: mat-dark-theme(
   (
     color: (
       primary: $dark-primary,
       accent: $dark-accent,
-      warn: $dark-warn,
     ),
   )
 );

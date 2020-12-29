@@ -1,0 +1,49 @@
+<div class="grid-container">
+  <mat-grid-list [cols]="(isHandset$ | async) ? 1 : 6" [rowHeight]="'180px'">
+    <mat-grid-tile
+      [colspan]="(isHandset$ | async) ? 1 : 2"
+      [rowspan]="(isHandset$ | async) ? 2 : 3"
+    >
+      <mat-card class="dashboard-card d-flex flex-column justify-content-end" color="primary">
+        <mat-card-header class="mx-0">
+          <mat-card-title>
+            <h1 [class.mat-display-4]="(isHandset$ | async) === false">#2020<br />Coded</h1>
+          </mat-card-title>
+          <mat-card-subtitle>
+            <h2>A quick glance at your 2020 GitHub Contributions!</h2>
+            <small *ngIf="isHandset$ | async">Scroll down to see more!</small>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions align="end">
+          <button mat-button (click)="share()" [disabled]="isLoading">Share</button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile
+      [colspan]="(isHandset$ | async) ? 1 : 2"
+      [rowspan]="(isHandset$ | async) ? 1 : 2"
+      *ngIf="isLoading"
+    >
+      <gitalytics-widget-loader></gitalytics-widget-loader>
+    </mat-grid-tile>
+
+    <ng-container *ngIf="!isLoading">
+      <!-- #region repository card -->
+
+      <mat-grid-tile
+        [colspan]="(isHandset$ | async) ? 1 : 2"
+        [rowspan]="(isHandset$ | async) ? 1 : 1"
+        @fadeSlideInOut
+      >
+        <gitalytics-repo-card
+          [totalRepositoryContributions]="
+            data.user.contributionsCollection.totalRepositoryContributions
+          "
+          [edges]="data.user.contributionsCollection.repositoryContributions.edges"
+        ></gitalytics-repo-card>
+      </mat-grid-tile>
+
+      <!-- #endregion -->
+    </ng-container>
+  </mat-grid-list>
+</div>

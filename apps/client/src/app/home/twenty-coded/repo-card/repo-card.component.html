@@ -1,0 +1,40 @@
+<mat-card class="dashboard-card">
+  <mat-card-header>
+    <div mat-card-avatar>
+      <mat-icon
+        [svgIcon]="icon"
+        aria-hidden="false"
+        [attr.aria-label]="icon + ' SVG Icon'"
+      ></mat-icon>
+    </div>
+    <mat-card-title
+      >{{ title }}
+      <button
+        mat-icon-button
+        class="more-button"
+        [matMenuTriggerFor]="menu"
+        aria-label="Toggle menu"
+        #menuTrigger
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item (click)="share()">Share</button>
+      </mat-menu>
+    </mat-card-title>
+    <!-- <mat-card-subtitle>{{ description }}</mat-card-subtitle> -->
+  </mat-card-header>
+  <mat-card-content>
+    <div class="row align-items-end">
+      <div class="col">
+        <h2 class="mat-display-3">{{ totalRepositoryContributions }}</h2>
+      </div>
+      <div class="col-auto ml-auto">
+        <h3 class="mat-display-1"><mat-icon svgIcon="star-fill"></mat-icon> {{ starCount }}</h3>
+      </div>
+      <div class="col-auto">
+        <h3 class="mat-display-1"><mat-icon svgIcon="git-fork"></mat-icon> {{ forkCount }}</h3>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,6 +9,7 @@ import { SharedModule } from './shared/shared.module';
 import { MaterialModule } from './material/material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { GraphQLModule } from './graphql/graphql.module';
+import { MatIconRegistry } from '@angular/material/icon';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,4 +25,24 @@ import { GraphQLModule } from './graphql/graphql.module';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    const iconList = [
+      { name: 'commit', url: 'assets/icons/commit.svg' },
+      { name: 'code-review', url: 'assets/icons/code-review.svg' },
+      { name: 'issue-opened', url: 'assets/icons/issue-opened.svg' },
+      { name: 'pull-request', url: 'assets/icons/pull-request.svg' },
+      { name: 'repo', url: 'assets/icons/repo.svg' },
+      { name: 'github', url: 'assets/icons/github.svg' },
+      { name: 'twitter', url: 'assets/icons/twitter.svg' },
+      { name: 'star', url: 'assets/icons/star.svg' },
+      { name: 'git-fork', url: 'assets/icons/git-fork.svg' },
+      { name: 'star-fill', url: 'assets/icons/star-fill.svg' },
+      { name: 'verified', url: 'assets/icons/verified.svg' },
+    ];
+
+    iconList.forEach((icon) => {
+      iconRegistry.addSvgIcon(icon.name, sanitizer.bypassSecurityTrustResourceUrl(icon.url));
+    });
+  }
+}

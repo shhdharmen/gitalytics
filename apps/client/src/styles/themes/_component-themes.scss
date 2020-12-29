@@ -6,10 +6,12 @@
 
 @import '../../app/core/components/side-nav/side-nav.component.scss-theme';
 @import '../../app/shared/components/dialog/dialog.component.scss-theme';
-@import '../../app/core/service/notification/notification.scss-theme';
+@import '../../app/core/services/notification/notification.scss-theme';
+@import "./card.scss-theme";
 
 @mixin components-theme($theme, $notifications-theme) {
   @include sidenav-component-theme($theme);
   @include dialog-component-theme($theme);
   @include notification-theme($notifications-theme);
+  @include card-component-theme($theme);
 }

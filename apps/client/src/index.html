@@ -5,6 +5,32 @@
     <title>Gitalytics</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Primary Meta Tags -->
+    <title>A simple overview of your GitHub Activities</title>
+    <meta name="title" content="A simple overview of your GitHub Activities" />
+    <meta name="description" content="" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://gitalytics.shhdharmen.me/" />
+    <meta property="og:title" content="A simple overview of your GitHub Activities" />
+    <meta
+      property="og:description"
+      content="Find out how many repos, commits, issues and pull requests you generated in 2020!"
+    />
+    <meta property="og:image" content="/static/gitalytics_banner.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://gitalytics.shhdharmen.me/" />
+    <meta property="twitter:title" content="A simple overview of your GitHub Activities" />
+    <meta
+      property="twitter:description"
+      content="Find out how many repos, commits, issues and pull requests you generated in 2020!"
+    />
+    <meta property="twitter:image" content="/static/gitalytics_banner.png" />
+
     <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png" />
@@ -15,8 +41,98 @@
     <meta name="msapplication-config" content="/static/browserconfig.xml" />
     <meta name="theme-color" content="#ffffff" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+    <!-- inline spinner styles to be able to display spinner right away -->
+
+    <script type="text/javascript">
+      let root = document.documentElement;
+      const isDark = localStorage.getItem('gitalytics-isDark');
+      if (isDark === 'true') {
+        root.style.setProperty('--bg-body', '#303030');
+        root.style.setProperty('--color-body', 'white');
+      } else {
+        console.log('else');
+        root.style.setProperty('--bg-body', 'white');
+        root.style.setProperty('--color-body', 'rgba(0, 0, 0, 0.87)');
+      }
+    </script>
+    <style type="text/css">
+      body,
+      html {
+        background-color: var(--bg-body, #fff);
+        color: var(--color-body, rgba(0, 0, 0, 0.87));
+        height: 100%;
+        transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+      }
+      .app-loading {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+
+      .app-loading .spinner {
+        height: 200px;
+        width: 200px;
+        animation: rotate 2s linear infinite;
+        transform-origin: center center;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+      }
+
+      .app-loading .spinner .path {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+        animation: dash 1.5s ease-in-out infinite;
+        stroke-linecap: round;
+        stroke: #ddd;
+      }
+
+      @keyframes rotate {
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes dash {
+        0% {
+          stroke-dasharray: 1, 200;
+          stroke-dashoffset: 0;
+        }
+        50% {
+          stroke-dasharray: 89, 200;
+          stroke-dashoffset: -35px;
+        }
+        100% {
+          stroke-dasharray: 89, 200;
+          stroke-dashoffset: -124px;
+        }
+      }
+    </style>
   </head>
   <body class="mat-typography">
-    <gitalytics-root></gitalytics-root>
+    <gitalytics-root>
+      <!-- loading layout replaced by app after startupp -->
+      <div class="app-loading">
+        <div class="logo"></div>
+        <svg class="spinner" viewBox="25 25 50 50">
+          <circle
+            class="path"
+            cx="50"
+            cy="50"
+            r="20"
+            fill="none"
+            stroke-width="2"
+            stroke-miterlimit="10"
+          />
+        </svg>
+      </div>
+    </gitalytics-root>
   </body>
 </html>

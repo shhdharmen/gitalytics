@@ -2,6 +2,7 @@
 @import 'vendors';
 @import 'base';
 // @import 'layout/*';
-// @import 'components/*';
-// @import 'pages/*';
+@import 'components/app-loader', 'components/loader';
+@import 'pages/twenty-coded';
 @import 'themes';
+@import 'utilities/misc';

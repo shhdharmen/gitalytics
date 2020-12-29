@@ -1,3 +1,44 @@
 <gitalytics-side-nav>
-  <router-outlet></router-outlet>
+  <div
+    class="h-100"
+    [@routeAnimations]="
+      o.isActivated &&
+      o.activatedRoute.routeConfig.data &&
+      o.activatedRoute.routeConfig.data.animation
+    "
+  >
+    <router-outlet #o="outlet"></router-outlet>
+  </div>
+  <footer class="p-4 bg-{{ (isDark$ | async) ? 'dark' : 'light' }} border-top">
+    <div class="container">
+      <div class="row justify-content-between align-items-center">
+        <div class="col-10 col-sm-10 col-md">
+          <a href="https://github.com/shhdharmen/gitalytics" target="_blank" mat-button>
+            <mat-icon svgIcon="github"></mat-icon>
+            GitHub</a
+          >
+          <a href="https://twitter.com/gitalytics_app" target="_blank" mat-button>
+            <mat-icon svgIcon="twitter"></mat-icon>
+            Twitter</a
+          >
+          <button mat-button>
+            <mat-icon>info</mat-icon>
+            About
+          </button>
+        </div>
+        <div class="col-10 col-sm-10 col-md text-right">
+          <p>
+            Designed and built with all the love in the world by
+            <a href="http://shhdharmen.me" target="_blank">Dharmen Shah</a>.
+          </p>
+          <p>
+            Code licensed
+            <a href="https://github.com/shhdharmen/gitalytics/blob/main/LICENSE" target="_blank"
+              >MIT</a
+            >.
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
 </gitalytics-side-nav>
