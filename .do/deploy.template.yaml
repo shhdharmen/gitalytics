@@ -1,12 +1,19 @@
 spec:
   name: gitalytics
   services:
-  - build_command: npm run server:build
+  - build_command: npm run build:prod:client
     environment_slug: node-js
+    envs:
+    - key: NODE_ENV
+      scope: RUN_AND_BUILD_TIME
+      value: production
+    - key: BACKEND_API_URL
+      scope: RUN_AND_BUILD_TIME
+      value: https://url-to-api
     git:
       branch: main
       repo_clone_url: https://github.com/shhdharmen/gitalytics.git
     name: gitalytics
     routes:
     - path: /
-    run_command: npm run server:start
+    run_command: npm run deploy:start:client

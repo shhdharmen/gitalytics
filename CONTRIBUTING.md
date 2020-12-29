@@ -1,6 +1,6 @@
 # Contributing to Gitalytics
 
-🙏 We would ❤️ for you to contribute to Inspector and help make it even better than it is today!
+🙏 We would ❤️ for you to contribute to Gitalytics and help make it even better than it is today!
 
 ## Developing
 
@@ -20,14 +20,16 @@ npm run e2e
 Run the playground app:
 
 ```bash
-npm start
+nx serve api
+```
+
+```bash
+nx serve client
 ```
 
 ## Building
 
-```bash
-npm run build:prod
-```
+Building is taken care at deployment.
 
 ## <a name="rules"></a> Coding Rules
 
