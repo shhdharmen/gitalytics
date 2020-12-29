@@ -10,7 +10,7 @@ require('dotenv').config();
 const environment = process.env.NODE_ENV;
 const isProd = environment === 'production';
 
-const targetPath = `./apps/client/src/environments/environment.ts`;
+const targetPath = `./apps/client/src/environments/environment${isProd ? '.prod' : ''}.ts`;
 const envConfigFile = `export const environment = {
   production: ${isProd},
   api_url: '${process.env.BACKEND_API_URL}'
