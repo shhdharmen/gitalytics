@@ -6,6 +6,7 @@
     "config": "ts-node ./scripts/set-env.ts",
     "commit": "cz",
     "ng": "nx",
+    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
     "nx": "nx",
     "start": "npm run config && ng serve",
     "client:build": "nx build client --prod",
@@ -113,8 +114,7 @@
     "ts-jest": "26.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~6.0.0",
-    "typescript": "~4.0.3",
-    "yargs": "^16.2.0"
+    "typescript": "~4.0.3"
   },
   "config": {
     "commitizen": {
