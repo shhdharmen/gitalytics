@@ -44,6 +44,22 @@
       </mat-grid-tile>
 
       <!-- #endregion -->
+      <!-- #region repository card -->
+
+      <mat-grid-tile
+        [colspan]="(isHandset$ | async) ? 1 : 2"
+        [rowspan]="(isHandset$ | async) ? 1 : 1"
+        @fadeSlideInOut
+      >
+        <gitalytics-commit-card
+          [totalCommitContributions]="data.user.contributionsCollection.totalCommitContributions"
+          [totalRepositoriesWithContributedCommits]="
+            data.user.contributionsCollection.totalRepositoriesWithContributedCommits
+          "
+        ></gitalytics-commit-card>
+      </mat-grid-tile>
+
+      <!-- #endregion -->
     </ng-container>
   </mat-grid-list>
 </div>

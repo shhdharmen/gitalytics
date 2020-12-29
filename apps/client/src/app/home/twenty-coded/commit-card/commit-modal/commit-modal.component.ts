@@ -1,19 +1,18 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { LocalStorageService } from '../../../../core/services/local-storage/local-storage.service';
 import { ThemeService } from '../../../../core/services/theme/theme.service';
 import html2canvas from 'html2canvas';
 import { map, shareReplay } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { LocalStorageService } from '../../../../core/services/local-storage/local-storage.service';
-import { DOCUMENT } from '@angular/common';
 
 @Component({
-  selector: 'gitalytics-repo-modal',
-  templateUrl: './repo-modal.component.html',
-  styleUrls: ['./repo-modal.component.scss'],
+  selector: 'gitalytics-commit-modal',
+  templateUrl: './commit-modal.component.html',
+  styleUrls: ['./commit-modal.component.scss'],
 })
-export class RepoModalComponent implements OnInit {
+export class CommitModalComponent implements OnInit {
   userName = this.localStorageService.get('userName');
   isDark$ = this.themeService.isDark$;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
@@ -22,11 +21,10 @@ export class RepoModalComponent implements OnInit {
   );
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: RepoModalData,
+    @Inject(MAT_DIALOG_DATA) public data: CommitModalData,
     private localStorageService: LocalStorageService,
     private themeService: ThemeService,
-    private breakpointObserver: BreakpointObserver,
-    @Inject(DOCUMENT) private document: Document
+    private breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnInit(): void {}
@@ -37,16 +35,16 @@ export class RepoModalComponent implements OnInit {
       encodeURI('https://gitalytics.shhdharmen.me') +
       '&text=' +
       encodeURIComponent(
-        `I created ${this.data.repositoriesCount} 📘 repositories, they got ${this.data.starCount} ⭐s and were forked ${this.data.forkCount} times!\n\n Find out yours!\n\n`
+        `I pushed total ${this.data.totalCommitContributions} commits, from them ${this.data.totalRepositoriesWithContributedCommits} were pushed in different repositories in 2020 on GitHub!\n\n Find out yours!\n\n`
       ) +
       '&via=gitalytics_app&hashtags=2020Coded'
     );
   }
 
   download() {
-    const shareDiv = this.document.querySelector('.share-div') as HTMLElement;
+    const shareDiv = document.querySelector('.share-div') as HTMLElement;
     html2canvas(shareDiv).then((canvas) => {
-      this.saveAs(canvas.toDataURL(), this.userName + '-' + 'repositories-2020.png');
+      this.saveAs(canvas.toDataURL(), this.userName + '-' + 'commits-2020.png');
     });
   }
 
@@ -71,8 +69,7 @@ export class RepoModalComponent implements OnInit {
   }
 }
 
-export interface RepoModalData {
-  repositoriesCount: string;
-  starCount: string;
-  forkCount: string;
+export interface CommitModalData {
+  totalCommitContributions: number;
+  totalRepositoriesWithContributedCommits: number;
 }

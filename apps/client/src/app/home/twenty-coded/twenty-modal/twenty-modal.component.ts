@@ -44,10 +44,8 @@ export class TwentyModalComponent implements OnInit {
 
   download() {
     const shareDiv = document.querySelector('.share-div') as HTMLElement;
-    // shareDiv.style.width = '411px';
     html2canvas(shareDiv).then((canvas) => {
-      this.saveAs(canvas.toDataURL(), this.userName + '-' + 'repositories-2020.png');
-      shareDiv.style.width = 'initial';
+      this.saveAs(canvas.toDataURL(), this.userName + '-' + 'contributions-2020.png');
     });
   }
 
