@@ -12,7 +12,7 @@
     "client:build": "nx build client --prod",
     "server:build": "nx build api --prod",
     "build": "ng build",
-    "build:prod:client": "run-s nx:script config client:build",
+    "build:prod:client": "run-s config nx:script client:build",
     "build:prod:server": "run-s nx:script server:build",
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",
