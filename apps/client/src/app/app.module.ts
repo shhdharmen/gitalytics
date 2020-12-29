@@ -10,9 +10,10 @@ import { MaterialModule } from './material/material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { GraphQLModule } from './graphql/graphql.module';
 import { MatIconRegistry } from '@angular/material/icon';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, AboutComponent],
   imports: [
     AppRoutingModule,
     BrowserModule,
