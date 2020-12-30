@@ -4,9 +4,9 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import html2canvas from 'html2canvas';
 import { map, shareReplay } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { LocalStorageService } from '../../../core/services/local-storage/local-storage.service';
 import { ThemeService } from '../../../core/services/theme/theme.service';
-import { ContributionQueryType, CONTRIBUTION_QUERY_LIST } from '../../../shared/models';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { buildTwitterIntent, saveAs } from '../../../shared/helpers';
 
 @Component({
   selector: 'gitalytics-twenty-modal',
@@ -14,7 +14,6 @@ import { ContributionQueryType, CONTRIBUTION_QUERY_LIST } from '../../../shared/
   styleUrls: ['./twenty-modal.component.scss'],
 })
 export class TwentyModalComponent implements OnInit {
-  userName = this.localStorageService.get('userName');
   isDark$ = this.themeService.isDark$;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map((result) => result.matches),
@@ -23,56 +22,47 @@ export class TwentyModalComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: TwentyModalData,
-    private localStorageService: LocalStorageService,
     private themeService: ThemeService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {}
 
   get twitterIntent() {
-    return (
-      'https://twitter.com/intent/tweet?url=' +
-      encodeURI('https://gitalytics.shhdharmen.me') +
-      '&text=' +
-      encodeURIComponent(
-        `My 2020 GitHub Contributions:\n\n${this.data.totalRepositoryContributions} 📘 repositories,\n${this.data.totalCommitContributions} ✅ commits,\n${this.data.totalIssueContributions} ⚠ issues,\n${this.data.totalPullRequestContributions} ⬆ pull requests\nreviewed 👀 ${this.data.totalPullRequestReviewContributions} pull requests\n\nFind out yours!\n\n`
-      ) +
-      '&via=gitalytics_app&hashtags=2020Coded'
+    return buildTwitterIntent(
+      `My 2020 GitHub Contributions:\n\n
+      ${this.data.totalRepositoryContributions} 📘 repositories,\n
+      ${this.data.totalCommitContributions} ✅ commits,\n
+      ${this.data.totalIssueContributions} ⚠ issues,\n
+      ${this.data.totalPullRequestContributions} ⬆ pull requests\n
+      reviewed 👀 ${this.data.totalPullRequestReviewContributions} pull requests\n\n
+      Find out yours!\n\n`
     );
   }
 
   download() {
     const shareDiv = document.querySelector('.share-div') as HTMLElement;
-    // shareDiv.style.width = '411px';
     html2canvas(shareDiv).then((canvas) => {
-      this.saveAs(canvas.toDataURL(), this.userName + '-' + 'repositories-2020.png');
-      shareDiv.style.width = 'initial';
+      saveAs(canvas.toDataURL(), this.data.login + '-' + 'contributions-2020.png');
     });
   }
 
-  saveAs(uri: string, filename: string) {
-    const link = document.createElement('a');
+  get currentURL() {
+    return window.location.href;
+  }
 
-    if (typeof link.download === 'string') {
-      link.href = uri;
-      link.download = filename;
-
-      //Firefox requires the link to be in the body
-      document.body.appendChild(link);
-
-      //simulate click
-      link.click();
-
-      //remove the link when done
-      document.body.removeChild(link);
-    } else {
-      window.open(uri);
+  openSnackBar(show: boolean) {
+    if (show) {
+      this.snackBar.open('URL Copied', 'Close', {
+        duration: 2000,
+      });
     }
   }
 }
 
 export interface TwentyModalData {
+  login: string;
   totalIssueContributions: number;
   totalCommitContributions: number;
   totalRepositoryContributions: number;

@@ -40,6 +40,7 @@ export class AppModule {
       { name: 'git-fork', url: 'assets/icons/git-fork.svg' },
       { name: 'star-fill', url: 'assets/icons/star-fill.svg' },
       { name: 'verified', url: 'assets/icons/verified.svg' },
+      { name: 'unfold', url: 'assets/icons/unfold.svg' },
     ];
 
     iconList.forEach((icon) => {

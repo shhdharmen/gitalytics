@@ -18499,6 +18499,7 @@ export interface UserDataFragment {
   bio?: Maybe<string>;
   name?: Maybe<string>;
   url: any;
+  login: string;
 }
 
 export interface ContributionsCollectionDataFragment {
@@ -18558,6 +18559,7 @@ export const UserDataFragmentDoc = gql`
     bio
     name
     url
+    login
   }
 `;
 export const ContributionsCollectionDataFragmentDoc = gql`

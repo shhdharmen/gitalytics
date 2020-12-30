@@ -6,26 +6,29 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  private twentyDataSub = new BehaviorSubject<TotalContributionsQuery>({});
+  private twentyDataSub = new BehaviorSubject<boolean>(false);
   twentyData$ = this.twentyDataSub.asObservable();
+  twentyData: TotalContributionsQuery = {};
 
-  private nineteenDataSub = new BehaviorSubject<TotalContributionsQuery>({});
+  private nineteenDataSub = new BehaviorSubject<boolean>(false);
   nineteenData$ = this.nineteenDataSub.asObservable();
+  nineteenData: TotalContributionsQuery = {};
 
-  private dataSub = new BehaviorSubject<TotalContributionsQuery>({});
+  private dataSub = new BehaviorSubject<boolean>(false);
   data$ = this.dataSub.asObservable();
+  data: TotalContributionsQuery = {};
 
   constructor() {}
 
-  updateTwentyDataSub(data: TotalContributionsQuery) {
+  updateTwentyDataSub(data: boolean) {
     this.twentyDataSub.next(data);
   }
 
-  updateNineteenDataSub(data: TotalContributionsQuery) {
+  updateNineteenDataSub(data: boolean) {
     this.nineteenDataSub.next(data);
   }
 
-  updateDataSub(data: TotalContributionsQuery) {
+  updateDataSub(data: boolean) {
     this.dataSub.next(data);
   }
 }

@@ -6,14 +6,45 @@
     >
       <mat-card class="dashboard-card d-flex flex-column justify-content-end" color="primary">
         <mat-card-header class="mx-0">
-          <mat-card-title>
+          <!-- <mat-card-title>
             <h1 [class.mat-display-4]="(isHandset$ | async) === false">#2020<br />Coded</h1>
-          </mat-card-title>
-          <mat-card-subtitle>
-            <h2>A quick glance at your 2020 GitHub Contributions!</h2>
-            <small *ngIf="isHandset$ | async">Scroll down to see more!</small>
+          </mat-card-title> -->
+          <mat-card-subtitle *ngIf="!isLoading" @fadeSlideInOut>
+            <div class="row align-items-center">
+              <div class="col-auto" *ngIf="(isHandset$ | async) === false">
+                <img
+                  [src]="data.user.avatarUrl"
+                  class="rounded-circle shadow"
+                  height="80"
+                  width="80"
+                  [alt]="'Photo of + ' + data.user.name"
+                  srcset=""
+                />
+              </div>
+              <div class="col">
+                <h2>
+                  A quick glance at
+                  <img
+                    [src]="data.user.avatarUrl"
+                    class="rounded-circle shadow"
+                    height="40"
+                    width="40"
+                    [alt]="'Photo of + ' + data.user.name"
+                    srcset=""
+                  />
+                  <a [href]="data.user.url" target="_blank"
+                    ><span class="highlight">{{ userName }}</span></a
+                  >'s 2020 GitHub Contributions!
+                </h2>
+              </div>
+            </div>
           </mat-card-subtitle>
         </mat-card-header>
+        <mat-card-content>
+          <h1 [ngClass]="[(isHandset$ | async) ? 'mat-display-1' : 'mat-display-4']">
+            #2020<br *ngIf="(isHandset$ | async) === false" />Coded
+          </h1>
+        </mat-card-content>
         <mat-card-actions align="end">
           <button mat-button (click)="share()" [disabled]="isLoading">Share</button>
         </mat-card-actions>
@@ -36,11 +67,29 @@
         @fadeSlideInOut
       >
         <gitalytics-repo-card
+          [login]="data.user.login"
           [totalRepositoryContributions]="
             data.user.contributionsCollection.totalRepositoryContributions
           "
           [edges]="data.user.contributionsCollection.repositoryContributions.edges"
         ></gitalytics-repo-card>
+      </mat-grid-tile>
+
+      <!-- #endregion -->
+      <!-- #region repository card -->
+
+      <mat-grid-tile
+        [colspan]="(isHandset$ | async) ? 1 : 2"
+        [rowspan]="(isHandset$ | async) ? 1 : 1"
+        @fadeSlideInOut
+      >
+        <gitalytics-commit-card
+          [login]="data.user.login"
+          [totalCommitContributions]="data.user.contributionsCollection.totalCommitContributions"
+          [totalRepositoriesWithContributedCommits]="
+            data.user.contributionsCollection.totalRepositoriesWithContributedCommits
+          "
+        ></gitalytics-commit-card>
       </mat-grid-tile>
 
       <!-- #endregion -->

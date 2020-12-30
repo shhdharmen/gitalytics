@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
 import { TotalContributionsQuery, TotalContributionsGQL } from '../../generated/graphql';
 import { fadeSlideInOut } from '../core/animations/animations';
 import { DataService } from '../core/services/data/data.service';
@@ -18,7 +19,7 @@ import { twentyFrom, twentyTo } from '../shared/constants';
   styleUrls: ['./home.component.scss'],
   animations: [fadeSlideInOut],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   isLoading = true;
   isUsernameLoading = false;
   loginForm = this.fb.group({
@@ -26,6 +27,11 @@ export class HomeComponent implements OnInit {
   });
   isDark$ = this.themeService.isDark$;
   totalContributions$: Observable<TotalContributionsQuery>;
+  subscriptions: Subscription[] = [];
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+    map((result) => result.matches),
+    shareReplay()
+  );
 
   constructor(
     private fb: FormBuilder,
@@ -34,18 +40,16 @@ export class HomeComponent implements OnInit {
     private dialog: MatDialog,
     private dataService: DataService,
     private router: Router,
-    private localStorage: LocalStorageService
+    private localStorage: LocalStorageService,
+    private breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnInit() {
     const userName = this.localStorage.get('userName');
-
     if (userName) {
       this.loginForm.get('userName').setValue(userName);
-      this.getDataForUser(userName, false);
-    } else {
-      this.isLoading = false;
     }
+    this.isLoading = false;
   }
 
   onSubmit() {
@@ -61,27 +65,31 @@ export class HomeComponent implements OnInit {
       .watch({ login: userName, from: twentyFrom, to: twentyTo })
       .valueChanges.pipe(map((result) => result.data));
 
-    this.totalContributions$.subscribe(
-      (data) => {
-        this.isUsernameLoading = false;
-        this.isLoading = false;
-        this.localStorage.set('userName', userName);
-        this.dataService.updateTwentyDataSub(data);
-        this.router.navigate(['/user', userName, '2020Coded']);
-      },
-      () => {
-        this.isUsernameLoading = false;
-        this.isLoading = false;
-        if (showError) {
-          const dialogData: DialogData = {
-            themeColor: 'warn',
-            content: 'Error while getting data for: <b><i>' + userName + '</i></b>',
-            header: 'Error!',
-            subHeader: 'Gitalytics did not get your profile!',
-          };
-          this.openDialog(dialogData);
+    this.subscriptions.push(
+      this.totalContributions$.subscribe(
+        (data) => {
+          this.isUsernameLoading = false;
+          this.isLoading = false;
+          this.localStorage.set('userName', userName);
+          this.dataService.twentyData = Object.assign({}, data);
+          this.dataService.updateTwentyDataSub(true);
+          this.router.navigate(['/user', userName, '2020Coded']);
+        },
+        () => {
+          this.isUsernameLoading = false;
+          this.isLoading = false;
+          this.dataService.updateTwentyDataSub(false);
+          if (showError) {
+            const dialogData: DialogData = {
+              themeColor: 'warn',
+              content: 'Error while getting data for: <b><i>' + userName + '</i></b>',
+              header: 'Error!',
+              subHeader: 'Gitalytics did not get your profile!',
+            };
+            this.openDialog(dialogData);
+          }
         }
-      }
+      )
     );
   }
 
@@ -90,5 +98,9 @@ export class HomeComponent implements OnInit {
       panelClass: 'custom-dialog',
       data,
     });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((s) => s.unsubscribe());
   }
 }

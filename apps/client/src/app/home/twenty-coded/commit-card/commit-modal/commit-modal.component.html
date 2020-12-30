@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>
-  2020 GitHub Repositories
+  2020 GitHub Commits
   <button mat-icon-button *ngIf="isHandset$ | async" mat-dialog-close class="float-right mt-n1">
     <mat-icon>close</mat-icon>
   </button>
@@ -17,15 +17,14 @@
       </div>
       <div class="mb-4"></div>
       <h2 class="mat-display-1">
-        They created<br /><span class="highlight">{{ data.repositoriesCount }} repositories</span
+        They pushed<br /><span class="highlight">{{ data.totalCommitContributions }} commits</span
         ><br />
         in 2020!
       </h2>
       <h2>
-        Their repositories got <span class="highlight">~{{ data.starCount }} stars</span>.
-      </h2>
-      <h2>
-        Their repositories were <span class="highlight">forked ~{{ data.forkCount }}</span> times.
+        Out of which,
+        <span class="highlight">{{ data.totalRepositoriesWithContributedCommits }} commits</span>
+        were pushed in<br />different repositories.
       </h2>
       <div class="mb-4"></div>
       <div class="bg-dark m-n3 px-3 py-1 rounded-bottom">
@@ -51,16 +50,6 @@
     </div>
     <div class="share-bg"></div>
   </div>
-  <p>
-    ℹ️ Star and fork are counted from first 100<br />
-    <a
-      href="https://docs.github.com/en/free-pro-team@latest/graphql/reference/objects#createdrepositorycontribution"
-      target="_blank"
-      rel="no-opener no-referrer"
-      ><code>CreatedRepositoryContribution</code></a
-    >
-    in 2020.
-  </p>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button mat-dialog-close>Close</button>

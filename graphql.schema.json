@@ -1245,7 +1245,7 @@
               "name": "DiffSide",
               "ofType": null
             },
-            "defaultValue": "RIGHT"
+            "defaultValue": null
           },
           {
             "name": "startLine",
@@ -1265,7 +1265,7 @@
               "name": "DiffSide",
               "ofType": null
             },
-            "defaultValue": "RIGHT"
+            "defaultValue": null
           }
         ],
         "interfaces": null,
@@ -4484,7 +4484,7 @@
               "name": "Boolean",
               "ofType": null
             },
-            "defaultValue": "false"
+            "defaultValue": null
           },
           {
             "name": "message",
@@ -6651,7 +6651,7 @@
               "name": "Boolean",
               "ofType": null
             },
-            "defaultValue": "false"
+            "defaultValue": null
           },
           {
             "name": "name",
@@ -13224,7 +13224,7 @@
               "name": "Boolean",
               "ofType": null
             },
-            "defaultValue": "false"
+            "defaultValue": null
           },
           {
             "name": "headRefName",
@@ -13248,7 +13248,7 @@
               "name": "Boolean",
               "ofType": null
             },
-            "defaultValue": "true"
+            "defaultValue": null
           },
           {
             "name": "repositoryId",
@@ -13450,7 +13450,7 @@
               "name": "Boolean",
               "ofType": null
             },
-            "defaultValue": "true"
+            "defaultValue": null
           },
           {
             "name": "hasWikiEnabled",
@@ -13460,7 +13460,7 @@
               "name": "Boolean",
               "ofType": null
             },
-            "defaultValue": "false"
+            "defaultValue": null
           },
           {
             "name": "homepageUrl",
@@ -13514,7 +13514,7 @@
               "name": "Boolean",
               "ofType": null
             },
-            "defaultValue": "false"
+            "defaultValue": null
           },
           {
             "name": "visibility",
@@ -17974,7 +17974,7 @@
               "name": "DiffSide",
               "ofType": null
             },
-            "defaultValue": "RIGHT"
+            "defaultValue": null
           },
           {
             "name": "startLine",
@@ -17994,7 +17994,7 @@
               "name": "DiffSide",
               "ofType": null
             },
-            "defaultValue": "RIGHT"
+            "defaultValue": null
           }
         ],
         "interfaces": null,
@@ -30927,7 +30927,7 @@
               "name": "Boolean",
               "ofType": null
             },
-            "defaultValue": "false"
+            "defaultValue": null
           }
         ],
         "interfaces": null,
@@ -36440,7 +36440,7 @@
               "name": "PullRequestMergeMethod",
               "ofType": null
             },
-            "defaultValue": "MERGE"
+            "defaultValue": null
           },
           {
             "name": "pullRequestId",
@@ -100786,7 +100786,7 @@
               "name": "Boolean",
               "ofType": null
             },
-            "defaultValue": "false"
+            "defaultValue": null
           },
           {
             "name": "oid",

@@ -13,7 +13,9 @@
       <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
     <div class="d-flex align-items-center">
-      <img src="../../../../assets/gitalytics.png" height="50" width="50" alt="" class="mr-2" />
+      <a routerLink="/"
+        ><img src="../../../../assets/gitalytics.png" height="50" width="50" alt="" class="mr-2"
+      /></a>
       <span>Gitalytics</span>
     </div>
     <div class="row no-gutters h-100 ml-2" *ngIf="(isHandset$ | async) !== true">
@@ -22,15 +24,56 @@
         [ngClass]="{ 'border-dark': !isDark }"
         [routerLinkActive]="['border-bottom']"
       >
-        <a class="nav-link" mat-button [routerLink]="['user', userName, '2020Coded']">#2020Coded</a>
+        <a *ngIf="user" class="nav-link" mat-button [routerLink]="['user', user.login, '2020Coded']"
+          >#2020Coded</a
+        >
       </div>
     </div>
-    <button mat-icon-button (click)="toggleTheme()" matTooltip="Toggle light/dark theme">
-      <mat-icon>
-        <ng-container *ngIf="isDark; else moon">wb_sunny</ng-container>
-        <ng-template #moon>brightness_3</ng-template>
-      </mat-icon>
-    </button>
+    <div>
+      <button mat-icon-button (click)="toggleTheme()" matTooltip="Toggle light/dark theme">
+        <mat-icon>
+          <ng-container *ngIf="isDark; else moon">wb_sunny</ng-container>
+          <ng-template #moon>brightness_3</ng-template>
+        </mat-icon>
+      </button>
+      <div class="d-inline-block" *ngIf="user" @fadeSlideInOutX>
+        <button
+          mat-icon-button
+          matTooltip="View User Info"
+          [matMenuTriggerFor]="menu"
+          aria-label="View User Info"
+        >
+          <mat-icon>person</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" class="pb-0">
+          <mat-card class="shadow-none">
+            <mat-card-header>
+              <div mat-card-avatar>
+                <img
+                  height="40"
+                  width="40"
+                  class="rounded-circle"
+                  [src]="user.avatarUrl"
+                  [alt]="'Photo of ' + user.name"
+                />
+              </div>
+              <mat-card-title>{{ user.name }}</mat-card-title>
+              <mat-card-subtitle>
+                <a [href]="user.url" target="_blank" rel="noopener noreferrer">{{ user.login }}</a>
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p>
+                {{ user.bio }}
+              </p>
+            </mat-card-content>
+            <mat-card-actions align="end">
+              <button mat-button (click)="change()">Change User</button>
+            </mat-card-actions>
+          </mat-card>
+        </mat-menu>
+      </div>
+    </div>
   </mat-toolbar>
   <mat-sidenav-container class="main-container">
     <mat-sidenav
@@ -42,8 +85,9 @@
       <mat-toolbar [color]="themeColor">Menu</mat-toolbar>
       <mat-nav-list>
         <a
+          *ngIf="user"
           mat-list-item
-          [routerLink]="['user', userName, '2020Coded']"
+          [routerLink]="['user', user.login, '2020Coded']"
           routerLinkActive="bg-primary-darker"
           >#2020Coded</a
         >

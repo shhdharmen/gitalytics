@@ -1,42 +1,54 @@
-<form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()" class="h-100">
-  <div class="container h-100">
-    <div class="row justify-content-center h-100 align-items-center">
-      <div class="col-12 col-sm-12 col-md-6" *ngIf="isLoading">
-        <gitalytics-widget-loader></gitalytics-widget-loader>
-      </div>
-      <div class="col-12 col-sm-12 col-md-6" *ngIf="!isLoading" @fadeSlideInOut>
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>What's your Github Username?</mat-card-title>
-          </mat-card-header>
-          <mat-card-content class="px-3">
-            <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Github Username</mat-label>
-              <input matInput placeholder="Github Username" formControlName="userName" />
-              <mat-error *ngIf="loginForm.controls['userName'].hasError('required')">
-                <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-          </mat-card-content>
-          <mat-card-actions class="px-3">
-            <div class="text-right">
-              <button
-                mat-flat-button
-                color="primary"
-                type="submit"
-                [disabled]="loginForm.invalid || isUsernameLoading"
-              >
-                Let's Go!
-                <mat-spinner
-                  *ngIf="isUsernameLoading"
-                  diameter="20"
-                  class="d-inline-block"
-                ></mat-spinner>
-              </button>
-            </div>
-          </mat-card-actions>
-        </mat-card>
-      </div>
+<mat-grid-list
+  [cols]="(isHandset$ | async) ? 1 : 2"
+  class="m-5"
+  [rowHeight]="(isHandset$ | async) ? '250px' : '400px'"
+>
+  <mat-grid-tile [colspan]="1" [rowspan]="1" class="welcom-tile">
+    <div class="px-3">
+      <h1 [class.mat-display-3]="(isHandset$ | async) === false">Hey 👋, Welcome to Gitalytics!</h1>
+      <h2 [class.mat-display-1]="(isHandset$ | async) === false">
+        Gitalytics is a simple tool to give you overview of your GitHub activities.
+      </h2>
+      <!-- <div class="py-md-5"></div> -->
     </div>
-  </div>
-</form>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="1" [rowspan]="1" class="form-tile">
+    <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
+      <h2 [class.mat-heading]="(isHandset$ | async) === false">
+        Enter your GitHub Username to get started!
+      </h2>
+      <mat-card>
+        <!-- <mat-card-header>
+          <mat-card-title>What's your Github Username?</mat-card-title>
+        </mat-card-header> -->
+        <mat-card-content class="px-3">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Github Username</mat-label>
+            <input matInput placeholder="Github Username" formControlName="userName" />
+            <mat-error *ngIf="loginForm.controls['userName'].hasError('required')">
+              <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions class="px-3">
+          <div class="text-right">
+            <button
+              mat-flat-button
+              color="primary"
+              type="submit"
+              [disabled]="loginForm.invalid || isUsernameLoading"
+            >
+              Let's Go!
+              <mat-spinner
+                *ngIf="isUsernameLoading"
+                diameter="20"
+                class="d-inline-block"
+              ></mat-spinner>
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+      <!-- <div class="py-md-5"></div> -->
+    </form>
+  </mat-grid-tile>
+</mat-grid-list>
