@@ -74,3 +74,15 @@ query TotalContributions($login: String!, $from: DateTime, $to: DateTime) {
     resetAt
   }
 }
+
+query UserLogin($login: String!) {
+  user(login: $login) {
+    ...UserData
+  }
+  rateLimit {
+    limit
+    cost
+    remaining
+    resetAt
+  }
+}

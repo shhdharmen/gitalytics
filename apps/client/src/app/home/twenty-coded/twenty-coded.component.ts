@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject, Subscription } from 'rxjs';
-import { first, map, shareReplay, take, takeLast, takeUntil } from 'rxjs/operators';
-import { DataService } from '../../core/services/data/data.service';
-import { LocalStorageService } from '../../core/services/local-storage/local-storage.service';
+import { Observable, Subscription } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
 import { TotalContributionsGQL, TotalContributionsQuery } from '../../../generated/graphql';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fadeSlideInOut } from '../../core/animations/animations';
@@ -10,6 +8,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material/dialog';
 import { TwentyModalComponent, TwentyModalData } from './twenty-modal/twenty-modal.component';
 import { twentyFrom, twentyTo } from '../../shared/constants';
+import { DataService } from '../../core/services/data/data.service';
 
 @Component({
   selector: 'gitalytics-twenty-coded',
@@ -31,31 +30,19 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
   panelClass = ['custom-dialog'];
   subscriptions: Subscription[] = [];
   constructor(
-    private dataService: DataService,
-    private localStorage: LocalStorageService,
     private router: Router,
     private route: ActivatedRoute,
     private breakpointObserver: BreakpointObserver,
     public dialog: MatDialog,
-    private totalContributionsGQL: TotalContributionsGQL
+    private totalContributionsGQL: TotalContributionsGQL,
+    private dataService: DataService
   ) {}
 
   ngOnInit() {
     const userName = this.route.snapshot.paramMap.get('userName');
 
-    if (userName) {
-      this.userName = userName;
-      const data = this.dataService.twentyData;
-      console.log('got data', data);
-      if (Object.prototype.hasOwnProperty.call(data, 'user')) {
-        this.data = data;
-        this.isLoading = false;
-      } else {
-        this.getDataForUser();
-      }
-    } else {
-      this.router.navigate(['']);
-    }
+    this.userName = userName;
+    this.getDataForUser();
     this.subscriptions.push(
       this.isHandset$.subscribe((isHandSet) => {
         if (isHandSet) {
@@ -98,15 +85,19 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.totalContributions$.subscribe(
         (data) => {
+          const userFragment = data.user;
+          this.dataService.updateUserLoginSub({
+            avatarUrl: userFragment.avatarUrl,
+            login: userFragment.login,
+            url: userFragment.url,
+            bio: userFragment.bio,
+            name: userFragment.name,
+          });
           this.isLoading = false;
           this.data = data;
-          this.localStorage.set('userName', this.userName);
-          this.dataService.twentyData = Object.assign({}, data);
-          this.dataService.updateTwentyDataSub(true);
         },
         () => {
           this.isLoading = false;
-          this.dataService.updateTwentyDataSub(false);
           this.router.navigate(['']);
         }
       )
@@ -115,7 +106,5 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe);
-    this.dataService.twentyData = {};
-    this.dataService.updateTwentyDataSub(false);
   }
 }

@@ -39,18 +39,17 @@ export class SideNavComponent implements OnInit, OnDestroy {
     this.isDark = this.localStorage.get('isDark') === 'true';
     this.updateTheme();
     this.subscriptions.push(
-      this.dataService.twentyData$.subscribe((hasData) => {
-        if (hasData) {
-          const data = this.dataService.twentyData;
-          if (Object.prototype.hasOwnProperty.call(data, 'user')) {
-            this.user = {
-              avatarUrl: data.user.avatarUrl,
-              url: data.user.url,
-              bio: data.user.bio,
-              name: data.user.name,
-              login: data.user.login,
-            };
-          }
+      this.dataService.userLogin$.subscribe((data) => {
+        if (data.login) {
+          this.user = {
+            avatarUrl: data.avatarUrl,
+            url: data.url,
+            bio: data.bio,
+            name: data.name,
+            login: data.login,
+          };
+        } else {
+          this.user = undefined;
         }
       })
     );
@@ -72,8 +71,7 @@ export class SideNavComponent implements OnInit, OnDestroy {
   }
 
   change() {
-    this.localStorage.set('userName', '');
-    this.dataService.updateTwentyDataSub(false);
+    this.dataService.updateUserLoginSub({ avatarUrl: '', url: '', login: '' });
     this.router.navigate(['']);
   }
 

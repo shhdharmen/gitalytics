@@ -18553,6 +18553,15 @@ export interface TotalContributionsQuery {
   rateLimit?: Maybe<{ limit: number; cost: number; remaining: number; resetAt: any }>;
 }
 
+export type UserLoginQueryVariables = Exact<{
+  login: Scalars['String'];
+}>;
+
+export interface UserLoginQuery {
+  user?: Maybe<UserDataFragment>;
+  rateLimit?: Maybe<{ limit: number; cost: number; remaining: number; resetAt: any }>;
+}
+
 export const UserDataFragmentDoc = gql`
   fragment UserData on User {
     avatarUrl
@@ -18644,6 +18653,31 @@ export class TotalContributionsGQL extends Apollo.Query<
   TotalContributionsQueryVariables
 > {
   document = TotalContributionsDocument;
+
+  constructor(apollo: Apollo.Apollo) {
+    super(apollo);
+  }
+}
+export const UserLoginDocument = gql`
+  query UserLogin($login: String!) {
+    user(login: $login) {
+      ...UserData
+    }
+    rateLimit {
+      limit
+      cost
+      remaining
+      resetAt
+    }
+  }
+  ${UserDataFragmentDoc}
+`;
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UserLoginGQL extends Apollo.Query<UserLoginQuery, UserLoginQueryVariables> {
+  document = UserLoginDocument;
 
   constructor(apollo: Apollo.Apollo) {
     super(apollo);

@@ -25,10 +25,11 @@
                 <h2>
                   A quick glance at
                   <img
+                    *ngIf="isHandset$ | async"
                     [src]="data.user.avatarUrl"
-                    class="rounded-circle shadow"
-                    height="40"
-                    width="40"
+                    class="rounded-circle shadow align-middle"
+                    height="36"
+                    width="36"
                     [alt]="'Photo of + ' + data.user.name"
                     srcset=""
                   />

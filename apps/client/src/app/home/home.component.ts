@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { TotalContributionsQuery, TotalContributionsGQL } from '../../generated/graphql';
+import { UserLoginQuery, UserLoginGQL } from '../../generated/graphql';
 import { fadeSlideInOut } from '../core/animations/animations';
 import { DataService } from '../core/services/data/data.service';
 import { LocalStorageService } from '../core/services/local-storage/local-storage.service';
@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     userName: [null, Validators.required],
   });
   isDark$ = this.themeService.isDark$;
-  totalContributions$: Observable<TotalContributionsQuery>;
+  totalContributions$: Observable<UserLoginQuery>;
   subscriptions: Subscription[] = [];
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map((result) => result.matches),
@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private themeService: ThemeService,
-    private totalContributionsGQL: TotalContributionsGQL,
+    private totalContributionsGQL: UserLoginGQL,
     private dialog: MatDialog,
     private dataService: DataService,
     private router: Router,
@@ -44,13 +44,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private breakpointObserver: BreakpointObserver
   ) {}
 
-  ngOnInit() {
-    const userName = this.localStorage.get('userName');
-    if (userName) {
-      this.loginForm.get('userName').setValue(userName);
-    }
-    this.isLoading = false;
-  }
+  ngOnInit() {}
 
   onSubmit() {
     this.isUsernameLoading = true;
@@ -62,23 +56,20 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private getDataForUser(userName: string, showError = true) {
     this.totalContributions$ = this.totalContributionsGQL
-      .watch({ login: userName, from: twentyFrom, to: twentyTo })
+      .watch({ login: userName })
       .valueChanges.pipe(map((result) => result.data));
 
     this.subscriptions.push(
       this.totalContributions$.subscribe(
         (data) => {
+          this.dataService.updateUserLoginSub(data.user);
           this.isUsernameLoading = false;
           this.isLoading = false;
-          this.localStorage.set('userName', userName);
-          this.dataService.twentyData = Object.assign({}, data);
-          this.dataService.updateTwentyDataSub(true);
           this.router.navigate(['/user', userName, '2020Coded']);
         },
         () => {
           this.isUsernameLoading = false;
           this.isLoading = false;
-          this.dataService.updateTwentyDataSub(false);
           if (showError) {
             const dialogData: DialogData = {
               themeColor: 'warn',
