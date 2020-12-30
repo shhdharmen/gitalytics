@@ -1,7 +1,7 @@
 spec:
   name: gitalytics
   services:
-  - build_command: npm run build:prod:client
+  - build_command: npm install --only=dev && npm run build:prod:client && npm prune --production
     environment_slug: node-js
     envs:
     - key: NODE_ENV
