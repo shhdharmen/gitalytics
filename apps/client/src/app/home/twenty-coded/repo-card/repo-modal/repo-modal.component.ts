@@ -5,8 +5,8 @@ import { ThemeService } from '../../../../core/services/theme/theme.service';
 import html2canvas from 'html2canvas';
 import { map, shareReplay } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { LocalStorageService } from '../../../../core/services/local-storage/local-storage.service';
 import { DOCUMENT } from '@angular/common';
+import { buildTwitterIntent, saveAs } from '../../../../shared/helpers';
 
 @Component({
   selector: 'gitalytics-repo-modal',
@@ -14,7 +14,6 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./repo-modal.component.scss'],
 })
 export class RepoModalComponent implements OnInit {
-  userName = this.localStorageService.get('userName');
   isDark$ = this.themeService.isDark$;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map((result) => result.matches),
@@ -23,7 +22,6 @@ export class RepoModalComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: RepoModalData,
-    private localStorageService: LocalStorageService,
     private themeService: ThemeService,
     private breakpointObserver: BreakpointObserver,
     @Inject(DOCUMENT) private document: Document
@@ -32,46 +30,21 @@ export class RepoModalComponent implements OnInit {
   ngOnInit(): void {}
 
   get twitterIntent() {
-    return (
-      'https://twitter.com/intent/tweet?url=' +
-      encodeURI('https://gitalytics.shhdharmen.me') +
-      '&text=' +
-      encodeURIComponent(
-        `I created ${this.data.repositoriesCount} 📘 repositories, they got ${this.data.starCount} ⭐s and were forked ${this.data.forkCount} times!\n\n Find out yours!\n\n`
-      ) +
-      '&via=gitalytics_app&hashtags=2020Coded'
+    return buildTwitterIntent(
+      `I created ${this.data.repositoriesCount} 📘 repositories, they got ${this.data.starCount} ⭐s and were forked ${this.data.forkCount} times!\n\n Find out yours!\n\n`
     );
   }
 
   download() {
     const shareDiv = this.document.querySelector('.share-div') as HTMLElement;
     html2canvas(shareDiv).then((canvas) => {
-      this.saveAs(canvas.toDataURL(), this.userName + '-' + 'repositories-2020.png');
+      saveAs(canvas.toDataURL(), this.data.login + '-' + 'repositories-2020.png');
     });
-  }
-
-  saveAs(uri: string, filename: string) {
-    const link = document.createElement('a');
-
-    if (typeof link.download === 'string') {
-      link.href = uri;
-      link.download = filename;
-
-      //Firefox requires the link to be in the body
-      document.body.appendChild(link);
-
-      //simulate click
-      link.click();
-
-      //remove the link when done
-      document.body.removeChild(link);
-    } else {
-      window.open(uri);
-    }
   }
 }
 
 export interface RepoModalData {
+  login: string;
   repositoriesCount: string;
   starCount: string;
   forkCount: string;

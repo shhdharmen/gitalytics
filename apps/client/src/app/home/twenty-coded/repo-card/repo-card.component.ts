@@ -1,9 +1,9 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { map, shareReplay } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {
   CONTRIBUTION_DESCRIPTION,
   CONTRIBUTION_ICON,
@@ -17,13 +17,14 @@ import { RepoModalComponent, RepoModalData } from './repo-modal/repo-modal.compo
   templateUrl: './repo-card.component.html',
   styleUrls: ['./repo-card.component.scss'],
 })
-export class RepoCardComponent implements OnInit {
+export class RepoCardComponent implements OnInit, OnDestroy {
   // card meta data
   readonly queryType: ContributionQueryType = 'totalRepositoryContributions';
   readonly icon: IconName = CONTRIBUTION_ICON[this.queryType];
   readonly title = CONTRIBUTION_TITLE[this.queryType];
   readonly description = CONTRIBUTION_DESCRIPTION[this.queryType];
 
+  @Input() login: string;
   @Input() totalRepositoryContributions: number;
   @Input() edges: {
     node?: { repository: { isFork: boolean; stargazerCount: number; forkCount: number } };
@@ -41,6 +42,7 @@ export class RepoCardComponent implements OnInit {
   );
 
   panelClass = ['custom-dialog'];
+  subscriptions: Subscription[] = [];
 
   constructor(public dialog: MatDialog, private breakpointObserver: BreakpointObserver) {}
 
@@ -50,18 +52,21 @@ export class RepoCardComponent implements OnInit {
       this.forkedFromCount += item.node.repository.isFork ? 1 : 0;
       this.starCount += item.node.repository.stargazerCount;
     });
-    this.isHandset$.subscribe((isHandSet) => {
-      if (isHandSet) {
-        this.panelClass.push('min-vw-100');
-        this.panelClass.push('min-vh-100');
-      } else {
-        this.panelClass = ['custom-dialog'];
-      }
-    });
+    this.subscriptions.push(
+      this.isHandset$.subscribe((isHandSet) => {
+        if (isHandSet) {
+          this.panelClass.push('min-vw-100');
+          this.panelClass.push('min-vh-100');
+        } else {
+          this.panelClass = ['custom-dialog'];
+        }
+      })
+    );
   }
 
   share() {
     const data: RepoModalData = {
+      login: this.login,
       forkCount: this.forkCount.toString(),
       repositoriesCount: this.totalRepositoryContributions.toString(),
       starCount: this.starCount.toString(),
@@ -75,5 +80,9 @@ export class RepoCardComponent implements OnInit {
     // Manually restore focus to the menu trigger since the element that
     // opens the dialog won't be in the DOM any more when the dialog closes.
     dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((s) => s.unsubscribe);
   }
 }

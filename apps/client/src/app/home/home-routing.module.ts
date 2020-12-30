@@ -6,6 +6,7 @@ import { TwentyCodedComponent } from './twenty-coded/twenty-coded.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, data: { animation: 'HomePage' } },
+  { path: 'home', redirectTo: '' },
   {
     path: 'user/:userName/2020Coded',
     component: TwentyCodedComponent,

@@ -86,6 +86,14 @@ export const fadeSlideInOut = trigger('fadeSlideInOut', [
   transition(':leave', [animate('500ms', style({ opacity: 0, transform: 'translateY(10px)' }))]),
 ]);
 
+export const fadeSlideInOutX = trigger('fadeSlideInOutX', [
+  transition(':enter', [
+    style({ opacity: 0, transform: 'translateX(10px)' }),
+    animate('500ms', style({ opacity: 1, transform: 'translateX(0)' })),
+  ]),
+  transition(':leave', [animate('500ms', style({ opacity: 0, transform: 'translateX(10px)' }))]),
+]);
+
 export const opacityInOut = trigger('opacityInOut', [
   transition(':enter', [style({ opacity: 0 }), animate('100ms', style({ opacity: 1 }))]),
   transition(':leave', [animate('100ms', style({ opacity: 0 }))]),

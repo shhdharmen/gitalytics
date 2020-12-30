@@ -12,7 +12,7 @@
         [class.text-dark]="(isDark$ | async) === true"
       >
         <p class="mb-0">
-          2020 Coded for <span class="highlight">{{ userName }}</span>
+          2020 Coded for <span class="highlight">{{ data.login }}</span>
         </p>
       </div>
       <div class="mb-4"></div>
@@ -63,7 +63,7 @@
   </p>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close *ngIf="(isHandset$ | async) === false">Close</button>
+  <button mat-button mat-dialog-close>Close</button>
   <button mat-icon-button class="ml-auto" (click)="download()">
     <mat-icon>download</mat-icon>
   </button>

@@ -3,6 +3,7 @@ fragment UserData on User {
   bio
   name
   url
+  login
 }
 
 fragment ContributionsCollectionData on ContributionsCollection {

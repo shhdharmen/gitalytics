@@ -12,7 +12,7 @@
         [class.text-dark]="(isDark$ | async) === true"
       >
         <p class="mb-0">
-          2020 Coded for <span class="highlight">{{ userName }}</span>
+          2020 Coded for <span class="highlight">{{ data.login }}</span>
         </p>
       </div>
       <div class="mb-4"></div>
@@ -53,11 +53,19 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close *ngIf="(isHandset$ | async) === false">Close</button>
-  <button mat-icon-button class="ml-auto" (click)="download()">
+  <button mat-button mat-dialog-close>Close</button>
+  <button mat-icon-button class="ml-auto" (click)="download()" matTooltip="Download PNG">
     <mat-icon>download</mat-icon>
   </button>
-  <a mat-icon-button [href]="twitterIntent" target="_blank">
+  <a mat-icon-button [href]="twitterIntent" target="_blank" matTooltip="Share stats on twitter">
     <mat-icon svgIcon="twitter"></mat-icon>
   </a>
+  <button
+    mat-icon-button
+    [cdkCopyToClipboard]="currentURL"
+    (cdkCopyToClipboardCopied)="openSnackBar($event)"
+    matTooltip="Copy URL"
+  >
+    <mat-icon>content_copy</mat-icon>
+  </button>
 </mat-dialog-actions>

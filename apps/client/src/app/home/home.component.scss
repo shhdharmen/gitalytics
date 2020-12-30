@@ -1,1 +1,35 @@
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
 
+.form-tile {
+  overflow: hidden;
+  position: relative;
+  &::before {
+    animation-direction: normal;
+    animation-duration: 30s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: rotate;
+    animation-timing-function: linear;
+    background-image: url('../../assets/images/blob.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    content: '';
+    height: 125%;
+    left: -10%;
+    position: absolute;
+    top: -10%;
+    width: 125%;
+    z-index: -1;
+  }
+}
