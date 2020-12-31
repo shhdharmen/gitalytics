@@ -1,21 +1,18 @@
 import { Injectable } from '@angular/core';
-import { UserDataFragment } from '../../../../generated/graphql';
 import { BehaviorSubject } from 'rxjs';
+import { UserDataFragment } from '../../../generated/graphql';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  private userLoginSub = new BehaviorSubject<UserDataFragment>({
-    avatarUrl: '',
-    url: '',
-    login: '',
-  });
+  private userLoginSub = new BehaviorSubject<boolean>(false);
   userLogin$ = this.userLoginSub.asObservable();
+  userLogin: UserDataFragment = { avatarUrl: '', url: '', login: '', name: '', bio: '' };
 
   constructor() {}
 
-  updateUserLoginSub(data: UserDataFragment) {
+  updateUserLoginSub(data: boolean) {
     this.userLoginSub.next(data);
   }
 }

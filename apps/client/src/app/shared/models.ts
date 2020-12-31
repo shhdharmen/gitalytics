@@ -31,3 +31,18 @@ export type ContributionType = typeof CONTRIBUTION_LIST[number];
 export type ContributionQueryType = typeof CONTRIBUTION_QUERY_LIST[number];
 
 export type IconName = 'commit' | 'code-review' | 'issue-opened' | 'pull-request' | 'repo' | 'na';
+
+export interface ShareModalData {
+  title: string;
+  content: string;
+  twitterIntent: string;
+}
+
+export interface TwentyShareCardType {
+  cols: number;
+  rows: number;
+  queryType: ContributionQueryType;
+  primaryData: number;
+  secondaryData: { value: number; icon: string | IconName; isIconSVG: boolean }[];
+  modalData: ShareModalData;
+}
