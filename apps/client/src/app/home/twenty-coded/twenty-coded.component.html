@@ -60,40 +60,53 @@
     </mat-grid-tile>
 
     <ng-container *ngIf="!isLoading">
-      <!-- #region repository card -->
-
       <mat-grid-tile
-        [colspan]="(isHandset$ | async) ? 1 : 2"
-        [rowspan]="(isHandset$ | async) ? 1 : 1"
-        @fadeSlideInOut
+        *ngFor="let card of shareCardList"
+        [colspan]="(isHandset$ | async) ? 1 : card.cols"
+        [rowspan]="(isHandset$ | async) ? 1 : card.rows"
       >
-        <gitalytics-repo-card
-          [login]="data.user.login"
-          [totalRepositoryContributions]="
-            data.user.contributionsCollection.totalRepositoryContributions
-          "
-          [edges]="data.user.contributionsCollection.repositoryContributions.edges"
-        ></gitalytics-repo-card>
+        <mat-card class="dashboard-card">
+          <mat-card-header>
+            <div mat-card-avatar>
+              <mat-icon
+                [svgIcon]="CONTRIBUTION_ICON[card.queryType]"
+                aria-hidden="false"
+                [attr.aria-label]="CONTRIBUTION_ICON[card.queryType] + ' SVG Icon'"
+              ></mat-icon>
+            </div>
+            <mat-card-title
+              >{{ CONTRIBUTION_TITLE[card.queryType] }}
+              <button
+                mat-icon-button
+                class="more-button"
+                [matMenuTriggerFor]="menu"
+                aria-label="Toggle menu"
+                #menuTrigger
+              >
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item (click)="shareCard(card.modalData)">Share</button>
+              </mat-menu>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="row align-items-end">
+              <div class="col-auto mr-auto">
+                <h2 class="mat-display-3">{{ card.primaryData }}</h2>
+              </div>
+              <div class="col-auto" *ngFor="let datum of card.secondaryData">
+                <h3 class="mat-display-1">
+                  <mat-icon [svgIcon]="datum.isIconSVG ? datum.icon : ''">
+                    <ng-container *ngIf="!datum.isIconSVG">{{ datum.icon }}</ng-container>
+                  </mat-icon>
+                  {{ datum.value }}
+                </h3>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
       </mat-grid-tile>
-
-      <!-- #endregion -->
-      <!-- #region repository card -->
-
-      <mat-grid-tile
-        [colspan]="(isHandset$ | async) ? 1 : 2"
-        [rowspan]="(isHandset$ | async) ? 1 : 1"
-        @fadeSlideInOut
-      >
-        <gitalytics-commit-card
-          [login]="data.user.login"
-          [totalCommitContributions]="data.user.contributionsCollection.totalCommitContributions"
-          [totalRepositoriesWithContributedCommits]="
-            data.user.contributionsCollection.totalRepositoriesWithContributedCommits
-          "
-        ></gitalytics-commit-card>
-      </mat-grid-tile>
-
-      <!-- #endregion -->
     </ng-container>
   </mat-grid-list>
 </div>

@@ -2,7 +2,7 @@ overwrite: true
 schema: "https://raw.githubusercontent.com/octokit/graphql-schema/master/schema.graphql"
 documents: "apps/client/src/.graphql"
 generates:
-  apps/client/src/generated/graphql.ts:
+  apps/client/src/app/generated/graphql.ts:
     plugins:
       - "typescript"
       - "typescript-operations"

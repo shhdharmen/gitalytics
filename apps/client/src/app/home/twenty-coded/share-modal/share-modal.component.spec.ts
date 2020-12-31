@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PullRequestsCardComponent } from './pull-requests-card.component';
+import { ShareModalComponent } from './share-modal.component';
 
-describe('PullRequestsCardComponent', () => {
-  let component: PullRequestsCardComponent;
-  let fixture: ComponentFixture<PullRequestsCardComponent>;
+describe('ShareModalComponent', () => {
+  let component: ShareModalComponent;
+  let fixture: ComponentFixture<ShareModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PullRequestsCardComponent],
+      declarations: [ShareModalComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PullRequestsCardComponent);
+    fixture = TestBed.createComponent(ShareModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -2,7 +2,7 @@
 @import 'vendors';
 @import 'base';
 // @import 'layout/*';
-@import 'components/app-loader', 'components/loader';
+@import 'components/app-loader', 'components/loader', './components/modals';
 @import 'pages/twenty-coded';
 @import 'themes';
 @import 'utilities/misc';

@@ -2,9 +2,9 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserDataFragment } from '../../../../generated/graphql';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { UserDataFragment } from '../../../generated/graphql';
 import { fadeSlideInOutX } from '../../animations/animations';
 import { DataService } from '../../services/data/data.service';
 import { LocalStorageService } from '../../services/local-storage/local-storage.service';
@@ -39,15 +39,20 @@ export class SideNavComponent implements OnInit, OnDestroy {
     this.isDark = this.localStorage.get('isDark') === 'true';
     this.updateTheme();
     this.subscriptions.push(
-      this.dataService.userLogin$.subscribe((data) => {
-        if (data.login) {
-          this.user = {
-            avatarUrl: data.avatarUrl,
-            url: data.url,
-            bio: data.bio,
-            name: data.name,
-            login: data.login,
-          };
+      this.dataService.userLogin$.subscribe((hasData) => {
+        if (hasData) {
+          const data = this.dataService.userLogin;
+          if (data.login) {
+            this.user = {
+              avatarUrl: data.avatarUrl,
+              url: data.url,
+              bio: data.bio,
+              name: data.name,
+              login: data.login,
+            };
+          } else {
+            this.user = undefined;
+          }
         } else {
           this.user = undefined;
         }
@@ -71,7 +76,14 @@ export class SideNavComponent implements OnInit, OnDestroy {
   }
 
   change() {
-    this.dataService.updateUserLoginSub({ avatarUrl: '', url: '', login: '' });
+    this.dataService.userLogin = {
+      avatarUrl: '',
+      login: '',
+      url: '',
+      bio: '',
+      name: '',
+    };
+    this.dataService.updateUserLoginSub(true);
     this.router.navigate(['']);
   }
 

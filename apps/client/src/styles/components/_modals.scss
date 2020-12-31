@@ -1,0 +1,33 @@
+.share-bg {
+  bottom: 0;
+  left: 0;
+  opacity: 0.25;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 0;
+  &.repo-bg {
+    background-image: url('../../assets/icons/repo.svg');
+    background-position-x: 96%;
+    background-position-y: 50px;
+    background-repeat: no-repeat;
+    background-size: 150px;
+  }
+  &.commit-bg {
+    background-image: url('../../assets/icons/commit.svg');
+    background-position-x: 96%;
+    background-position-y: 50px;
+    background-repeat: no-repeat;
+    background-size: 150px;
+  }
+}
+
+.share-content {
+  position: relative;
+  z-index: 1;
+}
+
+.dark-theme .share-title {
+  color: $dark;
+}

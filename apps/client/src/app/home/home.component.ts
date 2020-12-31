@@ -5,11 +5,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { UserLoginQuery, UserLoginGQL } from '../../generated/graphql';
 import { fadeSlideInOut } from '../core/animations/animations';
 import { DataService } from '../core/services/data/data.service';
 import { LocalStorageService } from '../core/services/local-storage/local-storage.service';
 import { ThemeService } from '../core/services/theme/theme.service';
+import { UserLoginGQL, UserLoginQuery } from '../generated/graphql';
 import { DialogComponent, DialogData } from '../shared/components/dialog/dialog.component';
 import { twentyFrom, twentyTo } from '../shared/constants';
 
@@ -55,6 +55,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private getDataForUser(userName: string, showError = true) {
+    // this.router.navigate(['/user', userName, '2020Coded']);
+
     this.totalContributions$ = this.totalContributionsGQL
       .watch({ login: userName })
       .valueChanges.pipe(map((result) => result.data));
@@ -62,7 +64,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.totalContributions$.subscribe(
         (data) => {
-          this.dataService.updateUserLoginSub(data.user);
+          this.dataService.userLogin = {
+            avatarUrl: data.user.avatarUrl,
+            login: data.user.login,
+            url: data.user.url,
+            bio: data.user.bio,
+            name: data.user.name,
+          };
+          this.dataService.updateUserLoginSub(true);
           this.isUsernameLoading = false;
           this.isLoading = false;
           this.router.navigate(['/user', userName, '2020Coded']);
@@ -70,6 +79,14 @@ export class HomeComponent implements OnInit, OnDestroy {
         () => {
           this.isUsernameLoading = false;
           this.isLoading = false;
+          this.dataService.userLogin = {
+            avatarUrl: '',
+            login: '',
+            url: '',
+            bio: '',
+            name: '',
+          };
+          this.dataService.updateUserLoginSub(false);
           if (showError) {
             const dialogData: DialogData = {
               themeColor: 'warn',
