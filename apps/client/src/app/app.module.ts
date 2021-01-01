@@ -45,6 +45,8 @@ export class AppModule {
       { name: 'git-merge', url: 'assets/icons/git-merge.svg' },
       { name: 'comment', url: 'assets/icons/comment.svg' },
       { name: 'smiley', url: 'assets/icons/smiley.svg' },
+      { name: 'share', url: 'assets/icons/share.svg' },
+      { name: 'info', url: 'assets/icons/info.svg' },
     ];
 
     iconList.forEach((icon) => {

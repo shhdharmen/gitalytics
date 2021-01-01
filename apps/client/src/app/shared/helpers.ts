@@ -1,4 +1,4 @@
-export function saveAs(uri: string, filename: string) {
+export function saveAs(uri: any, filename: string) {
   const link = document.createElement('a');
 
   if (typeof link.download === 'string') {

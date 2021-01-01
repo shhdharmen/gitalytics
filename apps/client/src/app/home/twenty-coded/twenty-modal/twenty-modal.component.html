@@ -1,33 +1,85 @@
-<h2 mat-dialog-title>
+<!-- <h2 mat-dialog-title>
   2020 GitHub Contributions
   <button mat-icon-button *ngIf="isHandset$ | async" mat-dialog-close class="float-right mt-n1">
     <mat-icon>close</mat-icon>
   </button>
-</h2>
+</h2> -->
 <mat-dialog-content class="mat-typography">
   <div class="rounded bg-primary text-white p-3 my-3 position-relative share-div">
     <div class="share-content">
-      <div
-        class="m-n3 px-3 py-1 bg-accent rounded-top"
-        [class.text-dark]="(isDark$ | async) === true"
-      >
-        <p class="mb-0">
-          2020 Coded for <span class="highlight">{{ data.login }}</span>
-        </p>
+      <div class="m-n3 px-5 py-3 bg-white rounded-top text-dark border border-primary">
+        <h1 class="mb-0 text-center mat-display-2">
+          2020 GitHub Contributions for <span class="highlight">{{ data.login }}</span>
+        </h1>
       </div>
       <div class="mb-4"></div>
-      <h2 class="mat-display-1">
-        They Created
-        <span class="highlight">{{ data.totalRepositoryContributions }} repositories</span>,<br />
-        Pushed <span class="highlight">{{ data.totalCommitContributions }} commits</span>,<br />
-        Raised <span class="highlight">{{ data.totalIssueContributions }} issues</span>,<br />
-        Generated
-        <span class="highlight">{{ data.totalPullRequestContributions }} pull requests</span>,<br />
-        and Reviewed
-        <span class="highlight">{{ data.totalPullRequestReviewContributions }} pull requests</span>
-        <br />in 2020!
-      </h2>
-      <div class="mb-4"></div>
+      <div class="p-3">
+        <div class="container-fluid">
+          <div class="row no-gutters">
+            <div class="col-4 mb-3 text-center">
+              <div>
+                <mat-icon svgIcon="repo" class="twenty-share-icon"></mat-icon>
+              </div>
+              <h1 class="mat-display-1 mb-0">
+                {{ data.totalRepositoryContributions }} Repositories
+              </h1>
+            </div>
+            <div class="col-4 mb-3 text-center">
+              <div>
+                <mat-icon svgIcon="commit" class="twenty-share-icon"></mat-icon>
+              </div>
+              <h1 class="mat-display-1 mb-0">{{ data.totalCommitContributions }} Commits</h1>
+              <h2 class="mb-0">
+                {{ data.totalRepositoriesWithContributedCommits }} in different repos
+              </h2>
+            </div>
+            <div class="col-4 mb-3 text-center">
+              <div>
+                <mat-icon svgIcon="star-fill" class="twenty-share-icon"></mat-icon>
+              </div>
+              <h1 class="mat-display-1 mb-0">~{{ data.totalStarCount }} Stars</h1>
+            </div>
+            <div class="col-4 mb-3 text-center">
+              <div>
+                <mat-icon svgIcon="issue-opened" class="twenty-share-icon"></mat-icon>
+              </div>
+              <h1 class="mat-display-1 mb-0">{{ data.totalIssueContributions }} Issues</h1>
+              <h2 class="mb-0">
+                {{ data.totalRepositoriesWithContributedIssues }} in different repos
+              </h2>
+              <h2 class="mb-0">~{{ data.closedIssue }} closed</h2>
+            </div>
+            <div class="col-4 mb-3 text-center align-self-center">
+              <div>
+                <mat-icon
+                  svgIcon="github"
+                  class="twenty-share-icon github-icon text-dark"
+                ></mat-icon>
+              </div>
+            </div>
+            <div class="col-4 mb-3 text-center">
+              <div>
+                <mat-icon svgIcon="pull-request" class="twenty-share-icon"></mat-icon>
+              </div>
+              <h1 class="mat-display-1 mb-0">
+                {{ data.totalPullRequestContributions }} Pull Requests
+              </h1>
+              <h2 class="mb-0">~{{ data.mergedPR }} merged</h2>
+              <h2 class="mb-0">~{{ data.closedPR }} closed</h2>
+            </div>
+            <div class="col-4 mb-3 text-center">
+              <div>
+                <mat-icon svgIcon="code-review" class="twenty-share-icon"></mat-icon>
+              </div>
+              <h1 class="mat-display-1 mb-0">
+                {{ data.totalPullRequestReviewContributions }} Reviews
+              </h1>
+              <h2 class="mb-0">~{{ data.comments }} comments</h2>
+              <h2 class="mb-0">~{{ data.reactions }} reactions</h2>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="bg-dark m-n3 px-3 py-1 rounded-bottom">
         <div class="row align-items-center">
           <div class="col">

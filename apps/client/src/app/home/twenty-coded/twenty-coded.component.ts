@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay, take } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -26,6 +26,12 @@ import { ThemeService } from '../../core/services/theme/theme.service';
 import { ShareModalComponent } from './share-modal/share-modal.component';
 import { TotalContributionsQuery, TotalContributionsGQL } from '../../generated/graphql';
 import { DialogComponent, DialogData } from '../../shared/components/dialog/dialog.component';
+import { DOCUMENT } from '@angular/common';
+import html2canvas from 'html2canvas';
+import { buildTwitterIntent, saveAs } from '../../shared/helpers';
+import { DomSanitizer } from '@angular/platform-browser';
+import domtoimage from 'dom-to-image';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'gitalytics-twenty-coded',
@@ -67,6 +73,13 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
   readonly CONTRIBUTION_TITLE = CONTRIBUTION_TITLE;
   readonly CONTRIBUTION_DESCRIPTION = CONTRIBUTION_DESCRIPTION;
 
+  totalStarCount = 0;
+  closedIssue = 0;
+  closedPR = 0;
+  comments = 0;
+  mergedPR = 0;
+  reactions = 0;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -74,7 +87,10 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private totalContributionsGQL: TotalContributionsGQL,
     private dataService: DataService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    @Inject(DOCUMENT) private document: Document,
+    private sanitized: DomSanitizer,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -94,7 +110,24 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
     );
   }
 
-  share() {
+  download() {
+    this.isDark$.pipe(take(1)).subscribe((isDark) => {
+      const shareDiv = this.document.querySelector('.share-div') as HTMLElement;
+
+      domtoimage
+        .toPng(shareDiv, {
+          filter: (node: HTMLElement) => {
+            return !(node.hasAttribute && node.hasAttribute('data-html2canvas-ignore'));
+          },
+          bgcolor: isDark ? '#303030' : '#fafafa',
+        })
+        .then((dataUrl) => {
+          saveAs(dataUrl, this.userName + '-2020Coded.png');
+        });
+    });
+  }
+
+  shareTwentyData() {
     const collection = this.data.user.contributionsCollection;
     const data: TwentyModalData = {
       login: this.data.user.login,
@@ -109,11 +142,36 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
         collection.totalRepositoriesWithContributedPullRequests,
       totalRepositoriesWithContributedPullRequestReviews:
         collection.totalRepositoriesWithContributedPullRequestReviews,
+      totalStarCount: this.totalStarCount,
+      closedIssue: this.closedIssue,
+      closedPR: this.closedPR,
+      comments: this.comments,
+      mergedPR: this.mergedPR,
+      reactions: this.reactions,
     };
     this.dialog.open(TwentyModalComponent, {
       data,
-      panelClass: this.panelClass,
+      panelClass: this.panelClass.concat('max-vh-100', 'max-vw-100'),
     });
+  }
+
+  get twitterIntent() {
+    const collection = this.data.user.contributionsCollection;
+    return buildTwitterIntent(
+      `My 2020 GitHub Contributions:\n\n📘 ${collection.totalRepositoryContributions} repositories,\n✅ ${collection.totalCommitContributions} commits,\n⭐ ${this.totalStarCount} stars,\n⚠ ${collection.totalIssueContributions} issues,\n⬆ ${collection.totalPullRequestContributions} pull requests\n👀 reviewed ${collection.totalPullRequestReviewContributions} PRs\n\nFind out yours!\n\n`
+    );
+  }
+
+  get currentURL() {
+    return window.location.href;
+  }
+
+  openSnackBar(show: boolean) {
+    if (show) {
+      this.snackBar.open('URL Copied', 'Close', {
+        duration: 2000,
+      });
+    }
   }
 
   private getDataForUser() {
@@ -134,6 +192,21 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
           };
           this.dataService.updateUserLoginSub(true);
           this.data = data;
+          const collection = this.data.user.contributionsCollection;
+          collection.repositoryContributions.edges.forEach((item) => {
+            this.totalStarCount += item.node.repository.stargazerCount;
+          });
+          collection.issueContributions.edges.forEach((issue) => {
+            this.closedIssue += issue?.node.issue.closed ? 1 : 0;
+          });
+          collection.pullRequestContributions.edges.forEach((pr) => {
+            this.mergedPR += pr?.node?.pullRequest?.merged ? 1 : 0;
+            this.closedPR += pr?.node?.pullRequest?.closed ? 1 : 0;
+          });
+          collection.pullRequestReviewContributions.edges.forEach((re) => {
+            this.comments += re?.node?.pullRequestReview?.comments?.totalCount ?? 0;
+            this.reactions += re?.node?.pullRequestReview?.reactions?.totalCount ?? 0;
+          });
           this.buildShareCards();
         },
         () => {

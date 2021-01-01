@@ -35,7 +35,6 @@ export function buildRepoCard(data: TotalContributionsQuery): TwentyShareCardTyp
     tabRows: 1,
     modalData: {
       content: buildRepoModal(login, repositoriesCount, starCount, forkCount),
-      title: '2020 GitHub Repositories',
       twitterIntent: buildTwitterIntent(
         `I created ${repositoriesCount} 📘 repositories, they got ${starCount} ⭐s and were forked ${forkCount} times!\n\n Find out yours!\n\n`
       ),
@@ -45,12 +44,12 @@ export function buildRepoCard(data: TotalContributionsQuery): TwentyShareCardTyp
       {
         icon: 'star-fill',
         isIconSVG: true,
-        value: starCount,
+        value: '~' + starCount,
       },
       {
         icon: 'git-fork',
         isIconSVG: true,
-        value: forkCount,
+        value: '~' + forkCount,
       },
     ],
     queryType: 'totalRepositoryContributions',
@@ -81,7 +80,6 @@ export function buildCommitCard(data: TotalContributionsQuery): TwentyShareCardT
         totalCommitContributions,
         totalRepositoriesWithContributedCommits
       ),
-      title: '2020 GitHub Repositories',
       twitterIntent: buildTwitterIntent(
         `I pushed total ${totalCommitContributions} commits, from them ${totalRepositoriesWithContributedCommits} were pushed in different repositories in 2020 on GitHub!\n\n Find out yours!\n\n`
       ),
@@ -91,7 +89,7 @@ export function buildCommitCard(data: TotalContributionsQuery): TwentyShareCardT
       {
         icon: 'unfold',
         isIconSVG: true,
-        value: totalRepositoriesWithContributedCommits,
+        value: totalRepositoriesWithContributedCommits.toString(),
       },
     ],
     queryType: 'totalCommitContributions',
@@ -129,7 +127,6 @@ export function buildIssueCard(data: TotalContributionsQuery): TwentyShareCardTy
         totalRepositoriesWithContributedIssues,
         closedIssues
       ),
-      title: '2020 GitHub Repositories',
       twitterIntent: buildTwitterIntent(
         `I submitted total ${totalIssueContributions} issues,\n
         from them ${totalRepositoriesWithContributedIssues} were submitted in different repositories\n
@@ -142,12 +139,12 @@ export function buildIssueCard(data: TotalContributionsQuery): TwentyShareCardTy
       {
         icon: 'issue-closed',
         isIconSVG: true,
-        value: closedIssues,
+        value: '~' + closedIssues,
       },
       {
         icon: 'unfold',
         isIconSVG: true,
-        value: totalRepositoriesWithContributedIssues,
+        value: totalRepositoriesWithContributedIssues.toString(),
       },
     ],
     queryType: 'totalIssueContributions',
@@ -188,7 +185,6 @@ export function buildPullRequestCard(data: TotalContributionsQuery): TwentyShare
         mergedPRs,
         closedPRs
       ),
-      title: '2020 GitHub Repositories',
       twitterIntent: buildTwitterIntent(
         `I created total ${totalPullRequestContributions} PRs,\n
         from them ${totalRepositoriesWithContributedPullRequests} were created in different repositories,\n
@@ -203,17 +199,17 @@ export function buildPullRequestCard(data: TotalContributionsQuery): TwentyShare
       {
         icon: 'git-merge',
         isIconSVG: true,
-        value: mergedPRs,
+        value: '~' + mergedPRs,
       },
       {
         icon: 'issue-closed',
         isIconSVG: true,
-        value: closedPRs,
+        value: '~' + closedPRs,
       },
       {
         icon: 'unfold',
         isIconSVG: true,
-        value: totalRepositoriesWithContributedPullRequests,
+        value: totalRepositoriesWithContributedPullRequests.toString(),
       },
     ],
     queryType: 'totalPullRequestContributions',
@@ -255,7 +251,6 @@ export function buildReviewCard(data: TotalContributionsQuery): TwentyShareCardT
         comments,
         reactions
       ),
-      title: '2020 GitHub Repositories',
       twitterIntent: buildTwitterIntent(
         `I reviewed total ${totalPullRequestReviewContributions} PRs,\n
         from them ${totalRepositoriesWithContributedPullRequestReviews} were reviewed in different repositories,\n
@@ -270,17 +265,17 @@ export function buildReviewCard(data: TotalContributionsQuery): TwentyShareCardT
       {
         icon: 'comment',
         isIconSVG: true,
-        value: comments,
+        value: '~' + comments,
       },
       {
         icon: 'smiley',
         isIconSVG: true,
-        value: reactions,
+        value: '~' + reactions,
       },
       {
         icon: 'unfold',
         isIconSVG: true,
-        value: totalRepositoriesWithContributedPullRequestReviews,
+        value: totalRepositoriesWithContributedPullRequestReviews.toString(),
       },
     ],
     queryType: 'totalPullRequestReviewContributions',

@@ -10,7 +10,7 @@ export function buildRepoModal(
       class="m-n3 px-3 py-1 bg-accent rounded-top share-title"
     >
       <p class="mb-0">
-        2020 Coded for <span class="highlight">${login}</span>
+        2020 GitHub Contributions for <span class="highlight">${login}</span>
       </p>
     </div>
     <div class="mb-4"></div>
@@ -63,7 +63,7 @@ export function buildCommitModal(
       class="m-n3 px-3 py-1 bg-accent rounded-top share-title"
     >
       <p class="mb-0">
-        2020 Coded for <span class="highlight">${login}</span>
+        2020 GitHub Contributions for <span class="highlight">${login}</span>
       </p>
     </div>
     <div class="mb-4"></div>
@@ -115,7 +115,7 @@ export function buildIssueModal(
       class="m-n3 px-3 py-1 bg-accent rounded-top share-title"
     >
       <p class="mb-0">
-        2020 Coded for <span class="highlight">${login}</span>
+        2020 GitHub Contributions for <span class="highlight">${login}</span>
       </p>
     </div>
     <div class="mb-4"></div>
@@ -174,7 +174,7 @@ export function buildPullRequestModal(
       class="m-n3 px-3 py-1 bg-accent rounded-top share-title"
     >
       <p class="mb-0">
-        2020 Coded for <span class="highlight">${login}</span>
+        2020 GitHub Contributions for <span class="highlight">${login}</span>
       </p>
     </div>
     <div class="mb-4"></div>
@@ -234,7 +234,7 @@ export function buildReviewModal(
       class="m-n3 px-3 py-1 bg-accent rounded-top share-title"
     >
       <p class="mb-0">
-        2020 Coded for <span class="highlight">${login}</span>
+        2020 GitHub Contributions for <span class="highlight">${login}</span>
       </p>
     </div>
     <div class="mb-4"></div>

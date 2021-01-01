@@ -1,0 +1,14 @@
+.mat-icon {
+  &.twenty-share-icon {
+    height: 80px;
+    width: 80px;
+    &.github-icon {
+      height: 160px;
+      width: 160px;
+    }
+  }
+  &.size-18px {
+    height: 18px;
+    width: 18px;
+  }
+}

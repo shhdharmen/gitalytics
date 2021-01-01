@@ -72,4 +72,10 @@ export interface TwentyModalData {
   totalRepositoriesWithContributedCommits: number;
   totalRepositoriesWithContributedPullRequests: number;
   totalRepositoriesWithContributedPullRequestReviews: number;
+  totalStarCount: number;
+  mergedPR: number;
+  closedPR: number;
+  closedIssue: number;
+  comments: number;
+  reactions: number;
 }

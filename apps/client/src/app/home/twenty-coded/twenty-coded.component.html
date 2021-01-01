@@ -1,162 +1,215 @@
-<div class="grid-container">
-  <mat-grid-list
-    [cols]="
-      (isHandset$ | async) ? 1 : (isTabletPortrait$ | async) ? 4 : (isTablet$ | async) ? 4 : 6
-    "
-    [rowHeight]="'160px'"
-  >
-    <mat-grid-tile
-      [colspan]="
-        (isHandset$ | async) ? 1 : (isTabletPortrait$ | async) ? 4 : (isTablet$ | async) ? 4 : 2
+<div class="share-div pb-3">
+  <div class="grid-container">
+    <mat-grid-list
+      [cols]="
+        (isHandset$ | async) ? 1 : (isTabletPortrait$ | async) ? 4 : (isTablet$ | async) ? 4 : 6
       "
-      [rowspan]="
-        (isHandset$ | async) ? 3 : (isTabletPortrait$ | async) ? 3 : (isTablet$ | async) ? 3 : 3
-      "
+      [rowHeight]="'160px'"
     >
-      <mat-card class="dashboard-card d-flex flex-column justify-content-end" color="primary">
-        <mat-card-header class="mx-0">
-          <!-- <mat-card-title>
-            <h1 [class.mat-display-4]="(isHandset$ | async) === false">#2020<br />Coded</h1>
-          </mat-card-title> -->
-          <mat-card-subtitle *ngIf="!isLoading" @fadeSlideInOut>
-            <div class="row align-items-center">
-              <div class="col-12 col-sm-12 col-md-auto">
-                <img
-                  [src]="data.user.avatarUrl"
-                  class="rounded-circle shadow"
-                  [height]="(isHandset$ | async) ? 80 : (isTablet$ | async) ? 150 : 100"
-                  [width]="(isHandset$ | async) ? 80 : (isTablet$ | async) ? 150 : 100"
-                  [alt]="'Photo of + ' + data.user.name"
-                  srcset=""
-                />
-              </div>
-              <div class="col">
-                <h2
-                  class="mb-0"
-                  [ngClass]="[
-                    (isHandset$ | async)
-                      ? 'mat-display-1'
-                      : (isTabletPortrait$ | async)
-                      ? 'mat-display-2'
-                      : (isTablet$ | async)
-                      ? 'mat-display-3'
-                      : ''
-                  ]"
-                >
-                  A quick glance at
-                  <!-- <img
-                    *ngIf="isHandset$ | async"
-                    [src]="data.user.avatarUrl"
-                    class="rounded-circle shadow align-middle"
-                    height="36"
-                    width="36"
-                    [alt]="'Photo of + ' + data.user.name"
-                    srcset=""
-                  /> -->
-                  <a [href]="data.user.url" target="_blank"
-                    ><span class="highlight">{{ userName }}</span></a
-                  >'s 2020 GitHub Contributions!
-                </h2>
-              </div>
-            </div>
-          </mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <h1
-            [ngClass]="[
-              (isHandset$ | async)
-                ? 'mat-display-2'
-                : (isTabletPortrait$ | async)
-                ? 'mat-display-3'
-                : 'mat-display-4'
-            ]"
-          >
-            #2020<br
-              *ngIf="
-                (isHandset$ | async) === false &&
-                (isTablet$ | async) === false &&
-                (isTabletPortrait$ | async) === false
-              "
-            />Coded
-          </h1>
-        </mat-card-content>
-        <mat-card-actions align="end">
-          <button mat-button (click)="share()" [disabled]="isLoading">Share</button>
-        </mat-card-actions>
-      </mat-card>
-    </mat-grid-tile>
-    <mat-grid-tile
-      [colspan]="(isHandset$ | async) ? 1 : (isTabletPortrait$ | async) ? 4 : 2"
-      [rowspan]="(isHandset$ | async) ? 1 : (isTabletPortrait$ | async) ? 2 : 2"
-      *ngIf="isLoading"
-    >
-      <gitalytics-widget-loader></gitalytics-widget-loader>
-    </mat-grid-tile>
-
-    <ng-container *ngIf="!isLoading">
       <mat-grid-tile
-        *ngFor="let card of shareCardList"
         [colspan]="
-          (isHandset$ | async)
-            ? 1
-            : (isTabletPortrait$ | async)
-            ? 4
-            : (isTablet$ | async)
-            ? card.tabCols
-            : card.cols
+          (isHandset$ | async) ? 1 : (isTabletPortrait$ | async) ? 4 : (isTablet$ | async) ? 4 : 2
         "
         [rowspan]="
-          (isHandset$ | async)
-            ? 1
-            : (isTabletPortrait$ | async)
-            ? card.tabRows
-            : (isTablet$ | async)
-            ? card.tabRows
-            : card.rows
+          (isHandset$ | async) ? 3 : (isTabletPortrait$ | async) ? 3 : (isTablet$ | async) ? 3 : 3
         "
       >
-        <mat-card class="dashboard-card">
-          <mat-card-header>
-            <div mat-card-avatar>
-              <mat-icon
-                [svgIcon]="CONTRIBUTION_ICON[card.queryType]"
-                aria-hidden="false"
-                [attr.aria-label]="CONTRIBUTION_ICON[card.queryType] + ' SVG Icon'"
-              ></mat-icon>
-            </div>
-            <mat-card-title
-              >{{ CONTRIBUTION_TITLE[card.queryType] }}
-              <button
-                mat-icon-button
-                class="more-button"
-                [matMenuTriggerFor]="menu"
-                aria-label="Toggle menu"
-                #menuTrigger
-              >
-                <mat-icon>more_vert</mat-icon>
-              </button>
-              <mat-menu #menu="matMenu" xPosition="before">
-                <button mat-menu-item (click)="shareCard(card.modalData)">Share</button>
-              </mat-menu>
-            </mat-card-title>
+        <mat-card class="dashboard-card d-flex flex-column justify-content-end" color="primary">
+          <mat-card-header class="mx-0">
+            <mat-card-subtitle *ngIf="!isLoading" @fadeSlideInOut>
+              <div class="row align-items-center">
+                <div class="col-12 col-sm-12 col-md-auto">
+                  <img
+                    [src]="data.user.avatarUrl"
+                    class="rounded-circle shadow"
+                    [height]="(isHandset$ | async) ? 80 : (isTablet$ | async) ? 150 : 80"
+                    [width]="(isHandset$ | async) ? 80 : (isTablet$ | async) ? 150 : 80"
+                    [alt]="'Photo of + ' + data.user.name"
+                    srcset=""
+                  />
+                </div>
+                <div class="col">
+                  <h2
+                    class="mb-0"
+                    [ngClass]="[
+                      (isHandset$ | async)
+                        ? 'mat-display-1'
+                        : (isTabletPortrait$ | async)
+                        ? 'mat-display-2'
+                        : (isTablet$ | async)
+                        ? 'mat-display-3'
+                        : ''
+                    ]"
+                  >
+                    A quick glance at
+                    <a [href]="data.user.url" target="_blank"
+                      ><span class="highlight">{{ userName }}</span></a
+                    >'s 2020 GitHub Contributions!
+                  </h2>
+                </div>
+              </div>
+            </mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
-            <div class="row align-items-end">
-              <div class="col-auto mr-auto">
-                <h2 class="mat-display-3">{{ card.primaryData }}</h2>
-              </div>
-              <div class="col-auto" *ngFor="let datum of card.secondaryData">
-                <h3 class="mat-display-1">
-                  <mat-icon [svgIcon]="datum.isIconSVG ? datum.icon : ''">
-                    <ng-container *ngIf="!datum.isIconSVG">{{ datum.icon }}</ng-container>
-                  </mat-icon>
-                  {{ datum.value }}
-                </h3>
-              </div>
-            </div>
+            <h1
+              [ngClass]="[
+                (isHandset$ | async)
+                  ? 'mat-display-2'
+                  : (isTabletPortrait$ | async)
+                  ? 'mat-display-3'
+                  : 'mat-display-4'
+              ]"
+            >
+              #2020<br
+                *ngIf="
+                  (isHandset$ | async) === false &&
+                  (isTablet$ | async) === false &&
+                  (isTabletPortrait$ | async) === false
+                "
+              />Coded
+            </h1>
           </mat-card-content>
+          <mat-card-actions align="end" data-html2canvas-ignore>
+            <button
+              [disabled]="isLoading"
+              mat-icon-button
+              class="ml-auto"
+              (click)="download()"
+              matTooltip="Download PNG"
+            >
+              <mat-icon>download</mat-icon>
+            </button>
+            <a
+              [disabled]="isLoading"
+              mat-icon-button
+              [href]="!isLoading && twitterIntent"
+              target="_blank"
+              matTooltip="Share stats on twitter"
+            >
+              <mat-icon svgIcon="twitter"></mat-icon>
+            </a>
+            <button
+              mat-icon-button
+              [cdkCopyToClipboard]="currentURL"
+              (cdkCopyToClipboardCopied)="openSnackBar($event)"
+              matTooltip="Copy URL"
+            >
+              <mat-icon>content_copy</mat-icon>
+            </button>
+          </mat-card-actions>
+          <div class="bg-dark m-n3 px-3 py-1 rounded-bottom">
+            <div class="row align-items-center">
+              <div class="col">
+                <p class="mb-0">
+                  <img
+                    src="../../../../assets/gitalytics.png"
+                    height="24"
+                    width="24"
+                    alt="Gitalytics"
+                    srcset=""
+                    class="align-middle"
+                  />
+                  Gitalytics
+                </p>
+              </div>
+              <!-- <div class="col text-right">
+                <p class="mb-0">#2020Coded</p>
+              </div> -->
+            </div>
+          </div>
         </mat-card>
       </mat-grid-tile>
-    </ng-container>
-  </mat-grid-list>
+      <mat-grid-tile
+        [colspan]="(isHandset$ | async) ? 1 : (isTabletPortrait$ | async) ? 4 : 2"
+        [rowspan]="(isHandset$ | async) ? 1 : (isTabletPortrait$ | async) ? 2 : 2"
+        *ngIf="isLoading"
+      >
+        <gitalytics-widget-loader></gitalytics-widget-loader>
+      </mat-grid-tile>
+
+      <ng-container *ngIf="!isLoading">
+        <mat-grid-tile
+          *ngFor="let card of shareCardList"
+          [colspan]="
+            (isHandset$ | async)
+              ? 1
+              : (isTabletPortrait$ | async)
+              ? 4
+              : (isTablet$ | async)
+              ? card.tabCols
+              : card.cols
+          "
+          [rowspan]="
+            (isHandset$ | async)
+              ? 1
+              : (isTabletPortrait$ | async)
+              ? card.tabRows
+              : (isTablet$ | async)
+              ? card.tabRows
+              : card.rows
+          "
+        >
+          <mat-card class="dashboard-card">
+            <mat-card-header>
+              <div mat-card-avatar>
+                <mat-icon
+                  [svgIcon]="CONTRIBUTION_ICON[card.queryType]"
+                  aria-hidden="false"
+                  [attr.aria-label]="CONTRIBUTION_ICON[card.queryType] + ' SVG Icon'"
+                ></mat-icon>
+              </div>
+              <mat-card-title
+                >{{ CONTRIBUTION_TITLE[card.queryType] }}
+                <button
+                  mat-icon-button
+                  class="more-button"
+                  (click)="shareCard(card.modalData)"
+                  data-html2canvas-ignore
+                >
+                  <mat-icon svgIcon="share"></mat-icon>
+                </button>
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="row align-items-end">
+                <div class="col-auto">
+                  <h2 class="mat-display-3 mb-0">{{ card.primaryData }}</h2>
+                </div>
+                <div class="col d-flex justify-content-end">
+                  <ng-container *ngFor="let datum of card.secondaryData; let i = index">
+                    <h2 class="mat-headline mb-0 px-2">
+                      <mat-icon [svgIcon]="datum.isIconSVG ? datum.icon : ''">
+                        <ng-container *ngIf="!datum.isIconSVG">{{ datum.icon }}</ng-container>
+                      </mat-icon>
+                      {{ datum.value }}
+                    </h2>
+                  </ng-container>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [colspan]="(isHandset$ | async) ? 1 : (isTabletPortrait$ | async) ? 4 : 2"
+          [rowspan]="1"
+        >
+          <mat-card class="dashboard-card bg-accent-lighter" [class.text-dark]="isDark$ | async">
+            <mat-card-content>
+              <p class="mb-0">
+                <mat-icon svgIcon="star-fill" class="size-18px mr-1 align-middle"></mat-icon>Stars,
+                <mat-icon svgIcon="git-fork" class="size-18px mr-1 align-middle"></mat-icon>forks,
+                <mat-icon svgIcon="git-merge" class="size-18px mr-1 align-middle"></mat-icon>merges,
+                <mat-icon svgIcon="issue-closed" class="size-18px mr-1 align-middle"></mat-icon
+                >closed issues,
+                <mat-icon svgIcon="comment" class="size-18px mr-1 align-middle"></mat-icon>comments
+                and
+                <mat-icon svgIcon="smiley" class="size-18px mr-1 align-middle"></mat-icon>reactions
+                on reviews are calculated based on 1st 100 contributions of 2020.
+              </p>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+      </ng-container>
+    </mat-grid-list>
+  </div>
 </div>
