@@ -1,19 +1,26 @@
 spec:
-  name: gitalytics
+  name: gitalytics-api
   services:
-  - build_command: npm install --only=dev && npm run build:prod:client && npm prune --production
+  - build_command: npm install --only=dev && npm run build:prod:server && npm prune --production
     environment_slug: node-js
     envs:
+    - key: PAT
+      scope: RUN_AND_BUILD_TIME
+      type: SECRET
+      value: GITHUB_PERSON_ACCESS_TOKEN
+    - key: API_URL
+      scope: RUN_AND_BUILD_TIME
+      value: https://api.github.com/graphql
+    - key: WHITELIST_URL
+      scope: RUN_AND_BUILD_TIME
+      value: https://front-end-app-url
     - key: NODE_ENV
       scope: RUN_AND_BUILD_TIME
       value: production
-    - key: BACKEND_API_URL
-      scope: RUN_AND_BUILD_TIME
-      value: https://url-to-api
     git:
       branch: main
       repo_clone_url: https://github.com/shhdharmen/gitalytics.git
-    name: gitalytics
+    name: gitalytics-api
     routes:
     - path: /
-    run_command: npm run deploy:start:client
+    run_command: npm run deploy:start:server
