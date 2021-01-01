@@ -1,7 +1,7 @@
 // @import 'abstracts/*';
 @import 'vendors';
 @import 'base';
-// @import 'layout/*';
+@import 'layouts/main';
 @import 'components/app-loader', 'components/loader', './components/modals';
 @import 'pages/twenty-coded';
 @import 'themes';

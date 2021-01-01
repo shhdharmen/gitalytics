@@ -51,6 +51,9 @@ fragment ContributionsCollectionData on ContributionsCollection {
     edges {
       node {
         pullRequestReview {
+          reactions {
+            totalCount
+          }
           comments {
             totalCount
           }

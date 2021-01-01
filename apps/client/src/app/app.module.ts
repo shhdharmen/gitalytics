@@ -41,6 +41,10 @@ export class AppModule {
       { name: 'star-fill', url: 'assets/icons/star-fill.svg' },
       { name: 'verified', url: 'assets/icons/verified.svg' },
       { name: 'unfold', url: 'assets/icons/unfold.svg' },
+      { name: 'issue-closed', url: 'assets/icons/issue-closed.svg' },
+      { name: 'git-merge', url: 'assets/icons/git-merge.svg' },
+      { name: 'comment', url: 'assets/icons/comment.svg' },
+      { name: 'smiley', url: 'assets/icons/smiley.svg' },
     ];
 
     iconList.forEach((icon) => {

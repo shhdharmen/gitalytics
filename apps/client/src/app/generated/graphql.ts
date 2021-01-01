@@ -18537,7 +18537,16 @@ export interface ContributionsCollectionDataFragment {
   };
   pullRequestReviewContributions: {
     edges?: Maybe<
-      Array<Maybe<{ node?: Maybe<{ pullRequestReview: { comments: { totalCount: number } } }> }>>
+      Array<
+        Maybe<{
+          node?: Maybe<{
+            pullRequestReview: {
+              reactions: { totalCount: number };
+              comments: { totalCount: number };
+            };
+          }>;
+        }>
+      >
     >;
   };
 }
@@ -18617,6 +18626,9 @@ export const ContributionsCollectionDataFragmentDoc = gql`
       edges {
         node {
           pullRequestReview {
+            reactions {
+              totalCount
+            }
             comments {
               totalCount
             }

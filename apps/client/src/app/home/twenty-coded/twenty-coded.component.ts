@@ -15,7 +15,13 @@ import {
 } from '../../shared/constants';
 import { DataService } from '../../core/services/data/data.service';
 import { ContributionQueryType, ShareModalData, TwentyShareCardType } from '../../shared/models';
-import { buildCommitCard, buildRepoCard } from './card-builders';
+import {
+  buildCommitCard,
+  buildIssueCard,
+  buildPullRequestCard,
+  buildRepoCard,
+  buildReviewCard,
+} from './card-builders';
 import { ThemeService } from '../../core/services/theme/theme.service';
 import { ShareModalComponent } from './share-modal/share-modal.component';
 import { TotalContributionsQuery, TotalContributionsGQL } from '../../generated/graphql';
@@ -33,10 +39,24 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
   totalContributions$: Observable<TotalContributionsQuery>;
   data: TotalContributionsQuery;
   activeIndex = 0;
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map((result) => result.matches),
-    shareReplay()
-  );
+  isHandset$: Observable<boolean> = this.breakpointObserver
+    .observe(Breakpoints.HandsetPortrait)
+    .pipe(
+      map((result) => result.matches),
+      shareReplay()
+    );
+  isTablet$: Observable<boolean> = this.breakpointObserver
+    .observe(Breakpoints.TabletLandscape)
+    .pipe(
+      map((result) => result.matches),
+      shareReplay()
+    );
+  isTabletPortrait$: Observable<boolean> = this.breakpointObserver
+    .observe([Breakpoints.TabletPortrait, Breakpoints.HandsetLandscape])
+    .pipe(
+      map((result) => result.matches),
+      shareReplay()
+    );
   isDark$ = this.themeService.isDark$;
 
   panelClass = ['custom-dialog'];
@@ -112,7 +132,6 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
             bio: userFragment.bio,
             name: userFragment.name,
           };
-          console.log('updating user login');
           this.dataService.updateUserLoginSub(true);
           this.data = data;
           this.buildShareCards();
@@ -157,7 +176,15 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
           case 'totalCommitContributions':
             card = buildCommitCard(this.data);
             break;
-
+          case 'totalIssueContributions':
+            card = buildIssueCard(this.data);
+            break;
+          case 'totalPullRequestContributions':
+            card = buildPullRequestCard(this.data);
+            break;
+          case 'totalPullRequestReviewContributions':
+            card = buildReviewCard(this.data);
+            break;
           default:
             break;
         }
@@ -166,7 +193,6 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
         }
       }
     }
-    // console.log(this.shareCardList);
     this.isLoading = false;
   }
 
