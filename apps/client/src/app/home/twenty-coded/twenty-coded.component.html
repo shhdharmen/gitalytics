@@ -1,8 +1,17 @@
 <div class="grid-container">
-  <mat-grid-list [cols]="(isHandset$ | async) ? 1 : 6" [rowHeight]="'180px'">
+  <mat-grid-list
+    [cols]="
+      (isHandset$ | async) ? 1 : (isTabletPortrait$ | async) ? 4 : (isTablet$ | async) ? 4 : 6
+    "
+    [rowHeight]="'160px'"
+  >
     <mat-grid-tile
-      [colspan]="(isHandset$ | async) ? 1 : 2"
-      [rowspan]="(isHandset$ | async) ? 2 : 3"
+      [colspan]="
+        (isHandset$ | async) ? 1 : (isTabletPortrait$ | async) ? 4 : (isTablet$ | async) ? 4 : 2
+      "
+      [rowspan]="
+        (isHandset$ | async) ? 3 : (isTabletPortrait$ | async) ? 3 : (isTablet$ | async) ? 3 : 3
+      "
     >
       <mat-card class="dashboard-card d-flex flex-column justify-content-end" color="primary">
         <mat-card-header class="mx-0">
@@ -11,20 +20,31 @@
           </mat-card-title> -->
           <mat-card-subtitle *ngIf="!isLoading" @fadeSlideInOut>
             <div class="row align-items-center">
-              <div class="col-auto" *ngIf="(isHandset$ | async) === false">
+              <div class="col-12 col-sm-12 col-md-auto">
                 <img
                   [src]="data.user.avatarUrl"
                   class="rounded-circle shadow"
-                  height="80"
-                  width="80"
+                  [height]="(isHandset$ | async) ? 80 : (isTablet$ | async) ? 150 : 100"
+                  [width]="(isHandset$ | async) ? 80 : (isTablet$ | async) ? 150 : 100"
                   [alt]="'Photo of + ' + data.user.name"
                   srcset=""
                 />
               </div>
               <div class="col">
-                <h2>
+                <h2
+                  class="mb-0"
+                  [ngClass]="[
+                    (isHandset$ | async)
+                      ? 'mat-display-1'
+                      : (isTabletPortrait$ | async)
+                      ? 'mat-display-2'
+                      : (isTablet$ | async)
+                      ? 'mat-display-3'
+                      : ''
+                  ]"
+                >
                   A quick glance at
-                  <img
+                  <!-- <img
                     *ngIf="isHandset$ | async"
                     [src]="data.user.avatarUrl"
                     class="rounded-circle shadow align-middle"
@@ -32,7 +52,7 @@
                     width="36"
                     [alt]="'Photo of + ' + data.user.name"
                     srcset=""
-                  />
+                  /> -->
                   <a [href]="data.user.url" target="_blank"
                     ><span class="highlight">{{ userName }}</span></a
                   >'s 2020 GitHub Contributions!
@@ -42,8 +62,22 @@
           </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <h1 [ngClass]="[(isHandset$ | async) ? 'mat-display-1' : 'mat-display-4']">
-            #2020<br *ngIf="(isHandset$ | async) === false" />Coded
+          <h1
+            [ngClass]="[
+              (isHandset$ | async)
+                ? 'mat-display-2'
+                : (isTabletPortrait$ | async)
+                ? 'mat-display-3'
+                : 'mat-display-4'
+            ]"
+          >
+            #2020<br
+              *ngIf="
+                (isHandset$ | async) === false &&
+                (isTablet$ | async) === false &&
+                (isTabletPortrait$ | async) === false
+              "
+            />Coded
           </h1>
         </mat-card-content>
         <mat-card-actions align="end">
@@ -52,8 +86,8 @@
       </mat-card>
     </mat-grid-tile>
     <mat-grid-tile
-      [colspan]="(isHandset$ | async) ? 1 : 2"
-      [rowspan]="(isHandset$ | async) ? 1 : 2"
+      [colspan]="(isHandset$ | async) ? 1 : (isTabletPortrait$ | async) ? 4 : 2"
+      [rowspan]="(isHandset$ | async) ? 1 : (isTabletPortrait$ | async) ? 2 : 2"
       *ngIf="isLoading"
     >
       <gitalytics-widget-loader></gitalytics-widget-loader>
@@ -62,8 +96,24 @@
     <ng-container *ngIf="!isLoading">
       <mat-grid-tile
         *ngFor="let card of shareCardList"
-        [colspan]="(isHandset$ | async) ? 1 : card.cols"
-        [rowspan]="(isHandset$ | async) ? 1 : card.rows"
+        [colspan]="
+          (isHandset$ | async)
+            ? 1
+            : (isTabletPortrait$ | async)
+            ? 4
+            : (isTablet$ | async)
+            ? card.tabCols
+            : card.cols
+        "
+        [rowspan]="
+          (isHandset$ | async)
+            ? 1
+            : (isTabletPortrait$ | async)
+            ? card.tabRows
+            : (isTablet$ | async)
+            ? card.tabRows
+            : card.rows
+        "
       >
         <mat-card class="dashboard-card">
           <mat-card-header>

@@ -41,6 +41,8 @@ export interface ShareModalData {
 export interface TwentyShareCardType {
   cols: number;
   rows: number;
+  tabCols: number;
+  tabRows: number;
   queryType: ContributionQueryType;
   primaryData: number;
   secondaryData: { value: number; icon: string | IconName; isIconSVG: boolean }[];
