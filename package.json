@@ -13,9 +13,11 @@
     "start": "npm run config && ng serve",
     "client:build": "nx build client --prod",
     "server:build": "nx build api --prod",
+    "twitter-bot:build": "nx build twitter-bot --prod",
     "build": "ng build",
     "build:prod:client": "run-s config nx:script client:build",
     "build:prod:server": "run-s nx:script server:build",
+    "build:prod:twitter-bot": "run-s nx:script twitter-bot:build",
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",
     "e2e": "ng e2e",
@@ -36,7 +38,10 @@
     "help": "nx help",
     "deploy:start:client": "serve -s dist/apps/client -l tcp://0.0.0.0:$PORT -n",
     "deploy:start:server": "node dist/apps/api/main.js",
-    "generate-codegen": "graphql-codegen --config codegen.yml"
+    "deploy:start:twitter-bot": "node dist/apps/twitter-bot/main.js",
+    "generate-codegen": "graphql-codegen --config codegen.yml",
+    "contributors:add": "all-contributors add",
+    "contributors:generate": "all-contributors generate"
   },
   "private": true,
   "dependencies": {
@@ -69,6 +74,7 @@
     "rxjs": "~6.5.5",
     "serve": "^11.3.2",
     "tslib": "^2.0.0",
+    "twitter": "^1.7.1",
     "zone.js": "^0.10.2"
   },
   "devDependencies": {
@@ -100,8 +106,10 @@
     "@types/jest": "26.0.8",
     "@types/node": "12.12.38",
     "@types/npm-run": "^5.0.0",
+    "@types/twitter": "^1.7.0",
     "@typescript-eslint/eslint-plugin": "4.3.0",
     "@typescript-eslint/parser": "4.3.0",
+    "all-contributors-cli": "^6.19.0",
     "codelyzer": "^6.0.0",
     "cypress": "^5.5.0",
     "cz-conventional-changelog": "^3.3.0",
