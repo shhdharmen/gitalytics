@@ -158,7 +158,7 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
   get twitterIntent() {
     const collection = this.data.user.contributionsCollection;
     return buildTwitterIntent(
-      `My 2020 GitHub Contributions:\n\n📘 ${collection.totalRepositoryContributions} repositories,\n✅ ${collection.totalCommitContributions} commits,\n⭐ ${this.totalStarCount} stars,\n⚠ ${collection.totalIssueContributions} issues,\n⬆ ${collection.totalPullRequestContributions} pull requests\n👀 reviewed ${collection.totalPullRequestReviewContributions} PRs\n\nFind out yours!\n\n`
+      `My 2020 GitHub Contributions:\n\n📘 ${collection.totalRepositoryContributions} repositories,\n✅ ${collection.totalCommitContributions} commits,\n⭐~${this.totalStarCount} stars,\n⚠ ${collection.totalIssueContributions} issues,\n⬆ ${collection.totalPullRequestContributions} pull requests\n👀 reviewed ${collection.totalPullRequestReviewContributions} PRs\n\nFind out yours!\n\n`
     );
   }
 

@@ -24,6 +24,6 @@ export function buildTwitterIntent(content: string) {
     encodeURI('https://gitalytics.shhdharmen.me') +
     '&text=' +
     encodeURIComponent(content) +
-    '&via=gitalytics_app&hashtags=2020Coded'
+    '&via=gitalytics_app&hashtags=2020Coded,gitalytics'
   );
 }

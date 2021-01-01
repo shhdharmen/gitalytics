@@ -178,7 +178,10 @@
                 <div class="col d-flex justify-content-end">
                   <ng-container *ngFor="let datum of card.secondaryData; let i = index">
                     <h2 class="mat-headline mb-0 px-2">
-                      <mat-icon [svgIcon]="datum.isIconSVG ? datum.icon : ''">
+                      <mat-icon
+                        [svgIcon]="datum.isIconSVG ? datum.icon : ''"
+                        class="size-20px align-text-top"
+                      >
                         <ng-container *ngIf="!datum.isIconSVG">{{ datum.icon }}</ng-container>
                       </mat-icon>
                       {{ datum.value }}
@@ -195,7 +198,7 @@
         >
           <mat-card class="dashboard-card bg-accent-lighter" [class.text-dark]="isDark$ | async">
             <mat-card-content>
-              <p class="mb-0">
+              <p class="mb-1">
                 <mat-icon svgIcon="star-fill" class="size-18px mr-1 align-middle"></mat-icon>Stars,
                 <mat-icon svgIcon="git-fork" class="size-18px mr-1 align-middle"></mat-icon>forks,
                 <mat-icon svgIcon="git-merge" class="size-18px mr-1 align-middle"></mat-icon>merges,
@@ -205,6 +208,10 @@
                 and
                 <mat-icon svgIcon="smiley" class="size-18px mr-1 align-middle"></mat-icon>reactions
                 on reviews are calculated based on 1st 100 contributions of 2020.
+              </p>
+              <p class="mb-0">
+                <mat-icon svgIcon="unfold" class="size-18px mr-1 align-middle"></mat-icon>
+                represents contributions to different repositories.
               </p>
             </mat-card-content>
           </mat-card>
