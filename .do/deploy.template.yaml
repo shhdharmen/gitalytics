@@ -1,26 +1,29 @@
 spec:
-  name: gitalytics-api
+  name: gitalytics-twitter-bot
   services:
-  - build_command: npm install --only=dev && npm run build:prod:server && npm prune --production
+  - build_command: npm install --only=dev && npm run build:prod:twitter-bot && npm prune --production
     environment_slug: node-js
     envs:
-    - key: PAT
+    - key: TWITTER_CONSUMER_KEY
       scope: RUN_AND_BUILD_TIME
       type: SECRET
-      value: GITHUB_PERSON_ACCESS_TOKEN
-    - key: API_URL
+      value: TWITTER_CONSUMER_KEY
+    - key: TWITTER_CONSUMER_SECRET
       scope: RUN_AND_BUILD_TIME
-      value: https://api.github.com/graphql
-    - key: WHITELIST_URL
+      type: SECRET
+      value: TWITTER_CONSUMER_KEY
+    - key: TWITTER_ACCESS_TOKEN
       scope: RUN_AND_BUILD_TIME
-      value: https://front-end-app-url
-    - key: NODE_ENV
+      type: SECRET
+      value: TWITTER_ACCESS_TOKEN
+    - key: TWITTER_ACCESS_TOKEN_SECRET
       scope: RUN_AND_BUILD_TIME
-      value: production
+      type: SECRET
+      value: TWITTER_ACCESS_TOKEN_SECRET
     git:
       branch: main
       repo_clone_url: https://github.com/shhdharmen/gitalytics.git
-    name: gitalytics-api
+    name: gitalytics
     routes:
     - path: /
-    run_command: npm run deploy:start:server
+    run_command: npm run deploy:start:twitter-bot
