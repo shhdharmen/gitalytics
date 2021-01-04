@@ -137,7 +137,7 @@
           "
         >
           <mat-card class="dashboard-card">
-            <mat-card-header style="position: relative; z-index: 1">
+            <mat-card-header style="position: relative; z-index: 2">
               <div mat-card-avatar>
                 <mat-icon
                   svgIcon="graph"
@@ -145,28 +145,20 @@
                   aria-label="Graph SVG Icon"
                 ></mat-icon>
               </div>
-              <mat-card-title
-                >Total Contributions
-                <!-- <button
-                mat-icon-button
-                class="more-button"
-                (click)="shareCard(card.modalData)"
-                data-html2canvas-ignore
-              >
-                <mat-icon svgIcon="share"></mat-icon>
-              </button> -->
-              </mat-card-title>
+              <mat-card-title>Total Contributions </mat-card-title>
             </mat-card-header>
             <mat-card-content>
-              <h2 class="mat-display-3 mb-0" style="position: relative; z-index: 1">
-                {{ data.user.contributionsCollection.contributionCalendar.totalContributions }}
+              <h2 class="mat-display-3 mb-0 d-inline-block" style="position: relative; z-index: 1">
+                {{
+                  data.user.contributionsCollection.contributionCalendar.totalContributions | number
+                }}
               </h2>
               <div
                 style="bottom: 0; display: block; left: 0; position: absolute; right: 0; z-index: 0"
               >
                 <div style="display: block; position: relative">
                   <canvas
-                    [height]="(isHandset$ | async) ? '165' : '300'"
+                    [height]="(isHandset$ | async) ? '165' : '255'"
                     baseChart
                     [datasets]="lineChartData"
                     [labels]="lineChartLabels"
@@ -227,7 +219,7 @@
             <mat-card-content>
               <div class="row align-items-end">
                 <div class="col-auto">
-                  <h2 class="mat-display-3 mb-0">{{ card.primaryData }}</h2>
+                  <h2 class="mat-display-3 mb-0">{{ card.primaryData | number }}</h2>
                 </div>
                 <div class="col d-flex justify-content-end">
                   <ng-container *ngFor="let datum of card.secondaryData; let i = index">
@@ -238,7 +230,7 @@
                       >
                         <ng-container *ngIf="!datum.isIconSVG">{{ datum.icon }}</ng-container>
                       </mat-icon>
-                      {{ datum.value }}
+                      {{ datum.value | number }}
                     </h2>
                   </ng-container>
                 </div>

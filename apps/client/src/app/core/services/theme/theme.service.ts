@@ -34,7 +34,6 @@ export class ThemeService {
         },
       ];
     }
-    console.log(this.chartColorOverrides);
     this.isDarkSub.next(value);
   }
 }

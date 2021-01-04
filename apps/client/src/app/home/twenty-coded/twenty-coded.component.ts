@@ -2,9 +2,14 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay, take } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { fadeSlideInOut } from '../../core/animations/animations';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material/dialog';
+import domtoimage from 'dom-to-image';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
+import { Color, Label } from 'ng2-charts';
+
+import { fadeSlideInOut } from '../../core/animations/animations';
 import { TwentyModalComponent, TwentyModalData } from './twenty-modal/twenty-modal.component';
 import {
   CONTRIBUTION_DESCRIPTION,
@@ -27,13 +32,7 @@ import { ShareModalComponent } from './share-modal/share-modal.component';
 import { TotalContributionsQuery, TotalContributionsGQL } from '../../generated/graphql';
 import { DialogComponent, DialogData } from '../../shared/components/dialog/dialog.component';
 import { DOCUMENT } from '@angular/common';
-import html2canvas from 'html2canvas';
 import { buildTwitterIntent, saveAs } from '../../shared/helpers';
-import { DomSanitizer } from '@angular/platform-browser';
-import domtoimage from 'dom-to-image';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
-import { Color, Label } from 'ng2-charts';
 
 @Component({
   selector: 'gitalytics-twenty-coded',
@@ -152,7 +151,6 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
     private dataService: DataService,
     private themeService: ThemeService,
     @Inject(DOCUMENT) private document: Document,
-    private sanitized: DomSanitizer,
     private snackBar: MatSnackBar
   ) {}
 
