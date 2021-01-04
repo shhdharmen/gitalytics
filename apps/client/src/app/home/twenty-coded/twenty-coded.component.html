@@ -4,7 +4,7 @@
       [cols]="
         (isHandset$ | async) ? 1 : (isTabletPortrait$ | async) ? 4 : (isTablet$ | async) ? 4 : 6
       "
-      [rowHeight]="'160px'"
+      [rowHeight]="(isHandset$ | async) ? '180px' : '165px'"
     >
       <mat-grid-tile
         [colspan]="
@@ -129,6 +129,60 @@
 
       <ng-container *ngIf="!isLoading">
         <mat-grid-tile
+          [colspan]="
+            (isHandset$ | async) ? 1 : (isTabletPortrait$ | async) ? 4 : (isTablet$ | async) ? 4 : 4
+          "
+          [rowspan]="
+            (isHandset$ | async) ? 1 : (isTabletPortrait$ | async) ? 2 : (isTablet$ | async) ? 2 : 2
+          "
+        >
+          <mat-card class="dashboard-card">
+            <mat-card-header style="position: relative; z-index: 1">
+              <div mat-card-avatar>
+                <mat-icon
+                  svgIcon="graph"
+                  aria-hidden="false"
+                  aria-label="Graph SVG Icon"
+                ></mat-icon>
+              </div>
+              <mat-card-title
+                >Total Contributions
+                <!-- <button
+                mat-icon-button
+                class="more-button"
+                (click)="shareCard(card.modalData)"
+                data-html2canvas-ignore
+              >
+                <mat-icon svgIcon="share"></mat-icon>
+              </button> -->
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h2 class="mat-display-3 mb-0" style="position: relative; z-index: 1">
+                {{ data.user.contributionsCollection.contributionCalendar.totalContributions }}
+              </h2>
+              <div
+                style="display: block; position: absolute; right: 0; bottom: 0; left: 0; z-index: 0"
+              >
+                <div style="display: block; position: relative">
+                  <canvas
+                    baseChart
+                    height="96"
+                    [datasets]="lineChartData"
+                    [labels]="lineChartLabels"
+                    [options]="lineChartOptions"
+                    [colors]="lineChartColors"
+                    [legend]="lineChartLegend"
+                    [chartType]="lineChartType"
+                    [plugins]="lineChartPlugins"
+                  >
+                  </canvas>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile
           *ngFor="let card of shareCardList"
           [colspan]="
             (isHandset$ | async)
@@ -194,7 +248,7 @@
         </mat-grid-tile>
         <mat-grid-tile
           [colspan]="(isHandset$ | async) ? 1 : (isTabletPortrait$ | async) ? 4 : 2"
-          [rowspan]="1"
+          [rowspan]="(isHandset$ | async) ? 1 : 1"
         >
           <mat-card class="dashboard-card bg-accent-lighter" [class.text-dark]="isDark$ | async">
             <mat-card-content>

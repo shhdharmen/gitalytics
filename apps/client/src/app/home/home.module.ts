@@ -13,11 +13,19 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { LayoutModule } from '@angular/cdk/layout';
+import { ChartsModule } from 'ng2-charts';
 import { TwentyModalComponent } from './twenty-coded/twenty-modal/twenty-modal.component';
 import { ShareModalComponent } from './twenty-coded/share-modal/share-modal.component';
+import { MyLineChartComponent } from './my-line-chart/my-line-chart.component';
 
 @NgModule({
-  declarations: [HomeComponent, TwentyCodedComponent, TwentyModalComponent, ShareModalComponent],
+  declarations: [
+    HomeComponent,
+    TwentyCodedComponent,
+    TwentyModalComponent,
+    ShareModalComponent,
+    MyLineChartComponent,
+  ],
   imports: [
     CommonModule,
     HomeRoutingModule,
@@ -30,6 +38,7 @@ import { ShareModalComponent } from './twenty-coded/share-modal/share-modal.comp
     MatIconModule,
     MatButtonModule,
     LayoutModule,
+    ChartsModule,
   ],
 })
 export class HomeModule {}

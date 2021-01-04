@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { ChartOptions } from 'chart.js';
+import { Color } from 'ng2-charts';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -7,10 +9,32 @@ import { BehaviorSubject, Subject } from 'rxjs';
 export class ThemeService {
   private isDarkSub = new BehaviorSubject<boolean>(false);
   isDark$ = this.isDarkSub.asObservable();
+  chartColorOverrides: Color[] = [
+    {
+      borderColor: '#F06292',
+      backgroundColor: '#F8BBD0',
+    },
+  ];
 
   constructor() {}
 
   updateIsDark(value: boolean) {
+    if (value) {
+      this.chartColorOverrides = [
+        {
+          borderColor: '#C8E6C9',
+          backgroundColor: '#4CAF50',
+        },
+      ];
+    } else {
+      this.chartColorOverrides = [
+        {
+          borderColor: '#F06292',
+          backgroundColor: '#F8BBD0',
+        },
+      ];
+    }
+    console.log(this.chartColorOverrides);
     this.isDarkSub.next(value);
   }
 }

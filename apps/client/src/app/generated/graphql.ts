@@ -18512,6 +18512,12 @@ export interface ContributionsCollectionDataFragment {
   totalRepositoriesWithContributedPullRequests: number;
   totalPullRequestReviewContributions: number;
   totalRepositoriesWithContributedPullRequestReviews: number;
+  contributionCalendar: {
+    totalContributions: number;
+    weeks: Array<{
+      contributionDays: Array<{ date: any; contributionCount: number; color: string }>;
+    }>;
+  };
   repositoryContributions: {
     edges?: Maybe<
       Array<
@@ -18591,6 +18597,16 @@ export const ContributionsCollectionDataFragmentDoc = gql`
     totalRepositoriesWithContributedPullRequests
     totalPullRequestReviewContributions
     totalRepositoriesWithContributedPullRequestReviews
+    contributionCalendar {
+      totalContributions
+      weeks {
+        contributionDays {
+          date
+          contributionCount
+          color
+        }
+      }
+    }
     repositoryContributions(first: 100) {
       edges {
         node {

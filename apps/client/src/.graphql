@@ -16,6 +16,16 @@ fragment ContributionsCollectionData on ContributionsCollection {
   totalRepositoriesWithContributedPullRequests
   totalPullRequestReviewContributions
   totalRepositoriesWithContributedPullRequestReviews
+  contributionCalendar {
+    totalContributions
+    weeks {
+      contributionDays {
+        date
+        contributionCount
+        color
+      }
+    }
+  }
   repositoryContributions(first: 100) {
     edges {
       node {

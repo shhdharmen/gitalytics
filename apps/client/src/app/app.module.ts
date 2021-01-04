@@ -47,6 +47,7 @@ export class AppModule {
       { name: 'smiley', url: 'assets/icons/smiley.svg' },
       { name: 'share', url: 'assets/icons/share.svg' },
       { name: 'info', url: 'assets/icons/info.svg' },
+      { name: 'graph', url: 'assets/icons/graph.svg' },
     ];
 
     iconList.forEach((icon) => {

@@ -32,6 +32,8 @@ import { buildTwitterIntent, saveAs } from '../../shared/helpers';
 import { DomSanitizer } from '@angular/platform-browser';
 import domtoimage from 'dom-to-image';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
+import { Color, Label } from 'ng2-charts';
 
 @Component({
   selector: 'gitalytics-twenty-coded',
@@ -80,6 +82,66 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
   mergedPR = 0;
   reactions = 0;
 
+  public lineChartData: ChartDataSets[] = [];
+  public lineChartLabels: Label[] = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+  public lineChartOptions: ChartOptions = {
+    responsive: true,
+    scales: {
+      yAxes: [
+        {
+          display: false,
+          scaleLabel: {
+            display: false,
+          },
+          gridLines: {
+            display: false,
+          },
+        },
+      ],
+      xAxes: [
+        {
+          display: false,
+          scaleLabel: {
+            display: false,
+          },
+          gridLines: {
+            display: false,
+          },
+          ticks: {
+            fontFamily: "'Poppins', sans-serif",
+          },
+        },
+      ],
+    },
+    legend: {
+      labels: {
+        fontFamily: "'Poppins', sans-serif",
+      },
+    },
+    tooltips: {
+      footerFontFamily: "'Poppins', sans-serif",
+      bodyFontFamily: "'Poppins', sans-serif",
+      titleFontFamily: "'Roboto Slab', serif",
+    },
+  };
+  public lineChartColors: Color[] = this.themeService.chartColorOverrides;
+  public lineChartLegend = false;
+  public lineChartType: ChartType = 'line';
+  public lineChartPlugins = [];
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -94,6 +156,10 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.isDark$.subscribe(() => {
+      this.lineChartColors = [...this.themeService.chartColorOverrides];
+    });
+
     const userName = this.route.snapshot.paramMap.get('userName');
 
     this.userName = userName;
@@ -208,6 +274,7 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
             this.reactions += re?.node?.pullRequestReview?.reactions?.totalCount ?? 0;
           });
           this.buildShareCards();
+          this.buildChartData();
         },
         () => {
           this.dataService.userLogin = {
@@ -267,6 +334,25 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
       }
     }
     this.isLoading = false;
+  }
+
+  buildChartData() {
+    const weeksData = this.data.user.contributionsCollection.contributionCalendar.weeks;
+
+    const daysData = weeksData.map((i) => i.contributionDays).reduce((acc, val) => acc.concat(val));
+
+    const monthsData: { [key: number]: number } = {};
+
+    daysData.forEach((i) => {
+      const month = new Date(i.date).getMonth();
+      if (monthsData[month]) {
+        monthsData[month] += i.contributionCount;
+      } else {
+        monthsData[month] = i.contributionCount;
+      }
+    });
+
+    this.lineChartData = [{ data: Object.values(monthsData), label: 'Total Contributions' }];
   }
 
   shareCard(data: ShareModalData) {
