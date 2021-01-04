@@ -99,6 +99,7 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
   ];
   public lineChartOptions: ChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
       yAxes: [
         {
