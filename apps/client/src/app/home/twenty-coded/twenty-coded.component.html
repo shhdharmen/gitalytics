@@ -230,6 +230,7 @@
                       >
                         <ng-container *ngIf="!datum.isIconSVG">{{ datum.icon }}</ng-container>
                       </mat-icon>
+                      <span *ngIf="datum.isApproximate">~</span>
                       {{ datum.value | number }}
                     </h2>
                   </ng-container>
