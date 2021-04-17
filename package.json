@@ -41,7 +41,8 @@
     "deploy:start:twitter-bot": "node dist/apps/twitter-bot/main.js",
     "generate-codegen": "graphql-codegen --config codegen.yml",
     "contributors:add": "all-contributors add",
-    "contributors:generate": "all-contributors generate"
+    "contributors:generate": "all-contributors generate",
+    "heroku-postbuild": "npm run build:prod:server"
   },
   "private": true,
   "dependencies": {
@@ -62,6 +63,7 @@
     "@nestjs/core": "^7.0.0",
     "@nestjs/graphql": "^7.9.1",
     "@nestjs/platform-express": "^7.0.0",
+    "@nestjs/serve-static": "^2.1.4",
     "@nrwl/angular": "11.0.18",
     "apollo-angular": "^2.1.0",
     "apollo-server-express": "^2.19.0",
@@ -151,5 +153,8 @@
     "*.{js,json,md,ts,html}": [
       "prettier --write"
     ]
+  },
+  "engines": {
+    "node": "14.x"
   }
 }
