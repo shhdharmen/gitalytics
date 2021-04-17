@@ -10,6 +10,8 @@ async function bootstrap() {
   // const allowList = configService.get<string>('WHITELIST_URL').split(',');
   // const env = configService.get<string>('NODE_ENV');
 
+  app.enableCors();
+
   // app.enableCors({
   //   origin: (origin, callback) => {
   //     // allow requests with no origin
