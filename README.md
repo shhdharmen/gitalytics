@@ -141,27 +141,13 @@ All the GraphQL related stuff is maintained at: `apps/client/src/.graphql`. You 
 npm run generate-codegen
 ```
 
-## Instructions to Deploy to App Platform
+## Instructions to Deploy
 
 ### Important Notes on Deployment
 
 - Make sure you have all your environment variables in place
 - You will need to add frontend app urls separated by comma to `WHITELIST_URL` in environment variables
 - You will need to add backend api url in `BACKEND_API_URL` in environment variables
-
-You can use the Deploy to DigitalOcean buttons to deploy this repo directly to App Platform.
-
-### Backend
-
-[![Deploy to DO](https://mp-assets1.sfo2.digitaloceanspaces.com/deploy-to-do/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/shhdharmen/gitalytics/tree/deploy-backend&refcode=33d8c03500a4)
-
-### Frontend
-
-[![Deploy to DO](https://mp-assets1.sfo2.digitaloceanspaces.com/deploy-to-do/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/shhdharmen/gitalytics/tree/main&refcode=33d8c03500a4)
-
-### Twitter Bot
-
-[![Deploy to DO](https://mp-assets1.sfo2.digitaloceanspaces.com/deploy-to-do/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/shhdharmen/gitalytics/tree/deploy-twitter-bot&refcode=33d8c03500a4)
 
 ---
 
