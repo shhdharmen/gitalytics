@@ -41,8 +41,7 @@
     "deploy:start:twitter-bot": "node dist/apps/twitter-bot/main.js",
     "generate-codegen": "graphql-codegen --config codegen.yml",
     "contributors:add": "all-contributors add",
-    "contributors:generate": "all-contributors generate",
-    "heroku-postbuild": "npm run build:prod:server"
+    "contributors:generate": "all-contributors generate"
   },
   "private": true,
   "dependencies": {
