@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent, data: { animation: 'HomePage' } },
   { path: 'home', redirectTo: '' },
   {
-    path: 'user/:userName/2020Coded',
+    path: 'user/:userName/:year',
     component: TwentyCodedComponent,
     data: { animation: '2020Page' },
   },

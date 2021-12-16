@@ -18,12 +18,14 @@ export function saveAs(uri: any, filename: string) {
   }
 }
 
-export function buildTwitterIntent(content: string) {
+export function buildTwitterIntent(content: string, year: string) {
   return (
     'https://twitter.com/intent/tweet?url=' +
-    encodeURI('https://gitalytics.shhdharmen.me') +
+    encodeURI('https://gitalytics.netlify.app') +
     '&text=' +
     encodeURIComponent(content) +
-    '&via=gitalytics_app&hashtags=2020Coded,gitalytics'
+    '&via=gitalytics_app&hashtags=' +
+    year +
+    'Coded,gitalytics'
   );
 }

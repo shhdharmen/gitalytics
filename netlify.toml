@@ -1,0 +1,7 @@
+[build]
+  publish = "dist/apps/client"
+  command = "npm install --only=dev && npm run build:prod:client && npm prune --production"
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

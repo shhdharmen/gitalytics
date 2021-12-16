@@ -2,8 +2,9 @@ import { ContributionType, ContributionQueryType, IconName } from './models';
 
 export const LOCAL_STORAGE_PRE = 'gitalytics-';
 
-export const twentyFrom = new Date(2020, 0, 1, 0, 0, 1).toISOString();
-export const twentyTo = new Date(2020, 11, 31, 23, 59, 59).toISOString();
+export const fromDate = (year: string) => new Date(parseInt(year, 10), 0, 1, 0, 0, 1).toISOString();
+export const toDate = (year: string) =>
+  new Date(parseInt(year, 10), 11, 31, 23, 59, 59).toISOString();
 
 export const CONTRIBUTION_DESCRIPTION: { [key in ContributionQueryType]: string } = {
   totalCommitContributions: 'How many commits were made by the user in this time span.',

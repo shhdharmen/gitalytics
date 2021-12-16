@@ -29,8 +29,17 @@
         [ngClass]="{ 'border-dark': !isDark }"
         [routerLinkActive]="['border-bottom']"
       >
-        <a *ngIf="user" class="nav-link" mat-button [routerLink]="['user', user.login, '2020Coded']"
+        <a *ngIf="user" class="nav-link" mat-button [routerLink]="['user', user.login, '2020']"
           >#2020Coded</a
+        >
+      </div>
+      <div
+        class="col-auto d-flex align-items-center border-thick"
+        [ngClass]="{ 'border-dark': !isDark }"
+        [routerLinkActive]="['border-bottom']"
+      >
+        <a *ngIf="user" class="nav-link" mat-button [routerLink]="['user', user.login, '2021']"
+          >#2021Coded</a
         >
       </div>
     </div>
@@ -95,6 +104,13 @@
           [routerLink]="['user', user.login, '2020Coded']"
           routerLinkActive="bg-primary-darker"
           >#2020Coded</a
+        >
+        <a
+          *ngIf="user"
+          mat-list-item
+          [routerLink]="['user', user.login, '2021Coded']"
+          routerLinkActive="bg-primary-darker"
+          >#2021Coded</a
         >
       </mat-nav-list>
     </mat-sidenav>

@@ -31,13 +31,14 @@ export class TwentyModalComponent implements OnInit {
 
   get twitterIntent() {
     return buildTwitterIntent(
-      `My 2020 GitHub Contributions:\n\n
+      `My ${this.data.year} GitHub Contributions:\n\n
       ${this.data.totalRepositoryContributions} 📘 repositories,\n
       ${this.data.totalCommitContributions} ✅ commits,\n
       ${this.data.totalIssueContributions} ⚠ issues,\n
       ${this.data.totalPullRequestContributions} ⬆ pull requests\n
       reviewed 👀 ${this.data.totalPullRequestReviewContributions} pull requests\n\n
-      Find out yours!\n\n`
+      Find out yours!\n\n`,
+      this.data.year
     );
   }
 
@@ -78,4 +79,5 @@ export interface TwentyModalData {
   closedIssue: number;
   comments: number;
   reactions: number;
+  year: string;
 }

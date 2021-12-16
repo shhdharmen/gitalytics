@@ -36,6 +36,7 @@ export interface ShareModalData {
   title?: string;
   content: string;
   twitterIntent: string;
+  year: string;
 }
 
 export interface TwentyShareCardType {

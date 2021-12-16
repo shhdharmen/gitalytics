@@ -2,7 +2,8 @@ export function buildRepoModal(
   login: string,
   repositoriesCount: number,
   starCount: number,
-  forkCount: number
+  forkCount: number,
+  year: string
 ): string {
   return `<div class="rounded bg-primary text-white p-3 my-3 position-relative share-div">
   <div class="share-content">
@@ -10,14 +11,14 @@ export function buildRepoModal(
       class="m-n3 px-3 py-1 bg-accent rounded-top share-title"
     >
       <p class="mb-0">
-        2020 GitHub Contributions for <span class="highlight">${login}</span>
+        ${year} GitHub Contributions for <span class="highlight">${login}</span>
       </p>
     </div>
     <div class="mb-4"></div>
     <h2 class="mat-display-1">
       They created<br /><span class="highlight">${repositoriesCount} repositories</span
       ><br />
-      in 2020!
+      in ${year}!
     </h2>
     <h2>
       Their repositories got <span class="highlight">~${starCount} stars</span>.
@@ -42,20 +43,21 @@ export function buildRepoModal(
           </p>
         </div>
         <div class="col text-right">
-          <p class="mb-0">#2020Coded</p>
+          <p class="mb-0">#${year}Coded</p>
         </div>
       </div>
     </div>
   </div>
   <div class="share-bg repo-bg"></div>
 </div>
-<p>ℹ Star and fork count are calculated from <br> 1st 100 <a href="https://docs.github.com/en/free-pro-team@latest/graphql/reference/objects#createdrepositorycontribution" target="_blank" rel="noopener noreferrer"><code>CreatedRepositoryContribution</code></a> of 2020.</p>`;
+<p>ℹ Star and fork count are calculated from <br> 1st 100 <a href="https://docs.github.com/en/free-pro-team@latest/graphql/reference/objects#createdrepositorycontribution" target="_blank" rel="noopener noreferrer"><code>CreatedRepositoryContribution</code></a> of ${year}.</p>`;
 }
 
 export function buildCommitModal(
   login: string,
   totalCommitContributions: number,
-  totalRepositoriesWithContributedCommits: number
+  totalRepositoriesWithContributedCommits: number,
+  year: string
 ): string {
   return `<div class="rounded bg-primary text-white p-3 my-3 position-relative share-div">
   <div class="share-content">
@@ -63,14 +65,14 @@ export function buildCommitModal(
       class="m-n3 px-3 py-1 bg-accent rounded-top share-title"
     >
       <p class="mb-0">
-        2020 GitHub Contributions for <span class="highlight">${login}</span>
+        ${year} GitHub Contributions for <span class="highlight">${login}</span>
       </p>
     </div>
     <div class="mb-4"></div>
     <h2 class="mat-display-1">
       They pushed<br /><span class="highlight">${totalCommitContributions} commits</span
       ><br />
-      in 2020!
+      in ${year}!
     </h2>
     <h2>
       Out of which,
@@ -94,7 +96,7 @@ export function buildCommitModal(
           </p>
         </div>
         <div class="col text-right">
-          <p class="mb-0">#2020Coded</p>
+          <p class="mb-0">#${year}Coded</p>
         </div>
       </div>
     </div>
@@ -107,7 +109,8 @@ export function buildIssueModal(
   login: string,
   totalIssueContributions: number,
   totalRepositoriesWithContributedIssues: number,
-  closedIssues: number
+  closedIssues: number,
+  year: string
 ): string {
   return `<div class="rounded bg-primary text-white p-3 my-3 position-relative share-div">
   <div class="share-content">
@@ -115,14 +118,14 @@ export function buildIssueModal(
       class="m-n3 px-3 py-1 bg-accent rounded-top share-title"
     >
       <p class="mb-0">
-        2020 GitHub Contributions for <span class="highlight">${login}</span>
+        ${year} GitHub Contributions for <span class="highlight">${login}</span>
       </p>
     </div>
     <div class="mb-4"></div>
     <h2 class="mat-display-1">
       They submitted<br /><span class="highlight">${totalIssueContributions} issues</span
       ><br />
-      in 2020!
+      in ${year}!
     </h2>
     <h2>
       Out of which,
@@ -151,14 +154,14 @@ export function buildIssueModal(
           </p>
         </div>
         <div class="col text-right">
-          <p class="mb-0">#2020Coded</p>
+          <p class="mb-0">#${year}Coded</p>
         </div>
       </div>
     </div>
   </div>
   <div class="share-bg issue-bg"></div>
 </div>
-<p>ℹ Closed issues count is calculated from <br> 1st 100 <a href="https://docs.github.com/en/free-pro-team@latest/graphql/reference/objects#createdissuecontribution" target="_blank" rel="noopener noreferrer"><code>CreatedIssueContribution</code></a> of 2020.</p>`;
+<p>ℹ Closed issues count is calculated from <br> 1st 100 <a href="https://docs.github.com/en/free-pro-team@latest/graphql/reference/objects#createdissuecontribution" target="_blank" rel="noopener noreferrer"><code>CreatedIssueContribution</code></a> of ${year}.</p>`;
 }
 
 export function buildPullRequestModal(
@@ -166,7 +169,8 @@ export function buildPullRequestModal(
   totalPullRequestContributions: number,
   totalRepositoriesWithContributedPullRequests: number,
   mergedPRs: number,
-  closedPRs: number
+  closedPRs: number,
+  year: string
 ): string {
   return `<div class="rounded bg-primary text-white p-3 my-3 position-relative share-div">
   <div class="share-content">
@@ -174,14 +178,14 @@ export function buildPullRequestModal(
       class="m-n3 px-3 py-1 bg-accent rounded-top share-title"
     >
       <p class="mb-0">
-        2020 GitHub Contributions for <span class="highlight">${login}</span>
+        ${year} GitHub Contributions for <span class="highlight">${login}</span>
       </p>
     </div>
     <div class="mb-4"></div>
     <h2 class="mat-display-1">
       They created<br /><span class="highlight">${totalPullRequestContributions} pull requests</span
       ><br />
-      in 2020!
+      in ${year}!
     </h2>
     <h2>
       Out of which,
@@ -211,14 +215,14 @@ export function buildPullRequestModal(
           </p>
         </div>
         <div class="col text-right">
-          <p class="mb-0">#2020Coded</p>
+          <p class="mb-0">#${year}Coded</p>
         </div>
       </div>
     </div>
   </div>
   <div class="share-bg pr-bg"></div>
 </div>
-<p>ℹ Closed and merged PR count is calculated from <br> 1st 100 <a href="https://docs.github.com/en/free-pro-team@latest/graphql/reference/objects#createdpullrequestcontribution" target="_blank" rel="noopener noreferrer"><code>CreatedPullRequestContribution</code></a> of 2020.</p>`;
+<p>ℹ Closed and merged PR count is calculated from <br> 1st 100 <a href="https://docs.github.com/en/free-pro-team@latest/graphql/reference/objects#createdpullrequestcontribution" target="_blank" rel="noopener noreferrer"><code>CreatedPullRequestContribution</code></a> of ${year}.</p>`;
 }
 
 export function buildReviewModal(
@@ -226,7 +230,8 @@ export function buildReviewModal(
   totalPullRequestReviewContributions: number,
   totalRepositoriesWithContributedPullRequestReviews: number,
   comments: number,
-  reactions: number
+  reactions: number,
+  year: string
 ): string {
   return `<div class="rounded bg-primary text-white p-3 my-3 position-relative share-div">
   <div class="share-content">
@@ -234,7 +239,7 @@ export function buildReviewModal(
       class="m-n3 px-3 py-1 bg-accent rounded-top share-title"
     >
       <p class="mb-0">
-        2020 GitHub Contributions for <span class="highlight">${login}</span>
+        ${year} GitHub Contributions for <span class="highlight">${login}</span>
       </p>
     </div>
     <div class="mb-4"></div>
@@ -242,7 +247,7 @@ export function buildReviewModal(
       They <span class="highlight">
       reviewed ${totalPullRequestReviewContributions}
       </span><br>
-      PRs in 2020!
+      PRs in ${year}!
     </h2>
     <h2>
       Out of which,
@@ -271,12 +276,12 @@ export function buildReviewModal(
           </p>
         </div>
         <div class="col text-right">
-          <p class="mb-0">#2020Coded</p>
+          <p class="mb-0">#${year}Coded</p>
         </div>
       </div>
     </div>
   </div>
   <div class="share-bg review-bg"></div>
 </div>
-<p>ℹ Comments and reactions count is calculated from <br> 1st 100 <a href="https://docs.github.com/en/free-pro-team@latest/graphql/reference/objects#createdpullrequestreviewcontribution" target="_blank" rel="noopener noreferrer"><code>CreatedPullRequestReviewContribution</code></a> of 2020.</p>`;
+<p>ℹ Comments and reactions count is calculated from <br> 1st 100 <a href="https://docs.github.com/en/free-pro-team@latest/graphql/reference/objects#createdpullrequestreviewcontribution" target="_blank" rel="noopener noreferrer"><code>CreatedPullRequestReviewContribution</code></a> of ${year}.</p>`;
 }

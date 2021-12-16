@@ -9,7 +9,7 @@ import {
   buildReviewModal,
 } from './modal-builders';
 
-export function buildRepoCard(data: TotalContributionsQuery): TwentyShareCardType {
+export function buildRepoCard(data: TotalContributionsQuery, year: string): TwentyShareCardType {
   let forkCount = 0,
     forkedFromCount = 0,
     starCount = 0;
@@ -34,10 +34,12 @@ export function buildRepoCard(data: TotalContributionsQuery): TwentyShareCardTyp
     tabCols: 2,
     tabRows: 1,
     modalData: {
-      content: buildRepoModal(login, repositoriesCount, starCount, forkCount),
+      content: buildRepoModal(login, repositoriesCount, starCount, forkCount, year),
       twitterIntent: buildTwitterIntent(
-        `I created ${repositoriesCount} 📘 repositories, they got ${starCount} ⭐s and were forked ${forkCount} times!\n\n Find out yours!\n\n`
+        `I created ${repositoriesCount} 📘 repositories, they got ${starCount} ⭐s and were forked ${forkCount} times!\n\n Find out yours!\n\n`,
+        year
       ),
+      year,
     },
     primaryData: contributionsCollection.totalRepositoryContributions,
     secondaryData: [
@@ -60,7 +62,7 @@ export function buildRepoCard(data: TotalContributionsQuery): TwentyShareCardTyp
   return card;
 }
 
-export function buildCommitCard(data: TotalContributionsQuery): TwentyShareCardType {
+export function buildCommitCard(data: TotalContributionsQuery, year: string): TwentyShareCardType {
   const user = data.user;
   const contributionsCollection = user.contributionsCollection;
 
@@ -80,11 +82,14 @@ export function buildCommitCard(data: TotalContributionsQuery): TwentyShareCardT
       content: buildCommitModal(
         login,
         totalCommitContributions,
-        totalRepositoriesWithContributedCommits
+        totalRepositoriesWithContributedCommits,
+        year
       ),
       twitterIntent: buildTwitterIntent(
-        `I pushed total ${totalCommitContributions} commits, from them ${totalRepositoriesWithContributedCommits} were pushed in different repositories in 2020 on GitHub!\n\n Find out yours!\n\n`
+        `I pushed total ${totalCommitContributions} commits, from them ${totalRepositoriesWithContributedCommits} were pushed in different repositories in ${year} on GitHub!\n\n Find out yours!\n\n`,
+        year
       ),
+      year,
     },
     primaryData: totalCommitContributions,
     secondaryData: [
@@ -100,7 +105,7 @@ export function buildCommitCard(data: TotalContributionsQuery): TwentyShareCardT
   return card;
 }
 
-export function buildIssueCard(data: TotalContributionsQuery): TwentyShareCardType {
+export function buildIssueCard(data: TotalContributionsQuery, year: string): TwentyShareCardType {
   const user = data.user;
   const contributionsCollection = user.contributionsCollection;
 
@@ -127,14 +132,17 @@ export function buildIssueCard(data: TotalContributionsQuery): TwentyShareCardTy
         login,
         totalIssueContributions,
         totalRepositoriesWithContributedIssues,
-        closedIssues
+        closedIssues,
+        year
       ),
       twitterIntent: buildTwitterIntent(
         `I submitted total ${totalIssueContributions} issues,\n
         from them ${totalRepositoriesWithContributedIssues} were submitted in different repositories\n
-        and ~${closedIssues} were closed in 2020 on GitHub!\n\n
-        Find out yours!\n\n`
+        and ~${closedIssues} were closed in ${year} on GitHub!\n\n
+        Find out yours!\n\n`,
+        year
       ),
+      year,
     },
     primaryData: totalIssueContributions,
     secondaryData: [
@@ -156,7 +164,10 @@ export function buildIssueCard(data: TotalContributionsQuery): TwentyShareCardTy
   return card;
 }
 
-export function buildPullRequestCard(data: TotalContributionsQuery): TwentyShareCardType {
+export function buildPullRequestCard(
+  data: TotalContributionsQuery,
+  year: string
+): TwentyShareCardType {
   const user = data.user;
   const contributionsCollection = user.contributionsCollection;
 
@@ -186,16 +197,19 @@ export function buildPullRequestCard(data: TotalContributionsQuery): TwentyShare
         totalPullRequestContributions,
         totalRepositoriesWithContributedPullRequests,
         mergedPRs,
-        closedPRs
+        closedPRs,
+        year
       ),
       twitterIntent: buildTwitterIntent(
         `I created total ${totalPullRequestContributions} PRs,\n
         from them ${totalRepositoriesWithContributedPullRequests} were created in different repositories,\n
         ~${mergedPRs} were merged\n
         and ~${closedPRs} were closed\n
-        in 2020 on GitHub!\n\n
-        Find out yours!\n\n`
+        in ${year} on GitHub!\n\n
+        Find out yours!\n\n`,
+        year
       ),
+      year,
     },
     primaryData: totalPullRequestContributions,
     secondaryData: [
@@ -223,7 +237,7 @@ export function buildPullRequestCard(data: TotalContributionsQuery): TwentyShare
   return card;
 }
 
-export function buildReviewCard(data: TotalContributionsQuery): TwentyShareCardType {
+export function buildReviewCard(data: TotalContributionsQuery, year: string): TwentyShareCardType {
   const user = data.user;
   const contributionsCollection = user.contributionsCollection;
 
@@ -254,16 +268,19 @@ export function buildReviewCard(data: TotalContributionsQuery): TwentyShareCardT
         totalPullRequestReviewContributions,
         totalRepositoriesWithContributedPullRequestReviews,
         comments,
-        reactions
+        reactions,
+        year
       ),
       twitterIntent: buildTwitterIntent(
         `I reviewed total ${totalPullRequestReviewContributions} PRs,\n
         from them ${totalRepositoriesWithContributedPullRequestReviews} were reviewed in different repositories,\n
         ~${comments} comments\n
         and ~${reactions} reactions were received\n
-        in 2020 on GitHub!\n\n
-        Find out yours!\n\n`
+        in ${year} on GitHub!\n\n
+        Find out yours!\n\n`,
+        year
       ),
+      year,
     },
     primaryData: totalPullRequestReviewContributions,
     secondaryData: [

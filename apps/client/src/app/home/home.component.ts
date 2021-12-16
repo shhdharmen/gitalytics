@@ -2,7 +2,7 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { fadeSlideInOut } from '../core/animations/animations';
@@ -11,7 +11,7 @@ import { LocalStorageService } from '../core/services/local-storage/local-storag
 import { ThemeService } from '../core/services/theme/theme.service';
 import { UserLoginGQL, UserLoginQuery } from '../generated/graphql';
 import { DialogComponent, DialogData } from '../shared/components/dialog/dialog.component';
-import { twentyFrom, twentyTo } from '../shared/constants';
+import { fromDate, toDate } from '../shared/constants';
 
 @Component({
   selector: 'gitalytics-home',
@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     map((result) => result.matches),
     shareReplay()
   );
+  year = '';
 
   constructor(
     private fb: FormBuilder,
@@ -41,7 +42,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private dataService: DataService,
     private router: Router,
     private localStorage: LocalStorageService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {}
@@ -55,8 +57,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private getDataForUser(userName: string, showError = true) {
-    // this.router.navigate(['/user', userName, '2020Coded']);
-
     this.totalContributions$ = this.totalContributionsGQL
       .watch({ login: userName })
       .valueChanges.pipe(map((result) => result.data));
@@ -74,7 +74,8 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.dataService.updateUserLoginSub(true);
           this.isUsernameLoading = false;
           this.isLoading = false;
-          this.router.navigate(['/user', userName, '2020Coded']);
+          this.year = this.route.snapshot.paramMap.get('year') || '2021';
+          this.router.navigate(['/user', userName, this.year]);
         },
         () => {
           this.isUsernameLoading = false;

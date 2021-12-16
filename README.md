@@ -1,6 +1,6 @@
 # Gitalytics <!-- omit in toc -->
 
-> A simple overview of your github activities <https://gitalytics.shhdharmen.me>
+> A simple overview of your github activities <https://gitalytics.netlify.app>
 
 <p align="center">
 <img src="./apps/client/src/static/gitalytics_banner.png" alt="Gitalytics">
@@ -16,17 +16,13 @@
   - [How does it look?](#how-does-it-look)
   - [What does it show?](#what-does-it-show)
   - [Export](#export)
-  - [Twitter Handle](#twitter-handle)
 - [Development](#development)
   - [Environment Variables](#environment-variables)
   - [Local Setup](#local-setup)
     - [Running the projects](#running-the-projects)
     - [GraphQL](#graphql)
-- [Instructions to Deploy to App Platform](#instructions-to-deploy-to-app-platform)
+- [Instructions to Deploy](#instructions-to-deploy)
   - [Important Notes on Deployment](#important-notes-on-deployment)
-  - [Backend](#backend)
-  - [Frontend](#frontend)
-  - [Twitter Bot](#twitter-bot)
 - [Contributors ✨](#contributors-)
 
 ## About
@@ -73,12 +69,6 @@ You can export each data as PNG. And you can also share stats on twitter. I will
 
 ![twitter](./twitter_sample.png)
 
-### Twitter Handle
-
-I have also created a bot on twitter [@gitalytics_app](https://twitter.com/gitalytics_app). It's job is to retweet **#2020Coded**.
-
-[![twitter profile](./twitter_profile.png)](https://twitter.com/gitalytics_app)
-
 ---
 
 ## Development
@@ -87,18 +77,14 @@ I have also created a bot on twitter [@gitalytics_app](https://twitter.com/gital
 
 A sample is provided a `.env.sample` file.
 
-| Variable                      | Description                                  | Dev Value                        | Prod Value                       | Needed for           |
-| ----------------------------- | -------------------------------------------- | -------------------------------- | -------------------------------- | -------------------- |
-| `PAT`                         | GitHub Person Access Token                   | `TOKEN`                          | `TOKEN`                          | Backend              |
-| `API_URL`                     | GitHub GraphQL API Endpoint                  | `https://api.github.com/graphql` | `https://api.github.com/graphql` | Backend              |
-| `PORT`                        | Where you want to run your nestjs app        | `3000`                           | `8080`                           | Backend              |
-| `WHITELIST_URL`               | Comma separated URLs to allow access to APIs | `http://localhost:4200`          | `FRONT_END_APP_URL`              | Backend              |
-| `NODE_ENV`                    | Environment where app is running             | `development`                    | `production`                     | Backend and Frontend |
-| `BACKEND_API_URL`             | URL where api is running                     | `/api`                           | `BACK_END_APP_URL`               | Frontend             |
-| `TWITTER_CONSUMER_KEY`        | -                                            | `TWITTER_CONSUMER_KEY`           | `TWITTER_CONSUMER_KEY`           | Twitter Bot          |
-| `TWITTER_CONSUMER_SECRET`     | -                                            | `TWITTER_CONSUMER_SECRET`        | `TWITTER_CONSUMER_SECRET`        | Twitter Bot          |
-| `TWITTER_ACCESS_TOKEN`        | -                                            | `TWITTER_ACCESS_TOKEN`           | `TWITTER_ACCESS_TOKEN`           | Twitter Bot          |
-| `TWITTER_ACCESS_TOKEN_SECRET` | -                                            | `TWITTER_ACCESS_TOKEN_SECRET`    | `TWITTER_ACCESS_TOKEN_SECRET`    | Twitter Bot          |
+| Variable          | Description                                  | Dev Value                        | Prod Value                       | Needed for           |
+| ----------------- | -------------------------------------------- | -------------------------------- | -------------------------------- | -------------------- |
+| `PAT`             | GitHub Person Access Token                   | `TOKEN`                          | `TOKEN`                          | Backend              |
+| `API_URL`         | GitHub GraphQL API Endpoint                  | `https://api.github.com/graphql` | `https://api.github.com/graphql` | Backend              |
+| `PORT`            | Where you want to run your nestjs app        | `3000`                           | `8080`                           | Backend              |
+| `WHITELIST_URL`   | Comma separated URLs to allow access to APIs | `http://localhost:4200`          | `FRONT_END_APP_URL`              | Backend              |
+| `NODE_ENV`        | Environment where app is running             | `development`                    | `production`                     | Backend and Frontend |
+| `BACKEND_API_URL` | URL where api is running                     | `/api`                           | `BACK_END_APP_URL`               | Frontend             |
 
 You can create an app and get keys for twitter bot from: <https://apps.twitter.com/>.
 
@@ -125,12 +111,6 @@ nx serve api
 
 ```bash
 nx serve client
-```
-
-**Twitter Bot**:
-
-```bash
-nx serve twitter-bot
 ```
 
 #### GraphQL

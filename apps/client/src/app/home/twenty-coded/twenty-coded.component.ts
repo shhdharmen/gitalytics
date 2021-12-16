@@ -15,8 +15,8 @@ import {
   CONTRIBUTION_DESCRIPTION,
   CONTRIBUTION_ICON,
   CONTRIBUTION_TITLE,
-  twentyFrom,
-  twentyTo,
+  fromDate,
+  toDate,
 } from '../../shared/constants';
 import { DataService } from '../../core/services/data/data.service';
 import { ContributionQueryType, ShareModalData, TwentyShareCardType } from '../../shared/models';
@@ -142,6 +142,8 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
   public lineChartType: ChartType = 'line';
   public lineChartPlugins = [];
 
+  year = '2021';
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -162,7 +164,14 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
     const userName = this.route.snapshot.paramMap.get('userName');
 
     this.userName = userName;
-    this.getDataForUser();
+
+    this.route.paramMap.subscribe((p) => {
+      this.isLoading = true;
+      this.year = p.get('year') || '2021';
+      this.getDataForUser();
+    });
+
+    // this.getDataForUser();
     this.subscriptions.push(
       this.isHandset$.subscribe((isHandSet) => {
         if (isHandSet) {
@@ -187,7 +196,7 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
           bgcolor: isDark ? '#303030' : '#fafafa',
         })
         .then((dataUrl) => {
-          saveAs(dataUrl, this.userName + '-2020Coded.png');
+          saveAs(dataUrl, this.userName + '-' + this.year + 'Coded.png');
         });
     });
   }
@@ -213,6 +222,7 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
       comments: this.comments,
       mergedPR: this.mergedPR,
       reactions: this.reactions,
+      year: this.year,
     };
     this.dialog.open(TwentyModalComponent, {
       data,
@@ -223,7 +233,8 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
   get twitterIntent() {
     const collection = this.data.user.contributionsCollection;
     return buildTwitterIntent(
-      `My 2020 GitHub Contributions:\n\n📘 ${collection.totalRepositoryContributions} repositories,\n✅ ${collection.totalCommitContributions} commits,\n⭐~${this.totalStarCount} stars,\n⚠ ${collection.totalIssueContributions} issues,\n⬆ ${collection.totalPullRequestContributions} pull requests\n👀 reviewed ${collection.totalPullRequestReviewContributions} PRs\n\nFind out yours!\n\n`
+      `My ${this.year} GitHub Contributions:\n\n📘 ${collection.totalRepositoryContributions} repositories,\n✅ ${collection.totalCommitContributions} commits,\n⭐~${this.totalStarCount} stars,\n⚠ ${collection.totalIssueContributions} issues,\n⬆ ${collection.totalPullRequestContributions} pull requests\n👀 reviewed ${collection.totalPullRequestReviewContributions} PRs\n\nFind out yours!\n\n`,
+      this.year
     );
   }
 
@@ -241,7 +252,7 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
 
   private getDataForUser() {
     this.totalContributions$ = this.totalContributionsGQL
-      .watch({ login: this.userName, from: twentyFrom, to: twentyTo })
+      .watch({ login: this.userName, from: fromDate(this.year), to: toDate(this.year) })
       .valueChanges.pipe(map((result) => result.data));
 
     this.subscriptions.push(
@@ -310,19 +321,19 @@ export class TwentyCodedComponent implements OnInit, OnDestroy {
 
         switch (queryKey) {
           case 'totalRepositoryContributions':
-            card = buildRepoCard(this.data);
+            card = buildRepoCard(this.data, this.year);
             break;
           case 'totalCommitContributions':
-            card = buildCommitCard(this.data);
+            card = buildCommitCard(this.data, this.year);
             break;
           case 'totalIssueContributions':
-            card = buildIssueCard(this.data);
+            card = buildIssueCard(this.data, this.year);
             break;
           case 'totalPullRequestContributions':
-            card = buildPullRequestCard(this.data);
+            card = buildPullRequestCard(this.data, this.year);
             break;
           case 'totalPullRequestReviewContributions':
-            card = buildReviewCard(this.data);
+            card = buildReviewCard(this.data, this.year);
             break;
           default:
             break;

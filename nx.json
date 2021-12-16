@@ -27,9 +27,6 @@
     },
     "api-interfaces": {
       "tags": []
-    },
-    "twitter-bot": {
-      "tags": []
     }
   }
 }

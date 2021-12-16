@@ -21,7 +21,7 @@ export class ShareModalComponent implements OnInit {
   download() {
     const shareDiv = this.document.querySelector('.share-div') as HTMLElement;
     html2canvas(shareDiv).then((canvas) => {
-      saveAs(canvas.toDataURL(), 'repositories-2020.png');
+      saveAs(canvas.toDataURL(), 'repositories-' + this.data.year + '.png');
     });
   }
 }

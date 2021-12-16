@@ -44,7 +44,7 @@
                     A quick glance at
                     <a [href]="data.user.url" target="_blank"
                       ><span class="highlight">{{ userName }}</span></a
-                    >'s 2020 GitHub Contributions!
+                    >'s {{ year }} GitHub Contributions!
                   </h2>
                 </div>
               </div>
@@ -60,7 +60,8 @@
                   : 'mat-display-4'
               ]"
             >
-              #2020<br
+              #{{ year
+              }}<br
                 *ngIf="
                   (isHandset$ | async) === false &&
                   (isTablet$ | async) === false &&
@@ -112,9 +113,6 @@
                   Gitalytics
                 </p>
               </div>
-              <!-- <div class="col text-right">
-                <p class="mb-0">#2020Coded</p>
-              </div> -->
             </div>
           </div>
         </mat-card>
@@ -254,7 +252,7 @@
                 <mat-icon svgIcon="comment" class="size-18px mr-1 align-middle"></mat-icon>comments
                 and
                 <mat-icon svgIcon="smiley" class="size-18px mr-1 align-middle"></mat-icon>reactions
-                on reviews are calculated based on 1st 100 contributions of 2020.
+                on reviews are calculated based on 1st 100 contributions of {{ year }}.
               </p>
               <p class="mb-0">
                 <mat-icon svgIcon="unfold" class="size-18px mr-1 align-middle"></mat-icon>
